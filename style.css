@@ -1,0 +1,25 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #eef3fc;
+  text-align: center;
+  color: #333;
+  margin: 50px;
+}
+
+button {
+  background: #0056ff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #003bb3;
+}
+
+#quiz {
+  margin-top: 30px;
+  font-size: 18px;
+}
