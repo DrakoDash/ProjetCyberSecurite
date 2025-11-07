@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberQuiz - Quiz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>CyberQuiz 🔐</h1>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="quiz.html">Quiz</a>
+    </nav>
+  </header>
+
+  <section id="quiz">
+    <h2>Quiz de Cybersécurité 🧠</h2>
+    <p><strong>Question 1 :</strong> Que dois-tu faire si tu reçois un email suspect ?</p>
+    <button onclick="bonneReponse(this)">🚫 Ne pas cliquer et le signaler</button>
+    <button onclick="mauvaiseReponse(this)">🔗 Cliquer pour voir ce que c’est</button>
+    <button onclick="mauvaiseReponse(this)">📤 Le transférer à un ami</button>
+  </section>
+
+  <footer>
+    <p>Projet BAC Pro CIEL - CyberQuiz © 2025</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
