@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz - Bases de la Cybersécurité</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #0d1117;
+      color: #c9d1d9;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #161b22;
+      padding: 1.5em;
+      text-align: center;
+      font-size: 1.8em;
+      font-weight: bold;
+    }
+
+    .quiz-container {
+      max-width: 700px;
+      margin: 2em auto;
+      background: #21262d;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 2em;
+    }
+
+    .question {
+      margin-bottom: 1.5em;
+    }
+
+    .question h3 { color: #58a6ff; }
+
+    .options label {
+      display: block;
+      margin-bottom: 0.5em;
+      cursor: pointer;
+    }
+
+    button {
+      background-color: #238636;
+      color: white;
+      border: none;
+      padding: 0.8em 1.5em;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s;
+    }
+
+    button:hover { background-color: #2ea043; }
+
+    #result {
+      margin-top: 2em;
+      font-size: 1.2em;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    a {
+      display: block;
+      text-align: center;
+      margin-top: 2em;
+      color: #58a6ff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <header>Quiz : Bases de la Cybersécurité 🔰</header>
+  <div class="quiz-container" id="quiz"></div>
+  <div style="text-align:center;"><button onclick="checkAnswers()">Valider mes réponses</button></div>
+  <div id="result"></div>
+  <a href="quizz.html">← Retour aux quiz</a>
+
+  <script>
+    const quizData = [
+      { question: "Que signifie le terme 'phishing' ?", options: ["Un antivirus", "Une attaque pour tromper l’utilisateur", "Un protocole réseau"], correct: 1 },
+      { question: "Quel est le mot de passe le plus sûr ?", options: ["12345678", "Motdepasse2024", "G!8x$tP@92#"], correct: 2 },
+      { question: "Que signifie HTTPS ?", options: ["Hyper Text Transfer Protocol Secure", "Hyperlink Transfer Text Protocol System", "High Transfer Text Protocol Security"], correct: 0 }
+    ];
+
+    const quizContainer = document.getElementById("quiz");
+    quizData.forEach((q, i) => {
+      quizContainer.innerHTML += `
+        <div class="question">
+          <h3>${i + 1}. ${q.question}</h3>
+          ${q.options.map((opt, j) => `
+            <label><input type="radio" name="q${i}" value="${j}"> ${opt}</label>
+          `).join("")}
+        </div>`;
+    });
+
+    function checkAnswers() {
+      let score = 0;
+      quizData.forEach((q, i) => {
+        const a = document.querySelector(\`input[name="q\${i}"]:checked\`);
+        if (a && parseInt(a.value) === q.correct) score++;
+      });
+      const r = document.getElementById("result");
+      r.textContent = \`Score : \${score} / \${quizData.length}\`;
+      r.style.color = score === quizData.length ? "#2ea043" : "#f85149";
+    }
+  </script>
+</body>
+</html>
