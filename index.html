@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CyberQuiz - Sensibilisation à la Cybersécurité</title>
+  <title>CyberQuiz - Accueil</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,8 +12,8 @@
   <header>
     <h1>CyberQuiz 🔐</h1>
     <nav>
-      <a href="#hero">Accueil</a>
-      <a href="#quiz">Quiz</a>
+      <a href="index.html">Accueil</a>
+      <a href="quiz.html">Quiz</a>
       <a href="#infos">Conseils</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -23,28 +23,30 @@
   <section id="hero">
     <h2>Apprends à te protéger sur Internet 💻</h2>
     <p>Teste tes connaissances en cybersécurité avec notre quiz interactif.</p>
-    <button onclick="demarrerQuiz()">🎯 Commencer le quiz</button>
+    <a href="quiz.html">
+      <button>🎯 Commencer le quiz</button>
+    </a>
   </section>
-
-  <!-- 🔹 Zone du quiz -->
-  <section id="quiz"></section>
 
   <!-- 🔹 Section d'informations -->
   <section id="infos">
     <h2>Pourquoi la cybersécurité est-elle importante ?</h2>
     <p>Chaque jour, des millions de personnes sont victimes d’escroqueries en ligne. 
        CyberQuiz t’aide à reconnaître les dangers et adopter les bons réflexes pour naviguer en toute sécurité !</p>
+
     <div class="cards">
       <div class="card">
         <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" alt="Protection">
         <h3>Protéger ses données</h3>
-        <p>Apprends à choisir des mots de passe solides et à activer la double authentification.</p>
+        <p>Choisis des mots de passe solides et active la double authentification.</p>
       </div>
+
       <div class="card">
         <img src="https://cdn-icons-png.flaticon.com/512/942/942748.png" alt="Phishing">
         <h3>Éviter les pièges</h3>
         <p>Reconnais les emails suspects, les liens piégés et les faux sites web.</p>
       </div>
+
       <div class="card">
         <img src="https://cdn-icons-png.flaticon.com/512/3064/3064198.png" alt="Réseaux sociaux">
         <h3>Protéger son identité</h3>
@@ -59,6 +61,7 @@
     <p>Fait avec ❤️ par notre équipe</p>
   </footer>
 
-  <script src="script.js"></script>
 </body>
 </html>
+
+
