@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz Cybersécurité</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0d1117;
+      color: #c9d1d9;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #161b22;
+      padding: 1.5em;
+      text-align: center;
+      font-size: 1.8em;
+      font-weight: bold;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5em;
+      padding: 2em;
+    }
+
+    .quiz-card {
+      background-color: #21262d;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 1.5em;
+      text-align: center;
+      transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .quiz-card:hover {
+      transform: scale(1.05);
+      background-color: #2d333b;
+    }
+
+    .quiz-card h3 {
+      margin-top: 0;
+      color: #58a6ff;
+    }
+
+    .quiz-card p {
+      font-size: 0.9em;
+      color: #8b949e;
+    }
+
+    .quiz-card a {
+      display: inline-block;
+      margin-top: 0.8em;
+      padding: 0.6em 1em;
+      background-color: #238636;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background-color 0.3s;
+    }
+
+    .quiz-card a:hover {
+      background-color: #2ea043;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1em;
+      font-size: 0.85em;
+      color: #8b949e;
+    }
+  </style>
+</head>
+<body>
+  <header>Quiz sur la Cybersécurité 🧠</header>
+
+  <div class="container">
+    <div class="quiz-card">
+      <h3>Quiz : Bases de la Cybersécurité</h3>
+      <p>Testez vos connaissances sur les fondamentaux de la sécurité informatique.</p>
+      <a href="quiz-bases.html">Commencer</a>
+    </div>
+
+    <div class="quiz-card">
+      <h3>Quiz : Attaques et Menaces</h3>
+      <p>Connaissez-vous les différents types d’attaques informatiques ?</p>
+      <a href="quiz-attaques.html">Commencer</a>
+    </div>
+
+    <div class="quiz-card">
+      <h3>Quiz : Sécurité Réseau</h3>
+      <p>Découvrez si vous maîtrisez la protection des réseaux et des communications.</p>
+      <a href="quiz-reseau.html">Commencer</a>
+    </div>
+
+    <div class="quiz-card">
+      <h3>Quiz : Bonnes Pratiques</h3>
+      <p>Êtes-vous prêt à reconnaître les bons réflexes en ligne ?</p>
+      <a href="quiz-pratiques.html">Commencer</a>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 TonSiteCyber | Créé par [TonNom]
+  </footer>
+</body>
+</html>
