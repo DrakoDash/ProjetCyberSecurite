@@ -1,50 +1,92 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quiz Cybersécurité Pro</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quiz Cybersécurité - Pro</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <header>
+    <h1>Quiz Cybersécurité - Academy</h1>
+    <p class="subtitle">Mode Cyber · Apprends en t'amusant · Neon UI</p>
+  </header>
 
-<header>
-    <h1>Quiz Cybersécurité 🔐</h1>
-    <p class="subtitle">Version Pro - Mode Cyber Futuriste</p>
-</header>
+  <main>
+    <section class="panel" id="setup-panel">
+      <h2>Configuration</h2>
 
-<div class="menu-container" id="start-menu">
-    <h2>Paramètres du Quiz</h2>
+      <label>Nom du joueur</label>
+      <input id="playerName" type="text" placeholder="Ton nom" />
 
-    <label>Votre nom :</label>
-    <input type="text" id="player-name" placeholder="Entrez votre nom..." />
+      <label>Niveau</label>
+      <div class="level-row">
+        <button class="level-btn" data-level="enfant">Enfant</button>
+        <button class="level-btn" data-level="adulte">Adulte</button>
+        <button class="level-btn" data-level="expert">Expert</button>
+      </div>
 
-    <label>Activer un chronomètre ?</label>
-    <select id="timer-choice">
-        <option value="0">Sans chronomètre</option>
-        <option value="60">60 secondes</option>
-        <option value="120">120 secondes</option>
-        <option value="180">180 secondes</option>
-    </select>
+      <label>Chronomètre (optionnel)</label>
+      <select id="timerSelect">
+        <option value="0">Sans chrono</option>
+        <option value="60">60 sec</option>
+        <option value="120">120 sec</option>
+        <option value="180">180 sec</option>
+      </select>
 
-    <button id="start-btn">Commencer le Quiz</button>
-</div>
+      <div class="options-row">
+        <label><input id="neonToggle" type="checkbox" checked /> Activer néon & animations</label>
+        <label><input id="showHints" type="checkbox" /> Montrer indices durant le quiz</label>
+      </div>
 
-<div id="timer-box" class="hidden">
-    <p>⏳ Temps restant : <span id="timer">--</span>s</p>
-</div>
+      <button id="startQuizBtn">Démarrer le quiz</button>
+    </section>
 
-<div class="container hidden" id="quiz"></div>
+    <section class="panel hidden" id="quiz-panel">
+      <div class="topbar">
+        <div class="player-info">
+          <strong id="displayName"></strong> — <span id="displayLevel"></span>
+        </div>
+        <div class="timer" id="timerBox">⏱ <span id="timerValue">--</span>s</div>
+      </div>
 
-<button id="finish-btn" class="hidden">Valider mes réponses</button>
+      <div id="questionCard" class="question-card neon">
+        <!-- Question injectée par script -->
+      </div>
 
-<div id="results" class="hidden"></div>
+      <div class="nav-row">
+        <button id="prevBtn" class="small">← Précédent</button>
+        <button id="nextBtn" class="small">Suivant →</button>
+        <button id="submitBtn" class="accent hidden">Terminer et voir les résultats</button>
+      </div>
+    </section>
 
-<h2 class="scoreboard-title">🏆 Classement</h2>
-<div id="scoreboard"></div>
+    <section class="panel hidden" id="results-panel">
+      <h2>Résultats</h2>
+      <div id="resultsSummary"></div>
 
-<script src="script.js"></script>
+      <h3>Corrections & explications</h3>
+      <div id="detailedResults"></div>
+
+      <div class="results-actions">
+        <button id="restartBtn">Recommencer</button>
+        <button id="backToSetupBtn">Retour au menu</button>
+      </div>
+    </section>
+
+    <section class="panel" id="scoreboard-panel">
+      <h2>Classement local</h2>
+      <div id="scoreboard"></div>
+      <div class="score-actions">
+        <button id="clearScores">Réinitialiser le classement</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <small>© 2025 QuizCyber Academy — Fait pour l'apprentissage</small>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
-****
-
