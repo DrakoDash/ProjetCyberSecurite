@@ -1,210 +1,50 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quiz Cybersécurité</title>
-
-  <style>
-    :root {
-      --bg-dark: #0d1117;
-      --bg-card: rgba(33, 38, 45, 0.75);
-      --bg-card-hover: rgba(45, 51, 59, 0.85);
-      --border: #30363d;
-      --blue: #58a6ff;
-      --green: #238636;
-      --green-hover: #2ea043;
-      --text-light: #c9d1d9;
-      --text-muted: #8b949e;
-    }
-
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: var(--bg-dark);
-      color: var(--text-light);
-      margin: 0;
-      padding: 0;
-      scroll-behavior: smooth;
-    }
-
-    /* HEADER */
-    header {
-      background-color: #161b22;
-      padding: 2em 1.5em;
-      text-align: center;
-      font-size: 2em;
-      font-weight: bold;
-      border-bottom: 1px solid var(--border);
-    }
-
-    header span {
-      font-size: 0.55em;
-      color: var(--text-muted);
-      display: block;
-      margin-top: 0.3em;
-    }
-
-    /* HERO SECTION */
-    .hero {
-      text-align: center;
-      padding: 3em 2em;
-      background: linear-gradient(145deg, #161b22, #0d1117);
-      border-bottom: 1px solid var(--border);
-      animation: fadeIn 1s;
-    }
-
-    .hero h1 {
-      color: var(--blue);
-      font-size: 2.4em;
-      margin-bottom: 0.4em;
-      animation: slideDown 1s ease;
-    }
-
-    .hero p {
-      max-width: 650px;
-      margin: auto;
-      font-size: 1.15em;
-      color: var(--text-muted);
-      margin-bottom: 1.5em;
-      animation: fadeIn 1.5s ease;
-    }
-
-    .hero a {
-      background-color: var(--green);
-      color: white;
-      text-decoration: none;
-      padding: 0.9em 1.8em;
-      font-size: 1.15em;
-      border-radius: 10px;
-      transition: 0.25s;
-      animation: fadeInUp 1.5s ease;
-      display: inline-block;
-    }
-
-    .hero a:hover {
-      background-color: var(--green-hover);
-      transform: scale(1.07);
-      box-shadow: 0 0 15px rgba(46,160,67,0.5);
-    }
-
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    @keyframes fadeInUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-    /* QUIZ CARDS GRID */
-    .container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 2em;
-      padding: 2.5em;
-    }
-
-    .quiz-card {
-      background: var(--bg-card);
-      backdrop-filter: blur(6px);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.9em;
-      text-align: center;
-      transition: 0.35s;
-      cursor: pointer;
-      transform: translateY(0);
-      box-shadow: 0 0 8px rgba(0,0,0,0.25);
-    }
-
-    .quiz-card:hover {
-      background: var(--bg-card-hover);
-      transform: translateY(-7px) scale(1.03);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-    }
-
-    .quiz-card h3 {
-      margin-top: 0;
-      color: var(--blue);
-      font-size: 1.3em;
-      margin-bottom: 0.6em;
-    }
-
-    .quiz-card p {
-      font-size: 0.93em;
-      color: var(--text-muted);
-      margin-bottom: 1em;
-    }
-
-    .quiz-card a {
-      display: inline-block;
-      margin-top: 0.5em;
-      padding: 0.6em 1em;
-      background-color: var(--green);
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: 0.25s;
-    }
-
-    .quiz-card a:hover {
-      background-color: var(--green-hover);
-      transform: scale(1.06);
-    }
-
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 1.5em;
-      font-size: 0.9em;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border);
-      margin-top: 3em;
-    }
-
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Cybersécurité Pro</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
 
-  <header>
-    Quiz Cybersécurité 🧠
-    <span>Projet BAC 2025–2027 – AEM</span>
-  </header>
+<header>
+    <h1>Quiz Cybersécurité 🔐</h1>
+    <p class="subtitle">Version Pro - Mode Cyber Futuriste</p>
+</header>
 
-  <section class="hero">
-    <h1>Bienvenue dans l’Espace Cybersécurité</h1>
-    <p>
-      Explore les fondamentaux de la cybersécurité à travers nos quiz interactifs.
-      Progresse, découvre les menaces et apprends à te protéger efficacement.
-    </p>
-    <a href="#quizz">Commencer le parcours ↓</a>
-  </section>
+<div class="menu-container" id="start-menu">
+    <h2>Paramètres du Quiz</h2>
 
-  <div id="quizz" class="container">
+    <label>Votre nom :</label>
+    <input type="text" id="player-name" placeholder="Entrez votre nom..." />
 
-    <div class="quiz-card">
-      <h3>🔐 Bases de la Cybersécurité</h3>
-      <p>Découvre les notions essentielles pour naviguer en toute sécurité.</p>
-      <a href="quiz-bases.html">Commencer</a>
-    </div>
+    <label>Activer un chronomètre ?</label>
+    <select id="timer-choice">
+        <option value="0">Sans chronomètre</option>
+        <option value="60">60 secondes</option>
+        <option value="120">120 secondes</option>
+        <option value="180">180 secondes</option>
+    </select>
 
-    <div class="quiz-card">
-      <h3>⚔️ Attaques & Menaces</h3>
-      <p>Identifie et comprends les différents types d’attaques informatiques.</p>
-      <a href="quiz-attaques.html">Commencer</a>
-    </div>
+    <button id="start-btn">Commencer le Quiz</button>
+</div>
 
-    <div class="quiz-card">
-      <h3>🌐 Sécurité Réseau</h3>
-      <p>Teste tes connaissances sur la protection des réseaux et protocoles.</p>
-      <a href="quiz-reseau.html">Commencer</a>
-    </div>
+<div id="timer-box" class="hidden">
+    <p>⏳ Temps restant : <span id="timer">--</span>s</p>
+</div>
 
-    <div class="quiz-card">
-      <h3>🛡️ Bonnes Pratiques</h3>
-      <p>Découvre les réflexes indispensables pour rester protégé au quotidien.</p>
-      <a href="quiz-pratiques.html">Commencer</a>
-    </div>
+<div class="container hidden" id="quiz"></div>
 
-  </div>
+<button id="finish-btn" class="hidden">Valider mes réponses</button>
 
-  <footer>© 2025 – Projet Cybersécurité | AEM</footer>
+<div id="results" class="hidden"></div>
 
+<h2 class="scoreboard-title">🏆 Classement</h2>
+<div id="scoreboard"></div>
+
+<script src="script.js"></script>
 </body>
 </html>
+****
+
