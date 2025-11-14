@@ -1,0 +1,83 @@
+!DOCTYPE html
+html lang=fr
+head
+  meta charset=UTF-8
+  meta name=viewport content=width=device-width, initial-scale=1.0
+  titleQuiz  Bases de la Cybersécuritétitle
+  style
+    body {
+      font-family Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+      background-color #0d1117;
+      color #c9d1d9;
+      margin 0;
+      padding 0;
+    }
+    header {
+      background-color #161b22;
+      padding 1.5em;
+      text-align center;
+      font-size 1.8em;
+      font-weight bold;
+    }
+    .quiz {
+      max-width 600px;
+      margin 2em auto;
+      background-color #21262d;
+      border 1px solid #30363d;
+      border-radius 12px;
+      padding 2em;
+    }
+    .question {
+      margin-bottom 1.5em;
+    }
+    button {
+      background-color #238636;
+      color white;
+      border none;
+      padding 0.8em 1.2em;
+      border-radius 6px;
+      cursor pointer;
+      margin-top 1em;
+    }
+    buttonhover {
+      background-color #2ea043;
+    }
+  style
+head
+body
+  headerQuiz  Bases de la Cybersécuritéheader
+
+  div class=quiz
+    div class=question
+      pb1.b Que signifie le terme phishing p
+      labelinput type=radio name=q1 Une technique de pêche en lignelabelbr
+      labelinput type=radio name=q1 data-correct Une tentative de vol d’informations par emaillabelbr
+      labelinput type=radio name=q1 Un logiciel de sécuritélabel
+    div
+
+    div class=question
+      pb2.b Quel est le but principal d’un antivirus p
+      labelinput type=radio name=q2 data-correct Détecter et supprimer les programmes malveillantslabelbr
+      labelinput type=radio name=q2 Accélérer l’ordinateurlabelbr
+      labelinput type=radio name=q2 Gérer les mots de passelabel
+    div
+
+    div class=question
+      pb3.b Que signifie HTTPS p
+      labelinput type=radio name=q3 data-correct HyperText Transfer Protocol Securelabelbr
+      labelinput type=radio name=q3 High Transfer Text Protocol Servicelabelbr
+      labelinput type=radio name=q3 HyperText Transfer Personal Serverlabel
+    div
+
+    button onclick=verifier()Validerbutton
+    p id=resultatp
+  div
+
+  script
+    function verifier() {
+      const correct = document.querySelectorAll('input[data-correct]checked').length;
+      document.getElementById('resultat').innerText = `Tu as ${correct}3 bonnes réponses !`;
+    }
+  script
+body
+html
