@@ -19,12 +19,10 @@ header{
 header h1{margin:0;font-size:28px;color:var(--accent);text-shadow:0 0 18px rgba(0,212,255,0.12)}
 .subtitle{color:var(--muted);margin-top:6px;font-size:13px}
 
-/* layout */
 main{max-width:1100px;margin:28px auto;padding:0 16px}
 .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px;padding:20px;margin-bottom:20px;border:1px solid rgba(255,255,255,0.03)}
 .hidden{display:none}
 
-/* setup */
 label{display:block;margin:12px 0 6px;color:var(--muted);font-size:13px}
 input[type="text"]{width:100%;padding:10px;border-radius:8px;border:none;background:#071922;color:#e6eef6}
 select{width:100%;padding:10px;border-radius:8px;border:none;background:#071922;color:#e6eef6}
@@ -36,7 +34,6 @@ button{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:no
 button.small{padding:8px 12px;border-radius:8px;background:linear-gradient(90deg,#15202b,#0b1720);color:var(--muted);border:1px solid rgba(255,255,255,0.03)}
 button.accent{background:linear-gradient(90deg,#00ffa2,#00d4ff);color:#002}
 
-/* question card neon */
 .question-card{min-height:220px;border-radius:12px;padding:18px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.035); box-shadow:0 10px 40px rgba(0,0,0,0.6)}
 .neon{box-shadow: 0 8px 30px rgba(0,212,255,0.06), inset 0 0 40px rgba(124,58,237,0.02)}
 .question-card h2{margin:0;color:var(--accent);font-size:18px}
@@ -48,31 +45,28 @@ button.accent{background:linear-gradient(90deg,#00ffa2,#00d4ff);color:#002}
 .option .label{flex:1;color:#d9e9ff}
 .option:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,0.5);}
 
-/* small helpers */
 .hint{font-size:13px;color:var(--muted);margin-top:8px}
 .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;color:var(--muted)}
 .timer{background:var(--glass);padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03)}
 .player-info{font-weight:600}
 
-/* results */
 #resultsSummary{padding:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:8px;margin-bottom:12px}
 .result-good{color:var(--good);font-weight:700}
 .result-bad{color:var(--bad);font-weight:700}
 .detailed{margin-top:12px;padding:12px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border-left:4px solid rgba(255,255,255,0.02)}
 
-/* scoreboard */
 #scoreboard table{width:100%;border-collapse:collapse}
 #scoreboard th,#scoreboard td{padding:10px;border-bottom:1px solid rgba(255,255,255,0.02);text-align:left;color:var(--muted)}
 #scoreboard th{color:var(--accent);font-weight:700}
 
-/* drag & drop style */
 .drag-area{display:flex;gap:12px;margin-top:8px;flex-wrap:wrap}
 .drop-target{min-width:160px;min-height:50px;padding:12px;border-radius:8px;border:2px dashed rgba(255,255,255,0.03);background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);display:flex;align-items:center;justify-content:center;color:var(--muted)}
 .draggable{padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.03);cursor:grab;color:#e6eef6;margin:6px}
 
-/* responsive */
 @media (max-width:720px){
   .level-row{flex-direction:column}
   .options-row{flex-direction:column;align-items:flex-start}
   header h1{font-size:20px}
 }
+
+
