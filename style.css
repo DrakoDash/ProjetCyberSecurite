@@ -34,7 +34,7 @@ nav a:hover {
   text-decoration: underline;
 }
 
-/* === Section principale === */
+/* === Section principale (Hero) === */
 #hero {
   background: linear-gradient(135deg, #0056ff, #00c6ff);
   color: white;
@@ -91,6 +91,10 @@ button:hover {
   width: 280px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   transition: transform 0.2s;
+  
+  /* Animation d'apparition */
+  opacity: 0;
+  animation: cardAppear 0.8s ease forwards;
 }
 
 .card:hover {
@@ -115,11 +119,28 @@ footer {
   border-radius: 20px 20px 0 0;
 }
 
-/* === Animation === */
+/* === Animations === */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* Animation des cartes */
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.25s; }
+.card:nth-child(3) { animation-delay: 0.4s; }
+.card:nth-child(4) { animation-delay: 0.55s; }
 
 /* === Responsive === */
 @media screen and (max-width: 768px) {
@@ -132,4 +153,3 @@ footer {
     align-items: center;
   }
 }
-
