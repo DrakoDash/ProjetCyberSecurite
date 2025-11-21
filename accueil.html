@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apprendre - Quiz CyberSécurité</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #0a0f24;
+      color: white;
+    }
+    header {
+      padding: 40px;
+      text-align: center;
+      background: #0d132b;
+    }
+    header h1 {
+      font-size: 2.8rem;
+      margin: 0;
+    }
+    .intro {
+      text-align: center;
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    .intro h2 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+    .intro p {
+      opacity: 0.9;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    .quizz-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      padding: 40px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .card {
+      background: #111833;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+      transition: 0.3s;
+      text-align: center;
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: translateY(-10px) scale(1.03);
+      background: #16204a;
+    }
+    .card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .card p {
+      opacity: 0.8;
+      font-size: 1rem;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+      background: #0d132b;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Apprendre & Se Tester</h1>
+  </header>
+
+  <section class="intro">
+    <h2>Choisissez votre quiz</h2>
+    <p>Explorez des quiz interactifs conçus pour tester vos connaissances, vous apprendre de nouvelles choses et vous préparer à reconnaître les menaces en ligne. Chaque quiz est amusant, rapide et éducatif !</p>
+  </section>
+
+  <section class="quizz-grid">
+    <div class="card">
+      <h3>🧠 Quiz Débutant</h3>
+      <p>Parfait pour commencer : testez vos bases en cybersécurité.</p>
+    </div>
+
+    <div class="card">
+      <h3>🔍 Identifier les Menaces</h3>
+      <p>Pourrez-vous reconnaître un phishing ou un malware ?</p>
+    </div>
+
+    <div class="card">
+      <h3>🔐 Mots de Passe</h3>
+      <p>Êtes-vous capable de repérer un mot de passe faible ?</p>
+    </div>
+
+    <div class="card">
+      <h3>👀 Sécurité sur les Réseaux Sociaux</h3>
+      <p>Apprenez à éviter les pièges les plus courants en ligne.</p>
+    </div>
+
+    <div class="card">
+      <h3>💡 Bonnes Pratiques</h3>
+      <p>Testez vos réflexes : êtes-vous prêt à vous protéger ?</p>
+    </div>
+    <div class="card">
+      <h3>📚 Quiz Avancé</h3>
+      <p>Défiez vos connaissances avec un quiz complet pour utilisateurs confirmés.</p>
+    </div>
+    
+  </section>
+
+  <footer>
+    © 2025 CyberSécurité — Apprenez en vous amusant.
+  </footer>
+</body>
+</html>
