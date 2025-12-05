@@ -1,141 +1,141 @@
-debutant: [
-  {
-    question: "Quel mot de passe est le plus sécurisé ?",
-    answers: ["azerty123", "123456", "MonCh@t2024!", "password"],
-    correct: 2,
-    explanation: "Un mot de passe sécurisé contient lettres majuscules/minuscules, chiffres et symboles. Les autres propositions sont des mots de passe très faibles et souvent piratés."
-  },
-  {
-    question: "Quel est le danger principal d’un email suspect ?",
-    answers: [
-      "Il peut contenir un virus",
-      "Il peut voler vos informations",
-      "Il peut vous rediriger vers un faux site",
-      "Tout ce qui précède"
-    ],
-    correct: 3,
-    explanation: "Un email suspect peut contenir un malware, voler vos données ou vous piéger avec un faux site. Il faut éviter de cliquer."
-  },
-  {
-    question: "Que signifie HTTPS ?",
-    answers: [
-      "Un site non sécurisé",
-      "Une connexion chiffrée",
-      "Un type de virus",
-      "Un outil de piratage"
-    ],
-    correct: 1,
-    explanation: "HTTPS signifie que les données sont chiffrées entre vous et le site. C’est plus sécurisé que HTTP."
-  },
-  {
-    question: "Quelle est la meilleure pratique pour protéger ses comptes ?",
-    answers: [
-      "Utiliser le même mot de passe partout",
-      "Partager son mot de passe avec un ami",
-      "Activer la double authentification (2FA)",
-      "Écrire le mot de passe sur un papier"
-    ],
-    correct: 2,
-    explanation: "La double authentification ajoute une couche de sécurité très efficace. Les autres réponses rendent le compte vulnérable."
-  },
-  {
-    question: "Qu’est-ce que le phishing ?",
-    answers: [
-      "Une technique qui vise à voler vos informations",
-      "Une mise à jour de sécurité",
-      "Un logiciel antivirus",
-      "Une connexion Wi-Fi"
-    ],
-    correct: 0,
-    explanation: "Le phishing est une arnaque qui tente de vous voler des informations en vous faisant croire à un service officiel."
-  },
-  {
-    question: "Que faire si un site vous demande une information personnelle inattendue ?",
-    answers: [
-      "La donner rapidement",
-      "Vérifier l’adresse du site",
-      "Ignorer et fermer le site",
-      "Les deux réponses B et C"
-    ],
-    correct: 3,
-    explanation: "Toujours vérifier l’authenticité et fermer en cas de doute. Ne jamais fournir d’informations personnelles."
-  },
-  {
-    question: "Un Wi-Fi public est…",
-    answers: ["Très sécurisé", "Neutre", "Risqué", "Sécurisé comme un Wi-Fi privé"],
-    correct: 2,
-    explanation: "Les Wi-Fi publics sont vulnérables. Un pirate peut intercepter vos données."
-  },
-  {
-    question: "Quelle est une bonne habitude en cybersécurité ?",
-    answers: [
-      "Mettre à jour régulièrement ses appareils",
-      "Télécharger des fichiers n'importe où",
-      "Désactiver l'antivirus",
-      "Utiliser des mots de passe simples"
-    ],
-    correct: 0,
-    explanation: "Les mises à jour corrigent des failles de sécurité. Les autres actions augmentent les risques."
-  },
-  {
-    question: "Qu’est-ce qu’un malware ?",
-    answers: [
-      "Un logiciel malveillant",
-      "Une mise à jour",
-      "Un antivirus",
-      "Un fichier sécurisé"
-    ],
-    correct: 0,
-    explanation: "Les malwares sont des logiciels créés pour nuire : virus, ransomwares, trojans…"
-  },
-  {
-    question: "Que signifie pirater un compte ?",
-    answers: [
-      "Avoir oublié son mot de passe",
-      "Se faire voler l’accès à son compte",
-      "Supprimer son compte",
-      "Changer de pseudo"
-    ],
-    correct: 1,
-    explanation: "Être piraté signifie qu'une personne non autorisée accède à votre compte."
-  },
-  {
-    question: "Pourquoi ne faut-il pas cliquer sur tous les liens reçus ?",
-    answers: [
-      "Ils peuvent être trompeurs",
-      "Ils peuvent installer des virus",
-      "Ils peuvent rediriger vers de faux sites",
-      "Tout est vrai"
-    ],
-    correct: 3,
-    explanation: "Les liens suspects sont une méthode très utilisée pour infecter ou voler des informations."
-  },
-  {
-    question: "Quel est le rôle d’un antivirus ?",
-    answers: [
-      "Créer des virus",
-      "Protéger l’ordinateur contre les menaces",
-      "Supprimer Internet",
-      "Accélérer le Wi-Fi"
-    ],
-    correct: 1,
-    explanation: "Un antivirus détecte et bloque les programmes dangereux."
-  },
-  {
-    question: "Quel fichier peut être dangereux ?",
-    answers: ["Un .exe", "Un .zip", "Un .pdf", "Tous"],
-    correct: 3,
-    explanation: "Tous les fichiers peuvent être piégés, mais les .exe et .zip sont les plus risqués."
-  },
-  {
-    question: "Un hacker veut généralement…",
-    answers: [
-      "Aider les gens",
-      "Voler des données ou de l’argent",
-      "Réparer des ordinateurs",
-      "Améliorer la connexion Internet"
-    ],
-    correct: 1,
-    explanation: "Les pirates malveillants cherchent principalement à voler des données ou de l’argent."
-  }
-]
+<script>
+const questions = [
+    {
+        question: "Quel mot de passe est le plus sécurisé ?",
+        answers: ["123456", "password", "G@7k!9#F2"],
+        correct: 2,
+        explanation: "Un bon mot de passe doit contenir des majuscules, minuscules, chiffres et symboles."
+    },
+    {
+        question: "Que faire si tu reçois un mail suspect ?",
+        answers: ["Cliquer sur les liens", "Le supprimer / le signaler", "Répondre immédiatement"],
+        correct: 1,
+        explanation: "Ne clique jamais sur un lien suspect : il peut mener à un phishing."
+    },
+    {
+        question: "Quel outil protège contre les virus ?",
+        answers: ["Bloc-notes", "Calculatrice", "Antivirus"],
+        correct: 2,
+        explanation: "Un antivirus détecte et bloque les logiciels malveillants."
+    },
+    {
+        question: "Que signifie HTTPS ?",
+        answers: ["Site sécurisé", "Site lent", "Site dangereux"],
+        correct: 0,
+        explanation: "Le 'S' signifie Secure : les données sont chiffrées."
+    },
+    {
+        question: "Quel est un signe de phishing ?",
+        answers: ["Fautes d’orthographe", "Message très professionnel", "Adresse d’envoi fiable"],
+        correct: 0,
+        explanation: "Les pirates utilisent souvent de mauvais français et des mails mal rédigés."
+    },
+    {
+        question: "Quel est le meilleur lieu pour stocker un mot de passe ?",
+        answers: ["Sur un papier", "Dans un gestionnaire de mots de passe", "Dans un SMS"],
+        correct: 1,
+        explanation: "Les gestionnaires chiffrent et protègent vos mots de passe."
+    },
+    {
+        question: "Une mise à jour sert principalement à…",
+        answers: ["Changer la couleur du téléphone", "Corriger des failles de sécurité", "Ajouter de la pub"],
+        correct: 1,
+        explanation: "Les mises à jour corrigent les vulnérabilités exploitées par les hackers."
+    },
+    {
+        question: "Un réseau Wi-Fi public est…",
+        answers: ["100% sécurisé", "À éviter sans VPN", "Plus rapide que le Wi-Fi privé"],
+        correct: 1,
+        explanation: "Les Wi-Fi publics ne sont pas chiffrés : on peut facilement intercepter vos données."
+    },
+    {
+        question: "Quel est le signe d’un site potentiellement dangereux ?",
+        answers: ["Beaucoup de pubs étranges", "HTTPS dans l’URL", "Logo de Google"],
+        correct: 0,
+        explanation: "Les sites pirates affichent souvent des pubs agressives et des pop-ups."
+    },
+    {
+        question: "Un malware est…",
+        answers: ["Un logiciel malveillant", "Une application de musique", "Un antivirus"],
+        correct: 0,
+        explanation: "Malware = MALicious softWARE, un programme conçu pour nuire."
+    }
+];
+
+let index = 0;
+
+const btnStart = document.getElementById("btn-start");
+const quizContainer = document.getElementById("quiz-container");
+const questionEl = document.getElementById("question");
+const answersEl = document.getElementById("answers");
+const nextBtn = document.getElementById("next-btn");
+const progressEl = document.getElementById("progress");
+
+btnStart.onclick = () => {
+    btnStart.style.display = "none";
+    quizContainer.style.display = "block";
+    afficherQuestion();
+};
+
+function afficherQuestion() {
+    const q = questions[index];
+    questionEl.textContent = q.question;
+    progressEl.textContent = `Question ${index + 1} / ${questions.length}`;
+
+    answersEl.innerHTML = "";
+
+    q.answers.forEach((rep, i) => {
+        const btn = document.createElement("button");
+        btn.className = "btn-answer";
+        btn.textContent = rep;
+
+        btn.onclick = () => verifierReponse(btn, i);
+
+        answersEl.appendChild(btn);
+    });
+}
+
+function verifierReponse(btn, choix) {
+    const correcte = questions[index].correct;
+
+    const allButtons = document.querySelectorAll(".btn-answer");
+    allButtons.forEach(b => b.disabled = true);
+
+    if (choix === correcte) {
+        btn.classList.add("correct");
+    } else {
+        btn.classList.add("wrong");
+        allButtons[correcte].classList.add("correct");
+    }
+
+    // Affiche l'explication sous la question
+    const explanationBox = document.createElement("p");
+    explanationBox.style.marginTop = "20px";
+    explanationBox.style.background = "#16204a";
+    explanationBox.style.padding = "15px";
+    explanationBox.style.borderRadius = "10px";
+    explanationBox.innerHTML = "ℹ️ " + questions[index].explanation;
+    answersEl.appendChild(explanationBox);
+}
+
+nextBtn.onclick = () => {
+    index++;
+    if (index < questions.length) {
+        afficherQuestion();
+    } else {
+        finDuQuiz();
+    }
+};
+
+function finDuQuiz() {
+    quizContainer.innerHTML = `
+        <h2>Bravo ! 🎉</h2>
+        <p>Vous avez terminé le quiz débutant !</p>
+        <button class="btn-restart" onclick="location.reload()">Recommencer</button>
+        <br><br>
+        <button class="btn-restart" onclick="window.location.href='apprendre.html'">Retour aux quiz</button>
+    `;
+}
+</script>
+
+
