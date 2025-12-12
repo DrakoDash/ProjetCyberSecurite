@@ -34,8 +34,8 @@ body {
 
 .btn-answer:hover { background: #1f2a66; }
 
-.correct { background: #2ecc71 !important; }
-.wrong { background: #e74c3c !important; }
+.correct { }
+.wrong { }
 
 #next-btn, .btn-restart {
   margin-top: 20px;
@@ -55,3 +55,4 @@ body {
   margin-bottom: 15px;
   opacity: 0.8;
 }
+
