@@ -6,111 +6,84 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
 
 <style>
-    body {
-        margin: 0;
-        background: #0a0f24;
-        color: white;
-        font-family: Poppins, sans-serif;
-    }
-
-    .quiz-container {
-        max-width: 700px;
-        margin: 40px auto;
-        background: #111833;
-        padding: 30px;
-        border-radius: 14px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-    }
-
-    .question {
-        font-size: 1.4rem;
-        margin-bottom: 20px;
-    }
-
-    .btn-answer {
-        display: block;
-        width: 100%;
-        padding: 12px;
-        margin: 10px 0;
-        background: #16204a;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: 0.2s;
-        color: white;
-    }
-
-    .btn-answer:hover {
-        background: #1f2a66;
-    }
-
-    #next-btn {
-        margin-top: 20px;
-        padding: 12px 20px;
-        background: #3f6cf3;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        display: none;
-    }
-
-    #next-btn:hover {
-        background: #5b82ff;
-    }
-
-    #progress {
-        font-size: 1rem;
-        margin-bottom: 15px;
-        opacity: 0.8;
-    }
-
-    #results {
-        margin-top: 20px;
-        background: #0d1330;
-        padding: 20px;
-        border-radius: 10px;
-        display: none;
-    }
-
-    .result-item {
-        background: #1c2347;
-        padding: 10px;
-        border-radius: 8px;
-        margin-bottom: 10px;
-    }
-
-    .correct-text { color: #2ecc71; }
-    .wrong-text { color: #e74c3c; }
-
-    .btn-return {
-        margin-top: 10px;
-        padding: 10px 15px;
-        background: #3f6cf3;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-    }
-
-    .btn-return:hover {
-        background: #5b82ff;
-    }
+body {
+    margin: 0;
+    background: #0a0f24;
+    color: white;
+    font-family: Poppins, sans-serif;
+}
+.quiz-container {
+    max-width: 700px;
+    margin: 40px auto;
+    background: #111833;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+}
+.question {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+}
+.btn-answer {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background: #16204a;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    color: white;
+}
+.btn-answer:hover {
+    background: #1f2a66;
+}
+#prev-btn, #next-btn {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background: #3f6cf3;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+#prev-btn:hover, #next-btn:hover {
+    background: #5b82ff;
+}
+#progress {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    opacity: 0.8;
+}
+#results {
+    margin-top: 20px;
+    background: #0d1330;
+    padding: 20px;
+    border-radius: 10px;
+    display: none;
+}
+.result-item {
+    background: #1c2347;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+.correct-text { color: #2ecc71; }
+.wrong-text { color: #e74c3c; }
 </style>
 </head>
 
 <body>
-
 <div class="quiz-container">
     <div id="progress"></div>
     <div id="question" class="question"></div>
     <div id="answers"></div>
-    <button id="next-btn">Question suivante</button>
+    <button id="prev-btn">Précédent</button>
+    <button id="next-btn">Suivant</button>
     <div id="results"></div>
 </div>
 
 <script>
-// -----------------------------
-//  20 QUESTIONS
-// -----------------------------
 const questions = [
     { question: "Quel mot de passe est le plus sécurisé ?", answers: ["soleil123", "azerty", "G@9!fL27#"], correct: 2, explanation: "Les mots de passe sécurisés incluent chiffres, lettres et symboles." },
     { question: "Que faire si tu reçois un mail suspect ?", answers: ["Cliquer dessus", "Le supprimer", "Répondre au mail"], correct: 1, explanation: "Supprimer un mail suspect évite les arnaques (phishing)." },
@@ -134,16 +107,14 @@ const questions = [
     { question: "Le phishing cherche à :", answers: ["Voler vos infos", "Vous protéger", "Effacer vos spams"], correct: 0, explanation: "Le phishing vise à voler vos données." }
 ];
 
-// -----------------------------
-// LOGIQUE DU QUIZ
-// -----------------------------
 let index = 0;
-let userAnswers = []; // Stocke {choisi, correct} pour chaque question
+let userAnswers = Array(questions.length).fill(null);
 
 const questionEl = document.getElementById("question");
 const answersEl = document.getElementById("answers");
 const progressEl = document.getElementById("progress");
 const nextBtn = document.getElementById("next-btn");
+const prevBtn = document.getElementById("prev-btn");
 const resultsEl = document.getElementById("results");
 
 function loadQuestion() {
@@ -151,50 +122,55 @@ function loadQuestion() {
     progressEl.textContent = `Question ${index + 1} / ${questions.length}`;
     questionEl.textContent = q.question;
     answersEl.innerHTML = "";
-    nextBtn.style.display = "none";
 
     q.answers.forEach((ans, i) => {
         const btn = document.createElement("button");
         btn.classList.add("btn-answer");
         btn.textContent = ans;
+        if (userAnswers[index] !== null && userAnswers[index] === i) {
+            btn.style.background = "#3f6cf3";
+        }
         btn.onclick = () => {
-            userAnswers[index] = { chosen: i, correct: q.correct };
-            nextBtn.style.display = "block";
+            userAnswers[index] = i;
+            loadQuestion(); // recharge question pour montrer la sélection
         };
         answersEl.appendChild(btn);
     });
-}
 
-nextBtn.onclick = () => {
-    index++;
-    if (index < questions.length) {
-        loadQuestion();
+    prevBtn.style.display = index > 0 ? "inline-block" : "none";
+    nextBtn.style.display = index < questions.length - 1 ? "inline-block" : "none";
+
+    if (index === questions.length -1) {
+        nextBtn.textContent = "Terminer";
+        nextBtn.onclick = showResults;
     } else {
-        showResults();
+        nextBtn.textContent = "Suivant";
+        nextBtn.onclick = () => { index++; loadQuestion(); };
     }
-};
+    prevBtn.onclick = () => { index--; loadQuestion(); };
+}
 
 function showResults() {
     questionEl.style.display = "none";
     answersEl.style.display = "none";
+    prevBtn.style.display = "none";
     nextBtn.style.display = "none";
 
     resultsEl.style.display = "block";
     let score = 0;
-    resultsEl.innerHTML = `<h2>Résultat :</h2>`;
+    resultsEl.innerHTML = `<h2>Score :</h2>`;
 
     questions.forEach((q, i) => {
         const ua = userAnswers[i];
-        const correct = ua.chosen === ua.correct;
-        if (correct) score++;
+        const correct = ua === q.correct;
+        if(correct) score++;
         resultsEl.innerHTML += `
             <div class="result-item">
                 <p><b>Question :</b> ${q.question}</p>
-                <p><b>Ta réponse :</b> ${q.answers[ua.chosen]}</p>
+                <p><b>Ta réponse :</b> ${ua !== null ? q.answers[ua] : 'Non répondu'}</p>
                 <p><b>${correct ? '✅ Correct' : '❌ Incorrect'}</b></p>
                 <p><b>Explication :</b> ${q.explanation}</p>
-                ${!correct ? `<p><b>Bonne réponse :</b> ${q.answers[q.correct]}</p>` : ''}
-                <button class="btn-return" onclick="goToQuestion(${i})">Revenir à cette question</button>
+                ${!correct && ua !== null ? `<p><b>Bonne réponse :</b> ${q.answers[q.correct]}</p>` : ''}
             </div>
         `;
     });
@@ -202,17 +178,7 @@ function showResults() {
     resultsEl.innerHTML = `<h2>Score : ${score} / ${questions.length}</h2>` + resultsEl.innerHTML;
 }
 
-function goToQuestion(i) {
-    index = i;
-    resultsEl.style.display = "none";
-    questionEl.style.display = "block";
-    answersEl.style.display = "block";
-    loadQuestion();
-}
-
-// Initialisation
 loadQuestion();
 </script>
-
 </body>
 </html>
