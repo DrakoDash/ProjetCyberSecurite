@@ -1,233 +1,216 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quiz Débutant - CyberSécurité</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+<meta charset="UTF-8">
+<title>Quiz Débutant CyberSécurité</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
 
-  <style>
+<style>
     body {
-      margin: 0;
-      background: #0a0f24;
-      color: white;
-      font-family: Poppins, sans-serif;
-    }
-
-    header {
-      padding: 30px;
-      text-align: center;
-      background: #0d132b;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 2.2rem;
-    }
-
-    header a {
-      color: #3f6cf3;
-      text-decoration: none;
-      font-size: 1rem;
+        margin: 0;
+        background: #0a0f24;
+        color: white;
+        font-family: Poppins, sans-serif;
     }
 
     .quiz-container {
-      max-width: 700px;
-      margin: 40px auto;
-      background: #111833;
-      padding: 30px;
-      border-radius: 14px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        max-width: 700px;
+        margin: 60px auto;
+        background: #111833;
+        padding: 30px;
+        border-radius: 14px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.5);
     }
 
     .question {
-      font-size: 1.4rem;
-      margin-bottom: 20px;
+        font-size: 1.4rem;
+        margin-bottom: 20px;
     }
 
     .btn-answer {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      background: #16204a;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: 0.2s;
-      color: white;
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        background: #16204a;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.2s;
+        color: white;
     }
 
-    .btn-answer:hover { background: #1f2a66; }
+    .btn-answer:hover {
+        background: #1f2a66;
+    }
 
     .correct { background: #2ecc71 !important; }
     .wrong { background: #e74c3c !important; }
 
-    #next-btn, .btn-restart {
-      margin-top: 20px;
-      padding: 12px 20px;
-      background: #3f6cf3;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
+    #next-btn {
+        margin-top: 20px;
+        padding: 12px 20px;
+        background: #3f6cf3;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        display: none;
     }
 
-    #next-btn:hover, .btn-restart:hover {
-      background: #5b82ff;
+    #next-btn:hover {
+        background: #5b82ff;
     }
 
     #progress {
-      font-size: 1rem;
-      margin-bottom: 15px;
-      opacity: 0.8;
+        font-size: 1rem;
+        margin-bottom: 15px;
+        opacity: 0.8;
     }
-  </style>
+
+    #results {
+        margin-top: 20px;
+        background: #0d1330;
+        padding: 20px;
+        border-radius: 10px;
+        display: none;
+    }
+
+    .error-item {
+        background: #1c2347;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+</style>
 </head>
 
 <body>
 
-<header>
-  <a href="apprendre.html">← Retour</a>
-  <h1>Quiz Débutant</h1>
-</header>
+<div class="quiz-container">
+    <div id="progress"></div>
+    <div id="question" class="question"></div>
+    <div id="answers"></div>
+    <button id="next-btn">Question suivante</button>
 
-<button id="btn-start" class="btn-restart" style="display:block;margin:20px auto;">Démarrer le Quiz</button>
-
-<div class="quiz-container" id="quiz-container" style="display:none;">
-  <div id="progress"></div>
-  <div id="question" class="question"></div>
-  <div id="answers"></div>
-  <button id="next-btn">Question suivante</button>
+    <div id="results"></div>
 </div>
 
 <script>
+// -----------------------------
+//  LES 20 QUESTIONS
+// -----------------------------
 const questions = [
-    {
-        question: "Quel mot de passe est le plus sécurisé ?",
-        answers: ["123456", "password", "G@7k!9#F2"],
-        correct: 2,
-        explanation: "Un bon mot de passe doit contenir des lettres, des chiffres et des symboles."
-    },
-    {
-        question: "Que faire si tu reçois un mail suspect ?",
-        answers: ["Cliquer sur les liens", "Le supprimer / le signaler", "Répondre immédiatement"],
-        correct: 1,
-        explanation: "Les liens suspects mènent souvent à des arnaques ou du phishing."
-    },
-    {
-        question: "Quel outil protège contre les virus ?",
-        answers: ["Bloc-notes", "Calculatrice", "Antivirus"],
-        correct: 2,
-        explanation: "Un antivirus détecte et élimine les logiciels malveillants."
-    },
-    {
-        question: "Que signifie HTTPS ?",
-        answers: ["Site sécurisé", "Site lent", "Site dangereux"],
-        correct: 0,
-        explanation: "Le S signifie 'Secure' : vos données sont chiffrées."
-    }
+    { question: "Quel mot de passe est le plus sécurisé ?", answers: ["soleil123", "azerty", "G@9!fL27#"], correct: 2, explanation: "Les mots de passe sécurisés incluent chiffres, lettres et symboles." },
+    { question: "Que faire si tu reçois un mail suspect ?", answers: ["Cliquer dessus", "Le supprimer", "Répondre au mail"], correct: 1, explanation: "Supprimer un mail suspect évite les arnaques (phishing)." },
+    { question: "Quel outil protège un ordinateur ?", answers: ["Antivirus", "Bloc-notes", "Paint"], correct: 0, explanation: "Un antivirus détecte et bloque les menaces." },
+    { question: "Que signifie HTTPS ?", answers: ["Secure", "Super rapide", "Non sécurisé"], correct: 0, explanation: "HTTPS signifie que vos données sont chiffrées." },
+    { question: "Un exemple de phishing :", answers: ["Un mail demandant ton mot de passe", "Un message d'un ami", "Une demande normale"], correct: 0, explanation: "Le phishing cherche à voler des données." },
+    { question: "Une mise à jour sert à :", answers: ["Ajouter des virus", "Corriger des failles", "Supprimer des fichiers"], correct: 1, explanation: "Les mises à jour corrigent souvent des failles de sécurité." },
+    { question: "Une bonne pratique :", answers: ["Partager son mot de passe", "Utiliser un mot de passe différent partout", "Mettre 123456"], correct: 1, explanation: "Utiliser plusieurs mots de passe réduit les risques." },
+    { question: "Quel fichier peut être dangereux ?", answers: ["photo.jpg", "setup.exe téléchargé au hasard", "musique.mp3"], correct: 1, explanation: "Les .exe peuvent installer un malware." },
+    { question: "Qu'est-ce qu'un malware ?", answers: ["Logiciel malveillant", "Photo", "Navigateur"], correct: 0, explanation: "Malware = software malveillant." },
+    { question: "Pourquoi sauvegarder ?", answers: ["Pour perdre des données", "Pour les récupérer en cas de problème", "Pour décorer"], correct: 1, explanation: "Une sauvegarde protège contre la perte de données." },
+    { question: "Indice d'un site frauduleux :", answers: ["Pas de HTTPS", "Logo normal", "Texte clair"], correct: 0, explanation: "Sans HTTPS, le site est suspect." },
+    { question: "Avant de télécharger une app :", answers: ["Vérifier l’éditeur", "Télécharger au hasard", "Ignorer les avis"], correct: 0, explanation: "Vérifier l'éditeur réduit les risques de malware." },
+    { question: "Un Wi-Fi public est :", answers: ["Toujours sécurisé", "Parfois dangereux", "Idéal pour taper ses mots de passe"], correct: 1, explanation: "Les pirates peuvent intercepter les données." },
+    { question: "Arnaque typique :", answers: ["Vous avez gagné un iPhone !", "Une facture normale", "Un message d’un ami"], correct: 0, explanation: "Les cadeaux miraculeux sont des pièges." },
+    { question: "Mot de passe sécurisé :", answers: ["azerty", "123456", "H#9fL2@9"], correct: 2, explanation: "Un mot de passe fort est long et complexe." },
+    { question: "Un ransomware :", answers: ["Chiffre vos fichiers", "Améliore le PC", "Accélère Internet"], correct: 0, explanation: "Il bloque vos données contre une rançon." },
+    { question: "Sur les réseaux sociaux :", answers: ["Ne pas partager d'infos perso", "Donner son adresse", "Envoyer ses codes"], correct: 0, explanation: "Ne jamais partager ses informations personnelles." },
+    { question: "Un lien raccourci peut :", answers: ["Être sûr", "Être dangereux", "Toujours fiable"], correct: 1, explanation: "Un lien raccourci peut cacher un site piégé." },
+    { question: "Pourquoi un gestionnaire de mots de passe ?", answers: ["Créer des mots de passe forts", "Diminuer la sécurité", "Partager les codes"], correct: 0, explanation: "Il crée et stocke des mots de passe sécurisés." },
+    { question: "Le phishing cherche à :", answers: ["Voler vos infos", "Vous protéger", "Effacer vos spams"], correct: 0, explanation: "Le phishing vise à voler vos données." }
 ];
 
+// -----------------------------
+//  LOGIQUE DU QUIZ
+// -----------------------------
 let index = 0;
-let selectedAnswer = null;
+let score = 0;
+let mistakes = [];
 
-const btnStart = document.getElementById("btn-start");
-const quizContainer = document.getElementById("quiz-container");
 const questionEl = document.getElementById("question");
 const answersEl = document.getElementById("answers");
+const progressEl = document.getElementById("progress");
 const nextBtn = document.getElementById("next-btn");
+const resultsEl = document.getElementById("results");
 
-btnStart.onclick = () => {
-    btnStart.style.display = "none";
-    quizContainer.style.display = "block";
-    afficherQuestion();
-};
-
-function afficherQuestion() {
+function loadQuestion() {
     const q = questions[index];
-
-    selectedAnswer = null; // Rien sélectionné
+    progressEl.textContent = `Question ${index + 1} / ${questions.length}`;
     questionEl.textContent = q.question;
     answersEl.innerHTML = "";
 
-    // Bouton VALIDER caché au début
-    nextBtn.textContent = "Valider";
-    nextBtn.style.display = "block";
-    nextBtn.disabled = false;
-
-    q.answers.forEach((rep, i) => {
+    q.answers.forEach((ans, i) => {
         const btn = document.createElement("button");
-        btn.className = "btn-answer";
-        btn.textContent = rep;
-
-        btn.onclick = () => {
-            selectedAnswer = i;
-            colorReset();
-            btn.style.background = "#3f6cf3";
-        };
-
+        btn.classList.add("btn-answer");
+        btn.textContent = ans;
+        btn.onclick = () => checkAnswer(i);
         answersEl.appendChild(btn);
     });
+
+    nextBtn.style.display = "none";
 }
 
-function colorReset() {
-    document.querySelectorAll(".btn-answer").forEach(b => {
-        b.style.background = "#16204a";
+function checkAnswer(choice) {
+    const q = questions[index];
+    const buttons = document.querySelectorAll(".btn-answer");
+
+    buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === q.correct) btn.classList.add("correct");
+        else if (i === choice) btn.classList.add("wrong");
     });
+
+    if (choice === q.correct) {
+        score++;
+    } else {
+        mistakes.push({
+            question: q.question,
+            chosen: q.answers[choice],
+            correct: q.answers[q.correct],
+            explanation: q.explanation
+        });
+    }
+
+    nextBtn.style.display = "block";
 }
 
-// Quand on clique sur VALIDER
 nextBtn.onclick = () => {
-    if (selectedAnswer === null) {
-        alert("Choisissez une réponse avant de valider !");
+    index++;
+    if (index < questions.length) loadQuestion();
+    else endQuiz();
+};
+
+function endQuiz() {
+    questionEl.style.display = "none";
+    answersEl.style.display = "none";
+    nextBtn.style.display = "none";
+
+    resultsEl.style.display = "block";
+    resultsEl.innerHTML = `<h2>Résultat : ${score}/${questions.length}</h2>`;
+
+    if (mistakes.length === 0) {
+        resultsEl.innerHTML += "<p>🎉 Parfait ! Aucune erreur !</p>";
         return;
     }
 
-    const correcte = questions[index].correct;
-    const allButtons = document.querySelectorAll(".btn-answer");
+    resultsEl.innerHTML += "<h3>Voici tes erreurs :</h3>";
 
-    // Bloquer les réponses
-    allButtons.forEach(b => b.disabled = true);
-
-    // Colorer vraie/faux
-    if (selectedAnswer === correcte) {
-        allButtons[selectedAnswer].classList.add("correct");
-    } else {
-        allButtons[selectedAnswer].classList.add("wrong");
-        allButtons[correcte].classList.add("correct");
-    }
-
-    // Afficher l'explication
-    const explanationBox = document.createElement("p");
-    explanationBox.style.marginTop = "20px";
-    explanationBox.style.background = "#16204a";
-    explanationBox.style.padding = "15px";
-    explanationBox.style.borderRadius = "10px";
-    explanationBox.innerHTML = "ℹ️ " + questions[index].explanation;
-    answersEl.appendChild(explanationBox);
-
-    // Transformer le bouton en "suivant"
-    nextBtn.textContent = "Question suivante";
-    nextBtn.onclick = () => {
-        index++;
-        if (index < questions.length) {
-            afficherQuestion();
-        } else {
-            finDuQuiz();
-        }
-    };
-};
-
-function finDuQuiz() {
-    quizContainer.innerHTML = `
-        <h2>Bravo ! 🎉</h2>
-        <p>Vous avez terminé le quiz débutant !</p>
-        <button class="btn-restart" onclick="location.reload()">Recommencer</button>
-        <br><br>
-        <button class="btn-restart" onclick="window.location.href='apprendre.html'">Retour aux quiz</button>
-    `;
+    mistakes.forEach(err => {
+        resultsEl.innerHTML += `
+            <div class="error-item">
+                <p><b>❌ Question :</b> ${err.question}</p>
+                <p><b>Ta réponse :</b> ${err.chosen}</p>
+                <p><b>Bonne réponse :</b> ${err.correct}</p>
+                <p><b>Explication :</b> ${err.explanation}</p>
+            </div>
+        `;
+    });
 }
+
+loadQuestion();
 </script>
+
 </body>
 </html>
-
