@@ -15,7 +15,7 @@
 
     .quiz-container {
         max-width: 700px;
-        margin: 60px auto;
+        margin: 40px auto;
         background: #111833;
         padding: 30px;
         border-radius: 14px;
@@ -43,9 +43,6 @@
     .btn-answer:hover {
         background: #1f2a66;
     }
-
-    .correct { background: #2ecc71 !important; }
-    .wrong { background: #e74c3c !important; }
 
     #next-btn {
         margin-top: 20px;
@@ -75,11 +72,27 @@
         display: none;
     }
 
-    .error-item {
+    .result-item {
         background: #1c2347;
         padding: 10px;
         border-radius: 8px;
         margin-bottom: 10px;
+    }
+
+    .correct-text { color: #2ecc71; }
+    .wrong-text { color: #e74c3c; }
+
+    .btn-return {
+        margin-top: 10px;
+        padding: 10px 15px;
+        background: #3f6cf3;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .btn-return:hover {
+        background: #5b82ff;
     }
 </style>
 </head>
@@ -91,13 +104,12 @@
     <div id="question" class="question"></div>
     <div id="answers"></div>
     <button id="next-btn">Question suivante</button>
-
     <div id="results"></div>
 </div>
 
 <script>
 // -----------------------------
-//  LES 20 QUESTIONS
+//  20 QUESTIONS
 // -----------------------------
 const questions = [
     { question: "Quel mot de passe est le plus sécurisé ?", answers: ["soleil123", "azerty", "G@9!fL27#"], correct: 2, explanation: "Les mots de passe sécurisés incluent chiffres, lettres et symboles." },
@@ -123,11 +135,10 @@ const questions = [
 ];
 
 // -----------------------------
-//  LOGIQUE DU QUIZ
+// LOGIQUE DU QUIZ
 // -----------------------------
 let index = 0;
-let score = 0;
-let mistakes = [];
+let userAnswers = []; // Stocke {choisi, correct} pour chaque question
 
 const questionEl = document.getElementById("question");
 const answersEl = document.getElementById("answers");
@@ -140,74 +151,68 @@ function loadQuestion() {
     progressEl.textContent = `Question ${index + 1} / ${questions.length}`;
     questionEl.textContent = q.question;
     answersEl.innerHTML = "";
+    nextBtn.style.display = "none";
 
     q.answers.forEach((ans, i) => {
         const btn = document.createElement("button");
         btn.classList.add("btn-answer");
         btn.textContent = ans;
-        btn.onclick = () => checkAnswer(i);
+        btn.onclick = () => {
+            userAnswers[index] = { chosen: i, correct: q.correct };
+            nextBtn.style.display = "block";
+        };
         answersEl.appendChild(btn);
     });
-
-    nextBtn.style.display = "none";
 }
-
-function checkAnswer(choice) {
-    const q = questions[index];
-
-    // Pas de couleurs, donc on ne touche plus aux boutons
-
-    if (choice === q.correct) {
-        score++;
-    } else {
-        mistakes.push({
-            question: q.question,
-            chosen: q.answers[choice],
-            correct: q.answers[q.correct],
-            explanation: q.explanation
-        });
-    }
-
-    nextBtn.style.display = "block";
-}
-
 
 nextBtn.onclick = () => {
     index++;
-    if (index < questions.length) loadQuestion();
-    else endQuiz();
+    if (index < questions.length) {
+        loadQuestion();
+    } else {
+        showResults();
+    }
 };
 
-function endQuiz() {
+function showResults() {
     questionEl.style.display = "none";
     answersEl.style.display = "none";
     nextBtn.style.display = "none";
 
     resultsEl.style.display = "block";
-    resultsEl.innerHTML = `<h2>Résultat : ${score}/${questions.length}</h2>`;
+    let score = 0;
+    resultsEl.innerHTML = `<h2>Résultat :</h2>`;
 
-    if (mistakes.length === 0) {
-        resultsEl.innerHTML += "<p>🎉 Parfait ! Aucune erreur !</p>";
-        return;
-    }
-
-    resultsEl.innerHTML += "<h3>Voici tes erreurs :</h3>";
-
-    mistakes.forEach(err => {
+    questions.forEach((q, i) => {
+        const ua = userAnswers[i];
+        const correct = ua.chosen === ua.correct;
+        if (correct) score++;
         resultsEl.innerHTML += `
-            <div class="error-item">
-                <p><b>❌ Question :</b> ${err.question}</p>
-                <p><b>Ta réponse :</b> ${err.chosen}</p>
-                <p><b>Bonne réponse :</b> ${err.correct}</p>
-                <p><b>Explication :</b> ${err.explanation}</p>
+            <div class="result-item">
+                <p><b>Question :</b> ${q.question}</p>
+                <p><b>Ta réponse :</b> ${q.answers[ua.chosen]}</p>
+                <p><b>${correct ? '✅ Correct' : '❌ Incorrect'}</b></p>
+                <p><b>Explication :</b> ${q.explanation}</p>
+                ${!correct ? `<p><b>Bonne réponse :</b> ${q.answers[q.correct]}</p>` : ''}
+                <button class="btn-return" onclick="goToQuestion(${i})">Revenir à cette question</button>
             </div>
         `;
     });
+
+    resultsEl.innerHTML = `<h2>Score : ${score} / ${questions.length}</h2>` + resultsEl.innerHTML;
 }
 
+function goToQuestion(i) {
+    index = i;
+    resultsEl.style.display = "none";
+    questionEl.style.display = "block";
+    answersEl.style.display = "block";
+    loadQuestion();
+}
+
+// Initialisation
 loadQuestion();
 </script>
 
 </body>
 </html>
-
