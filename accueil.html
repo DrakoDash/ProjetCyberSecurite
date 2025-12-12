@@ -1,180 +1,249 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Apprendre - Quiz CyberSécurité</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Apprendre - Quiz CyberSécurité</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #0a0f24;
-      color: white;
-      -webkit-font-smoothing: antialiased;
-      -webkit-text-size-adjust: 100%;
-    }
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #0a0f24;
+    color: white;
+    overflow-x: hidden;
+    position: relative;
+  }
 
+  /* CANVAS PARTICULES */
+  #particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+
+  header {
+    padding: 40px 20px;
+    text-align: center;
+    background: rgba(13,19,43,0.8);
+  }
+
+  header h1 {
+    font-size: 2.8rem;
+    margin: 0;
+  }
+
+  .intro {
+    text-align: center;
+    padding: 40px 20px;
+    max-width: 800px;
+    margin: auto;
+  }
+
+  .intro h2 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+  }
+
+  .intro p {
+    opacity: 0.9;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .quizz-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .card {
+    background: rgba(17,24,51,0.95);
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease, border 0.4s ease;
+    border: 2px solid transparent;
+  }
+
+  .card:hover {
+    transform: translateY(-12px) scale(1.05);
+    background: rgba(22,32,74,0.95);
+    box-shadow: 0 8px 25px rgba(0, 80, 255, 0.5);
+    border: 2px solid #00bfff;
+  }
+
+  .card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+
+  .card p {
+    opacity: 0.85;
+    font-size: 1rem;
+  }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    background: rgba(13,19,43,0.8);
+    opacity: 0.8;
+  }
+
+  /* --- MOBILE --- */
+  @media only screen and (max-width: 480px) {
     header {
-      padding: 40px 20px;
-      text-align: center;
-      background: #0d132b;
+      padding: 30px 10px;
     }
-
     header h1 {
-      font-size: 2.8rem;
-      margin: 0;
+      font-size: 2rem;
     }
-
     .intro {
-      text-align: center;
-      padding: 40px 20px;
-      max-width: 800px;
-      margin: auto;
+      padding: 30px 15px;
     }
-
     .intro h2 {
-      font-size: 2.2rem;
-      margin-bottom: 10px;
+      font-size: 1.7rem;
     }
-
     .intro p {
-      opacity: 0.9;
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
-
-    /* --- GRID --- */
-    .quizz-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-      padding: 40px 20px;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    /* --- CARTES --- */
-    .card {
-      background: #111833;
-      padding: 30px;
-      border-radius: 14px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-      text-align: center;
-      cursor: pointer;
-      transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease, border 0.4s ease;
-      border: 2px solid transparent;
-    }
-
-    /* --- EFFET SURVOL + BORDE LUMINEUSE --- */
-    .card:hover {
-      transform: translateY(-12px) scale(1.05);
-      background: #16204a;
-      box-shadow: 0 8px 25px rgba(0, 80, 255, 0.5);
-      border: 2px solid #00bfff; /* bordure lumineuse bleu cyan */
-    }
-
-    .card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-    }
-
-    .card p {
-      opacity: 0.85;
       font-size: 1rem;
     }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
-      background: #0d132b;
-      opacity: 0.8;
+    .quizz-grid {
+      grid-template-columns: 1fr;
+      padding: 30px 15px;
+      gap: 20px;
     }
-
-    /* --- OPTIMISATION MOBILE (iPhone) --- */
-    @media only screen and (max-width: 480px) {
-      header {
-        padding: 30px 10px;
-      }
-      header h1 {
-        font-size: 2rem;
-      }
-      .intro {
-        padding: 30px 15px;
-      }
-      .intro h2 {
-        font-size: 1.7rem;
-      }
-      .intro p {
-        font-size: 1rem;
-      }
-      .quizz-grid {
-        grid-template-columns: 1fr; /* cartes en colonne */
-        padding: 30px 15px;
-        gap: 20px;
-      }
-      .card {
-        padding: 25px;
-      }
-      .card h3 {
-        font-size: 1.3rem;
-      }
-      .card p {
-        font-size: 0.95rem;
-      }
+    .card {
+      padding: 25px;
     }
-  </style>
-
+    .card h3 {
+      font-size: 1.3rem;
+    }
+    .card p {
+      font-size: 0.95rem;
+    }
+  }
+</style>
 </head>
 
 <body>
+<canvas id="particles"></canvas>
 
-  <header>
-    <h1>Apprendre & Se Tester</h1>
-  </header>
+<header>
+  <h1>Apprendre & Se Tester</h1>
+</header>
 
-  <section class="intro">
-    <h2>Choisissez votre quiz</h2>
-    <p>Explorez des quiz interactifs conçus pour tester vos connaissances, vous apprendre de nouvelles choses et vous préparer à reconnaître les menaces en ligne. Chaque quiz est amusant, rapide et éducatif !</p>
-  </section>
+<section class="intro">
+  <h2>Choisissez votre quiz</h2>
+  <p>Explorez des quiz interactifs conçus pour tester vos connaissances, vous apprendre de nouvelles choses et vous préparer à reconnaître les menaces en ligne. Chaque quiz est amusant, rapide et éducatif !</p>
+</section>
 
-  <section class="quizz-grid">
-    <div class="card" onclick="window.location.href='debutant.html'">
-      <h3>🧠 Quiz Débutant</h3>
-      <p>Parfait pour commencer : testez vos bases en cybersécurité.</p>
-    </div>
+<section class="quizz-grid">
+  <div class="card" onclick="window.location.href='debutant.html'">
+    <h3>🧠 Quiz Débutant</h3>
+    <p>Parfait pour commencer : testez vos bases en cybersécurité.</p>
+  </div>
 
-    <div class="card" onclick="window.location.href='menaces.html'">
-      <h3>🔍 Identifier les Menaces</h3>
-      <p>Pourrez-vous reconnaître un phishing ou un malware ?</p>
-    </div>
+  <div class="card" onclick="window.location.href='menaces.html'">
+    <h3>🔍 Identifier les Menaces</h3>
+    <p>Pourrez-vous reconnaître un phishing ou un malware ?</p>
+  </div>
 
-    <div class="card" onclick="window.location.href='mdp.html'">
-      <h3>🔐 Mots de Passe</h3>
-      <p>Êtes-vous capable de repérer un mot de passe faible ?</p>
-    </div>
+  <div class="card" onclick="window.location.href='mdp.html'">
+    <h3>🔐 Mots de Passe</h3>
+    <p>Êtes-vous capable de repérer un mot de passe faible ?</p>
+  </div>
 
-    <div class="card" onclick="window.location.href='reseaux.html'">
-      <h3>👀 Réseaux Sociaux</h3>
-      <p>Apprenez à éviter les pièges les plus courants en ligne.</p>
-    </div>
+  <div class="card" onclick="window.location.href='reseaux.html'">
+    <h3>👀 Réseaux Sociaux</h3>
+    <p>Apprenez à éviter les pièges les plus courants en ligne.</p>
+  </div>
 
-    <div class="card" onclick="window.location.href='pratiques.html'">
-      <h3>💡 Bonnes Pratiques</h3>
-      <p>Testez vos réflexes : êtes-vous prêt à vous protéger ?</p>
-    </div>
+  <div class="card" onclick="window.location.href='pratiques.html'">
+    <h3>💡 Bonnes Pratiques</h3>
+    <p>Testez vos réflexes : êtes-vous prêt à vous protéger ?</p>
+  </div>
 
-    <div class="card" onclick="window.location.href='avance.html'">
-      <h3>📚 Quiz Avancé</h3>
-      <p>Défiez vos connaissances avec un quiz complet.</p>
-    </div>
-  </section>
+  <div class="card" onclick="window.location.href='avance.html'">
+    <h3>📚 Quiz Avancé</h3>
+    <p>Défiez vos connaissances avec un quiz complet.</p>
+  </div>
+</section>
 
-  <footer>
-    © 2025 CyberSécurité — Apprenez en vous amusant.
-  </footer>
+<footer>
+  © 2025 CyberSécurité — Apprenez en vous amusant.
+</footer>
 
+<script>
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let particlesArray;
+
+  // Resize canvas
+  function initCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', () => {
+    initCanvas();
+    initParticles();
+  });
+
+  // Particle class
+  class Particle {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 3 + 1;
+      this.speedX = Math.random() * 1 - 0.5;
+      this.speedY = Math.random() * 1 - 0.5;
+      this.color = 'rgba(0,191,255,0.6)';
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+
+      if(this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+      if(this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    }
+  }
+
+  function initParticles() {
+    particlesArray = [];
+    const number = (canvas.width * canvas.height) / 15000; // ajuste nombre selon taille écran
+    for(let i = 0; i < number; i++) {
+      particlesArray.push(new Particle());
+    }
+  }
+
+  function animateParticles() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particlesArray.forEach(p => {
+      p.update();
+      p.draw();
+    });
+    requestAnimationFrame(animateParticles);
+  }
+
+  // Initialize
+  initCanvas();
+  initParticles();
+  animateParticles();
+</script>
 </body>
 </html>
