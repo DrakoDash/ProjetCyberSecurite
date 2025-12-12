@@ -154,13 +154,8 @@ function loadQuestion() {
 
 function checkAnswer(choice) {
     const q = questions[index];
-    const buttons = document.querySelectorAll(".btn-answer");
 
-    buttons.forEach((btn, i) => {
-        btn.disabled = true;
-        if (i === q.correct) btn.classList.add("correct");
-        else if (i === choice) btn.classList.add("wrong");
-    });
+    // Pas de couleurs, donc on ne touche plus aux boutons
 
     if (choice === q.correct) {
         score++;
@@ -175,6 +170,7 @@ function checkAnswer(choice) {
 
     nextBtn.style.display = "block";
 }
+
 
 nextBtn.onclick = () => {
     index++;
@@ -214,3 +210,4 @@ loadQuestion();
 
 </body>
 </html>
+
