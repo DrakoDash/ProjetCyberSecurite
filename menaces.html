@@ -51,8 +51,6 @@
         color: white;
     }
     .btn-answer:hover { background: #1f2a66; }
-    .correct { background: #2ecc71 !important; }
-    .wrong { background: #e74c3c !important; }
     #next-btn {
         margin-top: 20px;
         padding: 12px 20px;
@@ -151,13 +149,6 @@ function loadQuestion() {
 
 function checkAnswer(choice) {
     const q = questions[index];
-    const buttons = document.querySelectorAll(".btn-answer");
-
-    buttons.forEach((btn, i) => {
-        btn.disabled = true;
-        if (i === q.correct) btn.classList.add("correct");
-        else if (i === choice) btn.classList.add("wrong");
-    });
 
     if (choice === q.correct) score++;
     else mistakes.push({
@@ -166,6 +157,10 @@ function checkAnswer(choice) {
         correct: q.answers[q.correct],
         explanation: q.explanation
     });
+
+    // Désactiver tous les boutons
+    const buttons = document.querySelectorAll(".btn-answer");
+    buttons.forEach(btn => btn.disabled = true);
 
     nextBtn.style.display = "block";
 }
