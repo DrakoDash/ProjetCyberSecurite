@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Apprendre - Quiz CyberSécurité</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
 
@@ -12,10 +12,12 @@
       font-family: 'Poppins', sans-serif;
       background: #0a0f24;
       color: white;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
     }
 
     header {
-      padding: 40px;
+      padding: 40px 20px;
       text-align: center;
       background: #0d132b;
     }
@@ -43,17 +45,17 @@
       line-height: 1.6;
     }
 
-    /* --- GRID AMÉLIORÉE --- */
+    /* --- GRID --- */
     .quizz-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 30px;
-      padding: 40px;
+      padding: 40px 20px;
       max-width: 1200px;
       margin: auto;
     }
 
-    /* --- CARTES + ANIMATION DE SURVOL --- */
+    /* --- CARTES --- */
     .card {
       background: #111833;
       padding: 30px;
@@ -61,15 +63,16 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.4);
       text-align: center;
       cursor: pointer;
-
-      /* Animation douce */
-      transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease, border 0.4s ease;
+      border: 2px solid transparent;
     }
 
+    /* --- EFFET SURVOL + BORDE LUMINEUSE --- */
     .card:hover {
       transform: translateY(-12px) scale(1.05);
       background: #16204a;
-      box-shadow: 0 8px 25px rgba(0, 80, 255, 0.35);
+      box-shadow: 0 8px 25px rgba(0, 80, 255, 0.5);
+      border: 2px solid #00bfff; /* bordure lumineuse bleu cyan */
     }
 
     .card h3 {
@@ -78,7 +81,7 @@
     }
 
     .card p {
-      opacity: 0.8;
+      opacity: 0.85;
       font-size: 1rem;
     }
 
@@ -88,6 +91,39 @@
       margin-top: 40px;
       background: #0d132b;
       opacity: 0.8;
+    }
+
+    /* --- OPTIMISATION MOBILE (iPhone) --- */
+    @media only screen and (max-width: 480px) {
+      header {
+        padding: 30px 10px;
+      }
+      header h1 {
+        font-size: 2rem;
+      }
+      .intro {
+        padding: 30px 15px;
+      }
+      .intro h2 {
+        font-size: 1.7rem;
+      }
+      .intro p {
+        font-size: 1rem;
+      }
+      .quizz-grid {
+        grid-template-columns: 1fr; /* cartes en colonne */
+        padding: 30px 15px;
+        gap: 20px;
+      }
+      .card {
+        padding: 25px;
+      }
+      .card h3 {
+        font-size: 1.3rem;
+      }
+      .card p {
+        font-size: 0.95rem;
+      }
     }
   </style>
 
@@ -104,9 +140,7 @@
     <p>Explorez des quiz interactifs conçus pour tester vos connaissances, vous apprendre de nouvelles choses et vous préparer à reconnaître les menaces en ligne. Chaque quiz est amusant, rapide et éducatif !</p>
   </section>
 
-  <!-- Réintégration dans la grid -->
   <section class="quizz-grid">
-
     <div class="card" onclick="window.location.href='debutant.html'">
       <h3>🧠 Quiz Débutant</h3>
       <p>Parfait pour commencer : testez vos bases en cybersécurité.</p>
@@ -136,7 +170,6 @@
       <h3>📚 Quiz Avancé</h3>
       <p>Défiez vos connaissances avec un quiz complet.</p>
     </div>
-
   </section>
 
   <footer>
