@@ -16,7 +16,6 @@
     position: relative;
   }
 
-  /* CANVAS PARTICULES */
   #particles {
     position: fixed;
     top: 0;
@@ -55,13 +54,23 @@
     line-height: 1.6;
   }
 
+  .quizz-category {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+  }
+
+  .quizz-category h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #00bfff;
+    text-align: left;
+  }
+
   .quizz-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
-    padding: 40px 20px;
-    max-width: 1200px;
-    margin: auto;
   }
 
   .card {
@@ -100,7 +109,6 @@
     opacity: 0.8;
   }
 
-  /* --- MOBILE --- */
   @media only screen and (max-width: 480px) {
     header {
       padding: 30px 10px;
@@ -147,35 +155,48 @@
   <p>Explorez des quiz interactifs conçus pour tester vos connaissances, vous apprendre de nouvelles choses et vous préparer à reconnaître les menaces en ligne. Chaque quiz est amusant, rapide et éducatif !</p>
 </section>
 
-<section class="quizz-grid">
-  <div class="card" onclick="window.location.href='debutant.html'">
-    <h3>🧠 Quiz Débutant</h3>
-    <p>Parfait pour commencer : testez vos bases en cybersécurité.</p>
+<!-- Catégorie : Bases -->
+<section class="quizz-category">
+  <h2>💡 Bases & Initiation</h2>
+  <div class="quizz-grid">
+    <div class="card" onclick="window.location.href='debutant.html'">
+      <h3>🧠 Quiz Débutant</h3>
+      <p>Parfait pour commencer : testez vos bases en cybersécurité.</p>
+    </div>
+    <div class="card" onclick="window.location.href='pratiques.html'">
+      <h3>💡 Bonnes Pratiques</h3>
+      <p>Testez vos réflexes : êtes-vous prêt à vous protéger ?</p>
+    </div>
   </div>
+</section>
 
-  <div class="card" onclick="window.location.href='menaces.html'">
-    <h3>🔍 Identifier les Menaces</h3>
-    <p>Pourrez-vous reconnaître un phishing ou un malware ?</p>
+<!-- Catégorie : Menaces -->
+<section class="quizz-category">
+  <h2>🔍 Menaces & Sécurité</h2>
+  <div class="quizz-grid">
+    <div class="card" onclick="window.location.href='menaces.html'">
+      <h3>🔍 Identifier les Menaces</h3>
+      <p>Pourrez-vous reconnaître un phishing ou un malware ?</p>
+    </div>
+    <div class="card" onclick="window.location.href='mdp.html'">
+      <h3>🔐 Mots de Passe</h3>
+      <p>Êtes-vous capable de repérer un mot de passe faible ?</p>
+    </div>
   </div>
+</section>
 
-  <div class="card" onclick="window.location.href='mdp.html'">
-    <h3>🔐 Mots de Passe</h3>
-    <p>Êtes-vous capable de repérer un mot de passe faible ?</p>
-  </div>
-
-  <div class="card" onclick="window.location.href='reseaux.html'">
-    <h3>👀 Réseaux Sociaux</h3>
-    <p>Apprenez à éviter les pièges les plus courants en ligne.</p>
-  </div>
-
-  <div class="card" onclick="window.location.href='pratiques.html'">
-    <h3>💡 Bonnes Pratiques</h3>
-    <p>Testez vos réflexes : êtes-vous prêt à vous protéger ?</p>
-  </div>
-
-  <div class="card" onclick="window.location.href='avance.html'">
-    <h3>📚 Quiz Avancé</h3>
-    <p>Défiez vos connaissances avec un quiz complet.</p>
+<!-- Catégorie : Réseaux & Avancé -->
+<section class="quizz-category">
+  <h2>👀 Réseaux & Avancé</h2>
+  <div class="quizz-grid">
+    <div class="card" onclick="window.location.href='reseaux.html'">
+      <h3>👀 Réseaux Sociaux</h3>
+      <p>Apprenez à éviter les pièges les plus courants en ligne.</p>
+    </div>
+    <div class="card" onclick="window.location.href='avance.html'">
+      <h3>📚 Quiz Avancé</h3>
+      <p>Défiez vos connaissances avec un quiz complet.</p>
+    </div>
   </div>
 </section>
 
@@ -188,7 +209,6 @@
   const ctx = canvas.getContext('2d');
   let particlesArray;
 
-  // Resize canvas
   function initCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -198,7 +218,6 @@
     initParticles();
   });
 
-  // Particle class
   class Particle {
     constructor() {
       this.x = Math.random() * canvas.width;
@@ -211,7 +230,6 @@
     update() {
       this.x += this.speedX;
       this.y += this.speedY;
-
       if(this.x < 0 || this.x > canvas.width) this.speedX *= -1;
       if(this.y < 0 || this.y > canvas.height) this.speedY *= -1;
     }
@@ -225,7 +243,7 @@
 
   function initParticles() {
     particlesArray = [];
-    const number = (canvas.width * canvas.height) / 15000; // ajuste nombre selon taille écran
+    const number = (canvas.width * canvas.height) / 15000;
     for(let i = 0; i < number; i++) {
       particlesArray.push(new Particle());
     }
@@ -240,7 +258,6 @@
     requestAnimationFrame(animateParticles);
   }
 
-  // Initialize
   initCanvas();
   initParticles();
   animateParticles();
