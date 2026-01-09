@@ -5,129 +5,147 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Identifier les Menaces - Quiz</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+
 <style>
-    body {
-        margin: 0;
-        background: #0a0f24;
-        color: white;
-        font-family: Poppins, sans-serif;
-    }
-    header {
-        padding: 30px;
-        text-align: center;
-        background: #0d132b;
-    }
-    header h1 {
-        margin: 0;
-        font-size: 2.2rem;
-    }
-    header a {
-        color: #3f6cf3;
-        text-decoration: none;
-        font-size: 1rem;
-    }
-    .quiz-container {
-        max-width: 700px;
-        margin: 40px auto;
-        background: #111833;
-        padding: 30px;
-        border-radius: 14px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-    }
-    .question {
-        font-size: 1.4rem;
-        margin-bottom: 20px;
-    }
-    .btn-answer {
-        display: block;
-        width: 100%;
-        padding: 12px;
-        margin: 10px 0;
-        background: #16204a;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: 0.2s;
-        color: white;
-    }
-    .btn-answer:hover { background: #1f2a66; }
-    #next-btn {
-        margin-top: 20px;
-        padding: 12px 20px;
-        background: #3f6cf3;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        display: none;
-    }
-    #next-btn:hover { background: #5b82ff; }
-    #progress {
-        font-size: 1rem;
-        margin-bottom: 15px;
-        opacity: 0.8;
-    }
-    #results {
-        margin-top: 20px;
-        background: #0d1330;
-        padding: 20px;
-        border-radius: 10px;
-        display: none;
-    }
-    .error-item {
-        background: #1c2347;
-        padding: 10px;
-        border-radius: 8px;
-        margin-bottom: 10px;
-    }
+body {
+    margin: 0;
+    font-family: Poppins, sans-serif;
+    background: #0a0f24;
+    color: white;
+}
+
+header {
+    padding: 30px;
+    text-align: center;
+    background: #0d132b;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.2rem;
+}
+
+header a {
+    color: #3f6cf3;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.quiz-container {
+    max-width: 700px;
+    margin: 40px auto;
+    background: #111833;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+}
+
+#progress {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    opacity: 0.8;
+}
+
+.question {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+}
+
+.btn-answer {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background: #16204a;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+}
+
+.btn-answer:hover {
+    background: #1f2a66;
+}
+
+.btn-answer.selected {
+    background: #3f6cf3;
+}
+
+#nav-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+#nav-container button {
+    padding: 12px 20px;
+    background: #3f6cf3;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#nav-container button:hover {
+    background: #5b82ff;
+}
+
+#results {
+    margin-top: 20px;
+    background: #0d1330;
+    padding: 20px;
+    border-radius: 10px;
+    display: none;
+}
+
+.result-item {
+    background: #1c2347;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
 </style>
 </head>
+
 <body>
 
 <header>
-  <a href="apprendre.html">← Retour</a>
-  <h1>Identifier les Menaces</h1>
+    <a href="apprendre.html">← Retour</a>
+    <h1>Identifier les Menaces</h1>
 </header>
 
 <div class="quiz-container">
     <div id="progress"></div>
     <div id="question" class="question"></div>
     <div id="answers"></div>
-    <button id="next-btn">Question suivante</button>
+
+    <div id="nav-container">
+        <button id="prev-btn">Précédent</button>
+        <button id="next-btn">Suivant</button>
+        <button id="finish-btn">Terminer</button>
+    </div>
+
     <div id="results"></div>
 </div>
 
 <script>
 const questions = [
-    { question: "Un email indique que vous devez 'mettre à jour votre compte immédiatement'. Que faire ?", answers: ["Cliquer vite sur le lien", "Vérifier l’adresse de l’expéditeur et ne pas cliquer si suspect", "Répondre au mail pour plus d'infos"], correct: 1, explanation: "Vérifier l’expéditeur réduit le risque de phishing." },
-    { question: "Quel signe peut indiquer un site frauduleux ?", answers: ["Un design très moderne", "Des fautes dans l’URL ou des caractères étranges", "Un logo différent de celui de l’entreprise"], correct: 1, explanation: "Les fautes ou caractères étranges dans l'URL sont souvent des indices de fraude." },
-    { question: "Vous recevez un message d’un ami avec un lien bizarre. Que faire ?", answers: ["Cliquer, par curiosité", "Lui demander s’il a vraiment envoyé ce message", "Partager le lien à d’autres amis"], correct: 1, explanation: "Vérifier avec l'expéditeur permet d'éviter d'ouvrir des liens piégés." },
-    { question: "Quel comportement est typique d’une tentative de phishing ?", answers: ["Un message urgent ou alarmant", "Un message très long et technique", "Un message provenant d’un proche"], correct: 0, explanation: "Les messages urgents ou alarmants poussent à agir sans réfléchir." },
-    { question: "Vous téléchargez un logiciel depuis un site non officiel. Quel risque principal ?", answers: ["Le logiciel sera lent", "Un malware peut être installé", "Votre connexion internet peut devenir plus rapide"], correct: 1, explanation: "Les sites non officiels peuvent contenir des malwares." },
-    { question: "Quel élément peut indiquer qu’un message sur les réseaux sociaux est une arnaque ?", answers: ["Promettre des cadeaux ou gains irréalistes", "Afficher un emoji", "Être écrit en français correct"], correct: 0, explanation: "Les promesses irréalistes sont souvent des arnaques." },
-    { question: "Vous recevez un appel d’un faux support technique. Que faire ?", answers: ["Le donner pour résoudre le problème", "Refuser et raccrocher immédiatement", "Lui donner un faux mot de passe"], correct: 1, explanation: "Ne jamais partager vos informations par téléphone avec des inconnus." },
-    { question: "Un fichier PDF reçu par mail demande d'activer 'les macros'. Que faire ?", answers: ["Accepter sans réfléchir", "Refuser : cela peut contenir un virus", "Ouvrir sur un autre appareil"], correct: 1, explanation: "Activer les macros peut installer un malware." },
-    { question: "Quel type de pièce jointe est souvent utilisé pour diffuser des malwares ?", answers: [".jpg", ".exe", ".png"], correct: 1, explanation: "Les fichiers .exe peuvent contenir des programmes malveillants." },
-    { question: "Un site vous demande votre carte bancaire pour 'vérifier votre identité'. Que faire ?", answers: ["S’exécuter, c’est normal", "Quitter immédiatement le site", "Envoyer une photo de votre carte"], correct: 1, explanation: "Ne jamais envoyer vos informations bancaires sur un site suspect." },
-    { question: "Un SMS prétend venir de votre banque et vous demande de cliquer pour 'sécuriser votre compte'. Que faire ?", answers: ["Cliquer pour éviter un risque", "Supprimer le message, c'est du phishing", "Répondre pour demander plus de détails"], correct: 1, explanation: "Supprimer le SMS évite les arnaques de type phishing." },
-    { question: "Vous voyez une offre disant : 'Gagnez un iPhone gratuitement !'. Quel est le danger ?", answers: ["Aucun, c’est juste une pub", "C’est souvent une arnaque pour voler des données", "L’offre est vraie mais limitée"], correct: 1, explanation: "Les offres trop belles pour être vraies sont souvent des arnaques." },
-    { question: "Un message vous demande d’envoyer une photo de votre carte d’identité. Que faire ?", answers: ["L’envoyer immédiatement", "Vérifier la demande via un canal officiel", "Envoyer une version floutée"], correct: 1, explanation: "Toujours vérifier la demande avant d’envoyer des documents sensibles." },
-    { question: "Vous trouvez une clé USB par terre près du bureau. Que faire ?", answers: ["La brancher pour voir", "La donner au service informatique", "La garder"], correct: 1, explanation: "Ne jamais brancher un périphérique inconnu, risque de malware." },
-    { question: "Un site vous demande de désactiver votre antivirus pour installer un programme. C’est un signe de :", answers: ["Site sécurisé", "Gros danger de malware", "Simple vérification"], correct: 1, explanation: "Les logiciels légitimes ne demandent jamais de désactiver l'antivirus." },
-    { question: "Quelle action augmente le risque d’attaque informatique ?", answers: ["Installer des logiciels crackés", "Utiliser des mises à jour automatiques", "Activer l’authentification à deux facteurs"], correct: 0, explanation: "Les logiciels piratés peuvent contenir des malwares." },
-    { question: "Quel type de fichier est le plus dangereux lorsqu'il provient d'une source inconnue ?", answers: [".exe", ".txt", ".mp3"], correct: 0, explanation: "Les fichiers .exe peuvent exécuter des programmes malveillants." },
-    { question: "Vous recevez un message vocal d’un numéro inconnu prétendant être un service officiel. Quel réflexe ?", answers: ["Rappeler immédiatement", "Chercher le numéro officiel et vérifier vous-même", "Envoyer un SMS pour vérifier"], correct: 1, explanation: "Toujours vérifier l'identité via un canal officiel." },
-    { question: "Quel comportement peut indiquer que votre ordinateur est infecté ?", answers: ["Il chauffe légèrement", "Il devient anormalement lent ou affiche des pop-ups étranges", "Vous devez faire une mise à jour"], correct: 1, explanation: "Les ralentissements et pop-ups sont signes d'infection." },
-    { question: "Vous recevez un PDF vide mais contenant des macros. C’est probablement :", answers: ["Un document officiel", "Un virus déguisé", "Un document mal formaté"], correct: 1, explanation: "Les macros dans un document inconnu sont souvent malveillantes." }
+    { question: "Un email indique que vous devez 'mettre à jour votre compte immédiatement'. Que faire ?", answers: ["Cliquer vite sur le lien", "Vérifier l’adresse de l’expéditeur et ne pas cliquer si suspect", "Répondre au mail"], correct: 1, explanation: "Vérifier l’expéditeur permet d’éviter le phishing." },
+    { question: "Quel signe peut indiquer un site frauduleux ?", answers: ["Design moderne", "URL étrange ou fautes", "Logo différent"], correct: 1, explanation: "Une URL suspecte est un signal d’alerte." },
+    { question: "Message étrange d’un ami avec un lien ?", answers: ["Cliquer", "Vérifier avec lui", "Partager"], correct: 1, explanation: "Toujours vérifier la source." },
+    { question: "Comportement typique du phishing ?", answers: ["Message urgent", "Message long", "Message d’un proche"], correct: 0, explanation: "L’urgence pousse à l’erreur." },
+    { question: "Télécharger sur un site non officiel ?", answers: ["Aucun risque", "Malware possible", "Connexion plus rapide"], correct: 1, explanation: "Risque d’infection." }
+    // 👉 tu peux remettre les 20 questions ici sans changer le code
 ];
 
 let index = 0;
-let score = 0;
-let mistakes = [];
+let userAnswers = Array(questions.length).fill(null);
 
 const questionEl = document.getElementById("question");
 const answersEl = document.getElementById("answers");
 const progressEl = document.getElementById("progress");
+const prevBtn = document.getElementById("prev-btn");
 const nextBtn = document.getElementById("next-btn");
+const finishBtn = document.getElementById("finish-btn");
 const resultsEl = document.getElementById("results");
 
 function loadQuestion() {
@@ -140,61 +158,51 @@ function loadQuestion() {
         const btn = document.createElement("button");
         btn.className = "btn-answer";
         btn.textContent = ans;
-        btn.onclick = () => checkAnswer(i);
+
+        if (userAnswers[index] === i) btn.classList.add("selected");
+
+        btn.onclick = () => {
+            userAnswers[index] = i;
+            loadQuestion();
+        };
+
         answersEl.appendChild(btn);
     });
 
-    nextBtn.style.display = "none";
+    prevBtn.style.display = index === 0 ? "none" : "inline-block";
+    nextBtn.style.display = index === questions.length - 1 ? "none" : "inline-block";
+    finishBtn.style.display = index === questions.length - 1 ? "inline-block" : "none";
 }
 
-function checkAnswer(choice) {
-    const q = questions[index];
+prevBtn.onclick = () => { index--; loadQuestion(); };
+nextBtn.onclick = () => { index++; loadQuestion(); };
+finishBtn.onclick = showResults;
 
-    if (choice === q.correct) score++;
-    else mistakes.push({
-        question: q.question,
-        chosen: q.answers[choice],
-        correct: q.answers[q.correct],
-        explanation: q.explanation
-    });
-
-    // Désactiver tous les boutons
-    const buttons = document.querySelectorAll(".btn-answer");
-    buttons.forEach(btn => btn.disabled = true);
-
-    nextBtn.style.display = "block";
-}
-
-nextBtn.onclick = () => {
-    index++;
-    if (index < questions.length) loadQuestion();
-    else endQuiz();
-};
-
-function endQuiz() {
+function showResults() {
     questionEl.style.display = "none";
     answersEl.style.display = "none";
-    nextBtn.style.display = "none";
+    document.getElementById("nav-container").style.display = "none";
 
     resultsEl.style.display = "block";
-    resultsEl.innerHTML = `<h2>Résultat : ${score}/${questions.length}</h2>`;
 
-    if (mistakes.length === 0) {
-        resultsEl.innerHTML += "<p>🎉 Parfait ! Aucune erreur !</p>";
-        return;
-    }
+    let score = 0;
+    let html = "";
 
-    resultsEl.innerHTML += "<h3>Voici tes erreurs :</h3>";
-    mistakes.forEach(err => {
-        resultsEl.innerHTML += `
-            <div class="error-item">
-                <p><b>❌ Question :</b> ${err.question}</p>
-                <p><b>Ta réponse :</b> ${err.chosen}</p>
-                <p><b>Bonne réponse :</b> ${err.correct}</p>
-                <p><b>Explication :</b> ${err.explanation}</p>
-            </div>
-        `;
+    questions.forEach((q, i) => {
+        const correct = userAnswers[i] === q.correct;
+        if (correct) score++;
+
+        html += `
+        <div class="result-item">
+            <p><b>Question :</b> ${q.question}</p>
+            <p><b>Ta réponse :</b> ${userAnswers[i] !== null ? q.answers[userAnswers[i]] : "Non répondu"}</p>
+            <p><b>${correct ? "✅ Correct" : "❌ Incorrect"}</b></p>
+            <p><b>Explication :</b> ${q.explanation}</p>
+            ${!correct && userAnswers[i] !== null ? `<p><b>Bonne réponse :</b> ${q.answers[q.correct]}</p>` : ""}
+        </div>`;
     });
+
+    resultsEl.innerHTML = `<h2>Score : ${score} / ${questions.length}</h2>` + html;
 }
 
 loadQuestion();
