@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Quiz Débutant – Bonnes pratiques en cybersécurité</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+<style>
+body { margin:0; font-family:Poppins,sans-serif; background:#0a0f24; color:white; }
+.quiz-container { max-width:700px; margin:40px auto; background:#111833; padding:30px; border-radius:14px; box-shadow:0 5px 20px rgba(0,0,0,0.5);}
+.question { font-size:1.4rem; margin-bottom:20px;}
+.btn-answer { display:block; width:100%; padding:12px; margin:10px 0; background:#16204a; border:none; border-radius:10px; cursor:pointer; color:white; }
+.btn-answer:hover { background:#1f2a66; }
+.selected { background:#3f6cf3; }
+#nav-container { display:flex; justify-content:space-between; margin-top:20px; }
+#nav-container button { padding:12px 20px; background:#3f6cf3; border:none; border-radius:10px; cursor:pointer; }
+#nav-container button:hover { background:#5b82ff; }
+#progress { font-size:1rem; margin-bottom:15px; opacity:0.8; }
+#results { margin-top:20px; background:#0d1330; padding:20px; border-radius:10px; display:none; }
+.result-item { background:#1c2347; padding:10px; border-radius:8px; margin-bottom:10px; }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <div id="progress"></div>
+  <div id="question" class="question"></div>
+  <div id="answers"></div>
+
+  <div id="nav-container">
+    <button id="prev-btn">Précédent</button>
+    <button id="next-btn">Suivant</button>
+    <button id="finish-btn">Terminer</button>
+  </div>
+
+  <div id="results"></div>
+</div>
+
+<script>
+// QUESTIONS – BONNES PRATIQUES
+const questions = [
+{ question:"Quelle est une bonne pratique pour les mots de passe ?", answers:["Utiliser le même partout","Utiliser un mot de passe long et unique","L’écrire sur un papier"], correct:1, explanation:"Un mot de passe fort et unique limite les risques de piratage."},
+{ question:"Que faire avant de cliquer sur un lien ?", answers:["Cliquer rapidement","Vérifier l’expéditeur","Le partager"], correct:1, explanation:"Vérifier l’origine du lien évite le phishing."},
+{ question:"Quelle est une bonne habitude ?", answers:["Mettre à jour ses logiciels","Ignorer les mises à jour","Désactiver l’antivirus"], correct:0, explanation:"Les mises à jour corrigent des failles de sécurité."},
+{ question:"Sur un Wi-Fi public, il est conseillé de :", answers:["Entrer ses mots de passe","Utiliser un VPN","Faire des achats"], correct:1, explanation:"Un VPN chiffre les données sur un réseau public."},
+{ question:"Que faire avec un email suspect ?", answers:["Le signaler","Y répondre","Cliquer sur la pièce jointe"], correct:0, explanation:"Signaler un mail suspect aide à lutter contre les arnaques."},
+{ question:"Sur les réseaux sociaux, il faut :", answers:["Partager sa vie privée","Limiter les infos personnelles","Publier ses documents"], correct:1, explanation:"Moins d’informations = moins de risques."},
+{ question:"Pourquoi verrouiller son écran ?", answers:["Pour faire joli","Pour empêcher l’accès non autorisé","Pour économiser la batterie"], correct:1, explanation:"Cela empêche quelqu’un d’accéder à tes données."},
+{ question:"Un bon réflexe en cas de doute :", answers:["Demander conseil","Ignorer","Télécharger quand même"], correct:0, explanation:"Demander conseil évite des erreurs coûteuses."},
+{ question:"Les sauvegardes servent à :", answers:["Décorer","Récupérer ses données","Supprimer des fichiers"], correct:1, explanation:"Une sauvegarde protège contre la perte de données."},
+{ question:"Quelle est une bonne pratique mobile ?", answers:["Installer toutes les apps","Télécharger depuis les stores officiels","Désactiver les protections"], correct:1, explanation:"Les stores officiels réduisent les risques de malware."},
+{ question:"Un bon comportement face aux pop-ups :", answers:["Cliquer dessus","Les ignorer","Donner ses infos"], correct:1, explanation:"Les pop-ups sont souvent des pièges."},
+{ question:"Pourquoi utiliser un gestionnaire de mots de passe ?", answers:["Pour tout retenir","Pour créer et stocker des mots de passe forts","Pour partager ses codes"], correct:1, explanation:"Il améliore la sécurité globale."},
+{ question:"Quand changer un mot de passe ?", answers:["Jamais","Après une fuite ou un doute","Tous les jours"], correct:1, explanation:"Changer après un incident limite les dégâts."},
+{ question:"Un bon réflexe sécurité au travail :", answers:["Partager ses identifiants","Verrouiller sa session","Ignorer les règles"], correct:1, explanation:"Chaque compte doit rester personnel."},
+{ question:"Avant de brancher une clé USB inconnue :", answers:["La brancher","La scanner","La jeter sur un PC pro"], correct:1, explanation:"Une clé USB peut contenir un malware."}
+];
+
+let index = 0;
+let userAnswers = Array(questions.length).fill(null);
+
+const questionEl = document.getElementById("question");
+const answersEl = document.getElementById("answers");
+const progressEl = document.getElementById("progress");
+const prevBtn = document.getElementById("prev-btn");
+const nextBtn = document.getElementById("next-btn");
+const finishBtn = document.getElementById("finish-btn");
+const resultsEl = document.getElementById("results");
+
+function loadQuestion(){
+  const q = questions[index];
+  progressEl.textContent = `Question ${index+1} / ${questions.length}`;
+  questionEl.textContent = q.question;
+  answersEl.innerHTML = "";
+
+  q.answers.forEach((ans,i)=>{
+    const btn = document.createElement("button");
+    btn.className = "btn-answer";
+    btn.textContent = ans;
+    if(userAnswers[index] === i) btn.classList.add("selected");
+    btn.onclick = ()=>{ userAnswers[index]=i; loadQuestion(); };
+    answersEl.appendChild(btn);
+  });
+
+  prevBtn.style.display = index===0 ? "none" : "inline-block";
+  nextBtn.style.display = index===questions.length-1 ? "none" : "inline-block";
+  finishBtn.style.display = index===questions.length-1 ? "inline-block" : "none";
+}
+
+prevBtn.onclick = ()=>{ index--; loadQuestion(); };
+nextBtn.onclick = ()=>{ index++; loadQuestion(); };
+finishBtn.onclick = showResults;
+
+function showResults(){
+  questionEl.style.display = answersEl.style.display = "none";
+  prevBtn.style.display = nextBtn.style.display = finishBtn.style.display = "none";
+  resultsEl.style.display = "block";
+
+  let score = 0;
+  let html = "";
+
+  questions.forEach((q,i)=>{
+    const ua = userAnswers[i];
+    const ok = ua === q.correct;
+    if(ok) score++;
+    html += `
+    <div class="result-item">
+      <p><b>Question :</b> ${q.question}</p>
+      <p><b>Ta réponse :</b> ${ua!==null ? q.answers[ua] : "Non répondu"}</p>
+      <p><b>${ok ? "✅ Correct" : "❌ Incorrect"}</b></p>
+      <p><b>Explication :</b> ${q.explanation}</p>
+      ${!ok && ua!==null ? `<p><b>Bonne réponse :</b> ${q.answers[q.correct]}</p>` : ""}
+    </div>`;
+  });
+
+  resultsEl.innerHTML = `<h2>Score : ${score} / ${questions.length}</h2>` + html;
+}
+
+loadQuestion();
+</script>
+</body>
+</html>
