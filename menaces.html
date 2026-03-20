@@ -170,9 +170,12 @@ prevBtn.onclick = () => { index--; loadQuestion(); };
 nextBtn.onclick = () => { index++; loadQuestion(); };
 finishBtn.onclick = showResults;
 
+function goBackToMenu() {
+    window.location.href = "apprendre.html"; // change si besoin
+}
+
 function showResults() {
-   // conteneur boutons
-const btnContainer = document.createElement("div");
+  const btnContainer = document.createElement("div");
 btnContainer.style.display = "flex";
 btnContainer.style.gap = "10px";
 btnContainer.style.marginTop = "20px";
@@ -183,20 +186,17 @@ restartBtn.textContent = "🔁 Recommencer";
 restartBtn.className = "restart-btn";
 restartBtn.onclick = restartQuiz;
 
-// bouton retour
+// bouton retour (VERSION FIX)
 const backBtn = document.createElement("button");
 backBtn.textContent = "🏠 Retour aux quiz";
 backBtn.className = "restart-btn";
-backBtn.onclick = () => {
-    window.location.href = "apprendre.html"; // 🔥 change si besoin
-};
+backBtn.onclick = goBackToMenu;
 
-// ajouter les boutons
+// ajout
 btnContainer.appendChild(restartBtn);
 btnContainer.appendChild(backBtn);
 resultsEl.appendChild(btnContainer);
 
-    
 function restartQuiz() {
     index = 0;
     userAnswers = Array(questions.length).fill(null);
