@@ -43,10 +43,17 @@ body {
     border-radius: 10px;
     cursor: pointer;
     color: white;
+    transition: background 0.3s, transform 0.2s;
 }
 
-.btn-answer:hover { background: #1f2a66; }
-.btn-answer.selected { background: #3f6cf3; }
+.btn-answer:hover { 
+    background: #1f2a66; 
+    transform: scale(1.03);
+}
+.btn-answer.selected { 
+    background: #3f6cf3; 
+    transform: scale(1.05);
+}
 
 #nav-container {
     display: flex;
@@ -60,9 +67,11 @@ body {
     border: none;
     border-radius: 10px;
     cursor: pointer;
+    transition: background 0.3s;
 }
 
 #nav-container button:hover { background: #5b82ff; }
+#nav-container button:disabled { background: #444d77; cursor: not-allowed; }
 
 #results {
     margin-top: 20px;
@@ -83,6 +92,7 @@ body {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .action-btn {
@@ -93,9 +103,15 @@ body {
     background: #3f6cf3;
     cursor: pointer;
     color: white;
+    transition: background 0.3s;
 }
 
 .action-btn:hover { background: #5b82ff; }
+
+@media (max-width: 480px) {
+    .btn-answer { font-size: 1rem; padding: 10px; }
+    #nav-container button, .action-btn { font-size: 0.9rem; padding: 10px; }
+}
 </style>
 </head>
 
@@ -146,34 +162,35 @@ const finishBtn = document.getElementById("finish-btn");
 const resultsEl = document.getElementById("results");
 
 function loadQuestion(){
-    const q=questions[index];
-    progressEl.textContent=`Question ${index+1} / ${questions.length}`;
-    questionEl.textContent=q.q;
-    answersEl.innerHTML="";
+    const q = questions[index];
+    progressEl.textContent = `Question ${index+1} / ${questions.length}`;
+    questionEl.textContent = q.q;
+    answersEl.innerHTML = "";
 
     q.a.forEach((ans,i)=>{
-        const btn=document.createElement("button");
-        btn.className="btn-answer";
-        btn.textContent=ans;
+        const btn = document.createElement("button");
+        btn.className = "btn-answer";
+        btn.textContent = ans;
+        btn.setAttribute("tabindex","0");
 
         if(userAnswers[index]===i) btn.classList.add("selected");
 
-        btn.onclick=()=>{
-            userAnswers[index]=i;
-            loadQuestion();
-        };
+        btn.onclick = () => { userAnswers[index]=i; loadQuestion(); };
+        btn.onkeypress = (e) => { if(e.key==="Enter" || e.key===" ") btn.click(); };
 
         answersEl.appendChild(btn);
     });
 
-    prevBtn.style.display=index===0?"none":"inline-block";
-    nextBtn.style.display=index===questions.length-1?"none":"inline-block";
-    finishBtn.style.display=index===questions.length-1?"inline-block":"none";
+    prevBtn.style.display = index===0?"none":"inline-block";
+    nextBtn.style.display = index===questions.length-1?"none":"inline-block";
+    finishBtn.style.display = index===questions.length-1?"inline-block":"none";
+
+    nextBtn.disabled = userAnswers[index]===null;
 }
 
-prevBtn.onclick=()=>{index--;loadQuestion();}
-nextBtn.onclick=()=>{index++;loadQuestion();}
-finishBtn.onclick=showResults;
+prevBtn.onclick = ()=>{index--; loadQuestion();}
+nextBtn.onclick = ()=>{index++; loadQuestion();}
+finishBtn.onclick = showResults;
 
 function showResults(){
     questionEl.style.display="none";
@@ -182,11 +199,26 @@ function showResults(){
 
     resultsEl.style.display="block";
 
-    let score=0;
-    let html="";
+    // 🔥 Choix de voir le corrigé ou non
+    let html = `
+    <div class="btn-top">
+        <button class="action-btn" onclick="goBack()">🏠 Retour aux quiz</button>
+        <button class="action-btn" onclick="restartQuiz()">🔁 Recommencer</button>
+    </div>
 
-    // 🔥 BOUTONS EN HAUT
-    html+=`
+    <div style="margin:20px 0; text-align:center;">
+        <p>Voulez-vous voir le corrigé détaillé ?</p>
+        <button class="action-btn" onclick="renderResults(true)">✅ Oui</button>
+        <button class="action-btn" onclick="renderResults(false)">❌ Non</button>
+    </div>
+    `;
+
+    resultsEl.innerHTML = html;
+}
+
+function renderResults(showCorrection){
+    let score = 0;
+    let html = `
     <div class="btn-top">
         <button class="action-btn" onclick="goBack()">🏠 Retour aux quiz</button>
         <button class="action-btn" onclick="restartQuiz()">🔁 Recommencer</button>
@@ -194,20 +226,25 @@ function showResults(){
     `;
 
     questions.forEach((q,i)=>{
-        const correct=userAnswers[i]===q.c;
+        const correct = userAnswers[i] === q.c;
         if(correct) score++;
 
-        html+=`
-        <div class="result-item">
+        html += `<div class="result-item">
             <p><b>Question :</b> ${q.q}</p>
             <p><b>Ta réponse :</b> ${userAnswers[i]!==null?q.a[userAnswers[i]]:"Non répondu"}</p>
-            <p><b>${correct?"✅ Correct":"❌ Incorrect"}</b></p>
-            <p><b>Explication :</b> ${q.e}</p>
-            ${!correct && userAnswers[i]!==null?`<p><b>Bonne réponse :</b> ${q.a[q.c]}</p>`:""}
-        </div>`;
+            <p><b>${correct?"✅ Correct":"❌ Incorrect"}</b></p>`;
+
+        if(showCorrection){
+            html += `<p><b>Explication :</b> ${q.e}</p>`;
+            if(!correct && userAnswers[i]!==null){
+                html += `<p><b>Bonne réponse :</b> ${q.a[q.c]}</p>`;
+            }
+        }
+
+        html += `</div>`;
     });
 
-    resultsEl.innerHTML=`<h2>Score : ${score}/${questions.length}</h2>`+html;
+    resultsEl.innerHTML = `<h2>Score : ${score}/${questions.length}</h2>` + html;
 }
 
 function restartQuiz(){
