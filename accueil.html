@@ -16,6 +16,7 @@
     position: relative;
   }
 
+  /* Effet particules */
   #particles {
     position: fixed;
     top: 0;
@@ -25,17 +26,28 @@
     z-index: -1;
   }
 
+  /* Bannière immersive */
   header {
-    padding: 40px 20px;
+    padding: 60px 20px;
     text-align: center;
-    background: rgba(13,19,43,0.8);
+    background: linear-gradient(180deg, rgba(13,19,43,0.9), rgba(10,15,36,0.6));
+    backdrop-filter: blur(4px);
+    border-bottom: 2px solid #00bfff;
   }
 
   header h1 {
-    font-size: 2.8rem;
+    font-size: 3rem;
     margin: 0;
+    letter-spacing: 2px;
   }
 
+  header p {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    opacity: 0.85;
+  }
+
+  /* Intro */
   .intro {
     text-align: center;
     padding: 40px 20px;
@@ -54,6 +66,7 @@
     line-height: 1.6;
   }
 
+  /* Catégories */
   .quizz-category {
     max-width: 1200px;
     margin: 50px auto;
@@ -67,12 +80,14 @@
     text-align: left;
   }
 
+  /* Grille */
   .quizz-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
   }
 
+  /* Cartes */
   .card {
     background: rgba(17,24,51,0.95);
     padding: 30px;
@@ -82,6 +97,13 @@
     cursor: pointer;
     transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease, border 0.4s ease;
     border: 2px solid transparent;
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  .card.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .card:hover {
@@ -109,12 +131,16 @@
     opacity: 0.8;
   }
 
+  /* Version mobile améliorée */
   @media only screen and (max-width: 480px) {
     header {
-      padding: 30px 10px;
+      padding: 40px 10px;
     }
     header h1 {
-      font-size: 2rem;
+      font-size: 2.2rem;
+    }
+    header p {
+      font-size: 1rem;
     }
     .intro {
       padding: 30px 15px;
@@ -124,6 +150,10 @@
     }
     .intro p {
       font-size: 1rem;
+    }
+    .quizz-category h2 {
+      text-align: center;
+      font-size: 1.6rem;
     }
     .quizz-grid {
       grid-template-columns: 1fr;
@@ -148,11 +178,12 @@
 
 <header>
   <h1>Apprendre & Se Tester</h1>
+  <p>Progressez pas à pas et devenez incollable en cybersécurité.</p>
 </header>
 
 <section class="intro">
   <h2>Choisissez votre quiz</h2>
-  <p>Explorez des quiz interactifs conçus pour tester vos connaissances, vous apprendre de nouvelles choses et vous préparer à reconnaître les menaces en ligne. Chaque quiz est amusant, rapide et éducatif !</p>
+  <p>Explorez des quiz interactifs conçus pour tester vos connaissances, vous apprendre de nouvelles choses et vous préparer à reconnaître les menaces en ligne.</p>
 </section>
 
 <!-- Catégorie : Bases -->
@@ -197,6 +228,12 @@
       <h3>📚 Quiz Avancé</h3>
       <p>Défiez vos connaissances avec un quiz complet.</p>
     </div>
+
+    <!-- NOUVELLE CARTE : Contrôle Final -->
+    <div class="card" onclick="window.location.href='quiz-final.html'">
+      <h3>🎓 Contrôle Final</h3>
+      <p>Une question difficile aléatoire pour tester votre niveau.</p>
+    </div>
   </div>
 </section>
 
@@ -205,6 +242,20 @@
 </footer>
 
 <script>
+  /* Animation au scroll */
+  const cards = document.querySelectorAll('.card');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  cards.forEach(card => observer.observe(card));
+
+  /* Particules */
   const canvas = document.getElementById('particles');
   const ctx = canvas.getContext('2d');
   let particlesArray;
@@ -262,5 +313,6 @@
   initParticles();
   animateParticles();
 </script>
+
 </body>
 </html>
