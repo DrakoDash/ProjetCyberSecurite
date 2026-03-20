@@ -79,10 +79,10 @@ body {
     margin-bottom: 10px;
 }
 
-.btn-group {
+.btn-top {
     display: flex;
     gap: 10px;
-    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .action-btn {
@@ -145,20 +145,20 @@ const nextBtn = document.getElementById("next-btn");
 const finishBtn = document.getElementById("finish-btn");
 const resultsEl = document.getElementById("results");
 
-function loadQuestion() {
-    const q = questions[index];
-    progressEl.textContent = `Question ${index+1} / ${questions.length}`;
-    questionEl.textContent = q.q;
-    answersEl.innerHTML = "";
+function loadQuestion(){
+    const q=questions[index];
+    progressEl.textContent=`Question ${index+1} / ${questions.length}`;
+    questionEl.textContent=q.q;
+    answersEl.innerHTML="";
 
     q.a.forEach((ans,i)=>{
-        const btn = document.createElement("button");
-        btn.className = "btn-answer";
-        btn.textContent = ans;
+        const btn=document.createElement("button");
+        btn.className="btn-answer";
+        btn.textContent=ans;
 
         if(userAnswers[index]===i) btn.classList.add("selected");
 
-        btn.onclick = ()=>{
+        btn.onclick=()=>{
             userAnswers[index]=i;
             loadQuestion();
         };
@@ -166,9 +166,9 @@ function loadQuestion() {
         answersEl.appendChild(btn);
     });
 
-    prevBtn.style.display = index===0?"none":"inline-block";
-    nextBtn.style.display = index===questions.length-1?"none":"inline-block";
-    finishBtn.style.display = index===questions.length-1?"inline-block":"none";
+    prevBtn.style.display=index===0?"none":"inline-block";
+    nextBtn.style.display=index===questions.length-1?"none":"inline-block";
+    finishBtn.style.display=index===questions.length-1?"inline-block":"none";
 }
 
 prevBtn.onclick=()=>{index--;loadQuestion();}
@@ -185,6 +185,14 @@ function showResults(){
     let score=0;
     let html="";
 
+    // 🔥 BOUTONS EN HAUT
+    html+=`
+    <div class="btn-top">
+        <button class="action-btn" onclick="goBack()">🏠 Retour aux quiz</button>
+        <button class="action-btn" onclick="restartQuiz()">🔁 Recommencer</button>
+    </div>
+    `;
+
     questions.forEach((q,i)=>{
         const correct=userAnswers[i]===q.c;
         if(correct) score++;
@@ -199,24 +207,7 @@ function showResults(){
         </div>`;
     });
 
-    resultsEl.innerHTML = `<h2>Score : ${score}/${questions.length}</h2>` + html;
-
-    const btnGroup=document.createElement("div");
-    btnGroup.className="btn-group";
-
-    const restartBtn=document.createElement("button");
-    restartBtn.textContent="🔁 Recommencer";
-    restartBtn.className="action-btn";
-    restartBtn.onclick=restartQuiz;
-
-    const backBtn=document.createElement("button");
-    backBtn.textContent="🏠 Retour aux quiz";
-    backBtn.className="action-btn";
-    backBtn.onclick=goBack;
-
-    btnGroup.appendChild(restartBtn);
-    btnGroup.appendChild(backBtn);
-    resultsEl.appendChild(btnGroup);
+    resultsEl.innerHTML=`<h2>Score : ${score}/${questions.length}</h2>`+html;
 }
 
 function restartQuiz(){
@@ -232,7 +223,7 @@ function restartQuiz(){
 }
 
 function goBack(){
-    window.location.href="apprendre.html"; // change si besoin
+    window.location.href="apprendre.html";
 }
 
 loadQuestion();
