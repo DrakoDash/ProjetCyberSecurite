@@ -171,40 +171,35 @@ nextBtn.onclick = () => { index++; loadQuestion(); };
 finishBtn.onclick = showResults;
 
 function showResults() {
-    questionEl.style.display = "none";
-    answersEl.style.display = "none";
-    document.getElementById("nav-container").style.display = "none";
+   // conteneur boutons
+const btnContainer = document.createElement("div");
+btnContainer.style.display = "flex";
+btnContainer.style.gap = "10px";
+btnContainer.style.marginTop = "20px";
 
-    resultsEl.style.display = "block";
+// bouton recommencer
+const restartBtn = document.createElement("button");
+restartBtn.textContent = "🔁 Recommencer";
+restartBtn.className = "restart-btn";
+restartBtn.onclick = restartQuiz;
 
-    let score = 0;
-    let html = "";
+// bouton retour
+const backBtn = document.createElement("button");
+backBtn.textContent = "🏠 Retour aux quiz";
+backBtn.className = "restart-btn";
+backBtn.onclick = () => {
+    window.location.href = "apprendre.html"; // 🔥 change si besoin
+};
 
-    questions.forEach((q, i) => {
-        const correct = userAnswers[i] === q.correct;
-        if (correct) score++;
+// ajouter les boutons
+btnContainer.appendChild(restartBtn);
+btnContainer.appendChild(backBtn);
+resultsEl.appendChild(btnContainer);
 
-        html += `
-        <div class="result-item">
-            <p><b>Question :</b> ${q.question}</p>
-            <p><b>Ta réponse :</b> ${userAnswers[i] !== null ? q.answers[userAnswers[i]] : "Non répondu"}</p>
-            <p><b>${correct ? "✅ Correct" : "❌ Incorrect"}</b></p>
-            <p><b>Explication :</b> ${q.explanation}</p>
-            ${!correct && userAnswers[i] !== null ? `<p><b>Bonne réponse :</b> ${q.answers[q.correct]}</p>` : ""}
-        </div>`;
-    });
-
-    resultsEl.innerHTML = `<h2>Score : ${score} / ${questions.length}</h2>` + html;
-
-    // bouton recommencer
-    const restartBtn = document.createElement("button");
-    restartBtn.textContent = "🔁 Recommencer le quiz";
-    restartBtn.className = "restart-btn";
-    restartBtn.onclick = restartQuiz;
-
-    resultsEl.appendChild(restartBtn);
+.restart-btn {
+    flex: 1;
 }
-
+    
 function restartQuiz() {
     index = 0;
     userAnswers = Array(questions.length).fill(null);
