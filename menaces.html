@@ -14,23 +14,6 @@ body {
     color: white;
 }
 
-header {
-    padding: 30px;
-    text-align: center;
-    background: #0d132b;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 2.2rem;
-}
-
-header a {
-    color: #3f6cf3;
-    text-decoration: none;
-    font-size: 1rem;
-}
-
 .quiz-container {
     max-width: 700px;
     margin: 40px auto;
@@ -41,7 +24,6 @@ header a {
 }
 
 #progress {
-    font-size: 1rem;
     margin-bottom: 15px;
     opacity: 0.8;
 }
@@ -63,13 +45,8 @@ header a {
     color: white;
 }
 
-.btn-answer:hover {
-    background: #1f2a66;
-}
-
-.btn-answer.selected {
-    background: #3f6cf3;
-}
+.btn-answer:hover { background: #1f2a66; }
+.btn-answer.selected { background: #3f6cf3; }
 
 #nav-container {
     display: flex;
@@ -85,9 +62,7 @@ header a {
     cursor: pointer;
 }
 
-#nav-container button:hover {
-    background: #5b82ff;
-}
+#nav-container button:hover { background: #5b82ff; }
 
 #results {
     margin-top: 20px;
@@ -103,15 +78,23 @@ header a {
     border-radius: 8px;
     margin-bottom: 10px;
 }
+
+.restart-btn {
+    margin-top: 20px;
+    padding: 12px;
+    width: 100%;
+    background: #3f6cf3;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.restart-btn:hover { background: #5b82ff; }
 </style>
 </head>
 
 <body>
-
-<header>
-    <a href="apprendre.html">← Retour</a>
-    <h1>Identifier les Menaces</h1>
-</header>
 
 <div class="quiz-container">
     <div id="progress"></div>
@@ -129,12 +112,21 @@ header a {
 
 <script>
 const questions = [
-    { question: "Un email indique que vous devez 'mettre à jour votre compte immédiatement'. Que faire ?", answers: ["Cliquer vite sur le lien", "Vérifier l’adresse de l’expéditeur et ne pas cliquer si suspect", "Répondre au mail"], correct: 1, explanation: "Vérifier l’expéditeur permet d’éviter le phishing." },
-    { question: "Quel signe peut indiquer un site frauduleux ?", answers: ["Design moderne", "URL étrange ou fautes", "Logo différent"], correct: 1, explanation: "Une URL suspecte est un signal d’alerte." },
-    { question: "Message étrange d’un ami avec un lien ?", answers: ["Cliquer", "Vérifier avec lui", "Partager"], correct: 1, explanation: "Toujours vérifier la source." },
-    { question: "Comportement typique du phishing ?", answers: ["Message urgent", "Message long", "Message d’un proche"], correct: 0, explanation: "L’urgence pousse à l’erreur." },
-    { question: "Télécharger sur un site non officiel ?", answers: ["Aucun risque", "Malware possible", "Connexion plus rapide"], correct: 1, explanation: "Risque d’infection." }
-    // 👉 tu peux remettre les 20 questions ici sans changer le code
+{question:"Un email urgent demande vos infos ?",answers:["Répondre","Vérifier l’expéditeur","Cliquer vite"],correct:1,explanation:"Toujours vérifier l’origine."},
+{question:"Un site frauduleux ?",answers:["HTTPS absent","Design beau","Logo connu"],correct:0,explanation:"Pas de HTTPS = danger."},
+{question:"Lien étrange d’un ami ?",answers:["Cliquer","Vérifier avec lui","Partager"],correct:1,explanation:"Compte peut être piraté."},
+{question:"Phishing ?",answers:["Message urgent","Message long","Message drôle"],correct:0,explanation:"Urgence = manipulation."},
+{question:"Téléchargement inconnu ?",answers:["Sans risque","Virus possible","Améliore PC"],correct:1,explanation:"Risque malware."},
+{question:"Cadeau gratuit ?",answers:["Fiable","Arnaque probable","Normal"],correct:1,explanation:"Trop beau = suspect."},
+{question:"Clé USB trouvée ?",answers:["Brancher","Donner à IT","Garder"],correct:1,explanation:"Peut contenir malware."},
+{question:"Fichier .exe inconnu ?",answers:["Ouvrir","Dangereux","Ignorer antivirus"],correct:1,explanation:"Peut installer virus."},
+{question:"SMS banque ?",answers:["Cliquer","Supprimer","Répondre"],correct:1,explanation:"Phishing SMS courant."},
+{question:"Wi-Fi public ?",answers:["Sûr","Risque","Ultra sécurisé"],correct:1,explanation:"Interception possible."},
+{question:"Mot de passe ?",answers:["123456","Complexe","Identique partout"],correct:1,explanation:"Complexité = sécurité."},
+{question:"Mise à jour ?",answers:["Inutile","Corrige failles","Ralentit"],correct:1,explanation:"Essentiel sécurité."},
+{question:"Site demande carte ?",answers:["Donner","Quitter","Envoyer photo"],correct:1,explanation:"Arnaque probable."},
+{question:"Pop-up étrange ?",answers:["Normal","Virus possible","Ignorer"],correct:1,explanation:"Signe infection."},
+{question:"Antivirus ?",answers:["Inutile","Protège","Ralentit seulement"],correct:1,explanation:"Protection essentielle."}
 ];
 
 let index = 0;
@@ -203,6 +195,26 @@ function showResults() {
     });
 
     resultsEl.innerHTML = `<h2>Score : ${score} / ${questions.length}</h2>` + html;
+
+    // bouton recommencer
+    const restartBtn = document.createElement("button");
+    restartBtn.textContent = "🔁 Recommencer le quiz";
+    restartBtn.className = "restart-btn";
+    restartBtn.onclick = restartQuiz;
+
+    resultsEl.appendChild(restartBtn);
+}
+
+function restartQuiz() {
+    index = 0;
+    userAnswers = Array(questions.length).fill(null);
+
+    questionEl.style.display = "block";
+    answersEl.style.display = "block";
+    document.getElementById("nav-container").style.display = "flex";
+    resultsEl.style.display = "none";
+
+    loadQuestion();
 }
 
 loadQuestion();
