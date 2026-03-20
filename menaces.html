@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Identifier les Menaces - Quiz</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+<title>Quiz Cybersécurité - Menaces</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 body {
@@ -23,14 +23,14 @@ body {
     box-shadow: 0 5px 20px rgba(0,0,0,0.5);
 }
 
-#progress {
-    margin-bottom: 15px;
-    opacity: 0.8;
-}
-
 .question {
     font-size: 1.4rem;
     margin-bottom: 20px;
+}
+
+#progress {
+    margin-bottom: 15px;
+    opacity: 0.8;
 }
 
 .btn-answer {
@@ -79,18 +79,23 @@ body {
     margin-bottom: 10px;
 }
 
-.restart-btn {
+.btn-group {
+    display: flex;
+    gap: 10px;
     margin-top: 20px;
-    padding: 12px;
-    width: 100%;
-    background: #3f6cf3;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 1rem;
 }
 
-.restart-btn:hover { background: #5b82ff; }
+.action-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #3f6cf3;
+    cursor: pointer;
+    color: white;
+}
+
+.action-btn:hover { background: #5b82ff; }
 </style>
 </head>
 
@@ -112,21 +117,21 @@ body {
 
 <script>
 const questions = [
-{question:"Un email urgent demande vos infos ?",answers:["Répondre","Vérifier l’expéditeur","Cliquer vite"],correct:1,explanation:"Toujours vérifier l’origine."},
-{question:"Un site frauduleux ?",answers:["HTTPS absent","Design beau","Logo connu"],correct:0,explanation:"Pas de HTTPS = danger."},
-{question:"Lien étrange d’un ami ?",answers:["Cliquer","Vérifier avec lui","Partager"],correct:1,explanation:"Compte peut être piraté."},
-{question:"Phishing ?",answers:["Message urgent","Message long","Message drôle"],correct:0,explanation:"Urgence = manipulation."},
-{question:"Téléchargement inconnu ?",answers:["Sans risque","Virus possible","Améliore PC"],correct:1,explanation:"Risque malware."},
-{question:"Cadeau gratuit ?",answers:["Fiable","Arnaque probable","Normal"],correct:1,explanation:"Trop beau = suspect."},
-{question:"Clé USB trouvée ?",answers:["Brancher","Donner à IT","Garder"],correct:1,explanation:"Peut contenir malware."},
-{question:"Fichier .exe inconnu ?",answers:["Ouvrir","Dangereux","Ignorer antivirus"],correct:1,explanation:"Peut installer virus."},
-{question:"SMS banque ?",answers:["Cliquer","Supprimer","Répondre"],correct:1,explanation:"Phishing SMS courant."},
-{question:"Wi-Fi public ?",answers:["Sûr","Risque","Ultra sécurisé"],correct:1,explanation:"Interception possible."},
-{question:"Mot de passe ?",answers:["123456","Complexe","Identique partout"],correct:1,explanation:"Complexité = sécurité."},
-{question:"Mise à jour ?",answers:["Inutile","Corrige failles","Ralentit"],correct:1,explanation:"Essentiel sécurité."},
-{question:"Site demande carte ?",answers:["Donner","Quitter","Envoyer photo"],correct:1,explanation:"Arnaque probable."},
-{question:"Pop-up étrange ?",answers:["Normal","Virus possible","Ignorer"],correct:1,explanation:"Signe infection."},
-{question:"Antivirus ?",answers:["Inutile","Protège","Ralentit seulement"],correct:1,explanation:"Protection essentielle."}
+{q:"Email urgent demandant tes infos ?",a:["Répondre","Vérifier expéditeur","Cliquer"],c:1,e:"Toujours vérifier la source."},
+{q:"Site sans HTTPS ?",a:["Sûr","Dangereux","Normal"],c:1,e:"Pas sécurisé."},
+{q:"Lien étrange d’un ami ?",a:["Cliquer","Vérifier","Partager"],c:1,e:"Compte peut être piraté."},
+{q:"Phishing ?",a:["Urgence","Message drôle","Long texte"],c:0,e:"Manipulation par stress."},
+{q:"Téléchargement inconnu ?",a:["Sûr","Virus possible","Rapide"],c:1,e:"Risque malware."},
+{q:"Cadeau gratuit ?",a:["Fiable","Arnaque","Normal"],c:1,e:"Trop beau = suspect."},
+{q:"Clé USB trouvée ?",a:["Brancher","Donner IT","Garder"],c:1,e:"Danger malware."},
+{q:"Fichier .exe ?",a:["Sans risque","Dangereux","Obligatoire"],c:1,e:"Peut installer virus."},
+{q:"SMS banque ?",a:["Cliquer","Supprimer","Répondre"],c:1,e:"Phishing courant."},
+{q:"Wi-Fi public ?",a:["Sûr","Risque","Ultra sûr"],c:1,e:"Interception possible."},
+{q:"Mot de passe ?",a:["123456","Complexe","Identique"],c:1,e:"Complexité importante."},
+{q:"Mise à jour ?",a:["Inutile","Sécurité","Ralentit"],c:1,e:"Corrige failles."},
+{q:"Carte bancaire demandée ?",a:["Donner","Quitter","Envoyer photo"],c:1,e:"Arnaque probable."},
+{q:"Pop-up étrange ?",a:["Normal","Virus","Ignorer"],c:1,e:"Signe infection."},
+{q:"Antivirus ?",a:["Inutile","Protège","Décoratif"],c:1,e:"Protection essentielle."}
 ];
 
 let index = 0;
@@ -142,79 +147,92 @@ const resultsEl = document.getElementById("results");
 
 function loadQuestion() {
     const q = questions[index];
-    progressEl.textContent = `Question ${index + 1} / ${questions.length}`;
-    questionEl.textContent = q.question;
+    progressEl.textContent = `Question ${index+1} / ${questions.length}`;
+    questionEl.textContent = q.q;
     answersEl.innerHTML = "";
 
-    q.answers.forEach((ans, i) => {
+    q.a.forEach((ans,i)=>{
         const btn = document.createElement("button");
         btn.className = "btn-answer";
         btn.textContent = ans;
 
-        if (userAnswers[index] === i) btn.classList.add("selected");
+        if(userAnswers[index]===i) btn.classList.add("selected");
 
-        btn.onclick = () => {
-            userAnswers[index] = i;
+        btn.onclick = ()=>{
+            userAnswers[index]=i;
             loadQuestion();
         };
 
         answersEl.appendChild(btn);
     });
 
-    prevBtn.style.display = index === 0 ? "none" : "inline-block";
-    nextBtn.style.display = index === questions.length - 1 ? "none" : "inline-block";
-    finishBtn.style.display = index === questions.length - 1 ? "inline-block" : "none";
+    prevBtn.style.display = index===0?"none":"inline-block";
+    nextBtn.style.display = index===questions.length-1?"none":"inline-block";
+    finishBtn.style.display = index===questions.length-1?"inline-block":"none";
 }
 
-prevBtn.onclick = () => { index--; loadQuestion(); };
-nextBtn.onclick = () => { index++; loadQuestion(); };
-finishBtn.onclick = showResults;
+prevBtn.onclick=()=>{index--;loadQuestion();}
+nextBtn.onclick=()=>{index++;loadQuestion();}
+finishBtn.onclick=showResults;
 
-function showResults() {
-    questionEl.style.display = "none";
-    answersEl.style.display = "none";
-    document.getElementById("nav-container").style.display = "none";
+function showResults(){
+    questionEl.style.display="none";
+    answersEl.style.display="none";
+    document.getElementById("nav-container").style.display="none";
 
-    resultsEl.style.display = "block";
+    resultsEl.style.display="block";
 
-    let score = 0;
-    let html = "";
+    let score=0;
+    let html="";
 
-    questions.forEach((q, i) => {
-        const correct = userAnswers[i] === q.correct;
-        if (correct) score++;
+    questions.forEach((q,i)=>{
+        const correct=userAnswers[i]===q.c;
+        if(correct) score++;
 
-        html += `
+        html+=`
         <div class="result-item">
-            <p><b>Question :</b> ${q.question}</p>
-            <p><b>Ta réponse :</b> ${userAnswers[i] !== null ? q.answers[userAnswers[i]] : "Non répondu"}</p>
-            <p><b>${correct ? "✅ Correct" : "❌ Incorrect"}</b></p>
-            <p><b>Explication :</b> ${q.explanation}</p>
-            ${!correct && userAnswers[i] !== null ? `<p><b>Bonne réponse :</b> ${q.answers[q.correct]}</p>` : ""}
+            <p><b>Question :</b> ${q.q}</p>
+            <p><b>Ta réponse :</b> ${userAnswers[i]!==null?q.a[userAnswers[i]]:"Non répondu"}</p>
+            <p><b>${correct?"✅ Correct":"❌ Incorrect"}</b></p>
+            <p><b>Explication :</b> ${q.e}</p>
+            ${!correct && userAnswers[i]!==null?`<p><b>Bonne réponse :</b> ${q.a[q.c]}</p>`:""}
         </div>`;
     });
 
-    resultsEl.innerHTML = `<h2>Score : ${score} / ${questions.length}</h2>` + html;
+    resultsEl.innerHTML = `<h2>Score : ${score}/${questions.length}</h2>` + html;
 
-    // bouton recommencer
-    const restartBtn = document.createElement("button");
-    restartBtn.textContent = "🔁 Recommencer le quiz";
-    restartBtn.className = "restart-btn";
-    restartBtn.onclick = restartQuiz;
+    const btnGroup=document.createElement("div");
+    btnGroup.className="btn-group";
 
-    resultsEl.appendChild(restartBtn);
+    const restartBtn=document.createElement("button");
+    restartBtn.textContent="🔁 Recommencer";
+    restartBtn.className="action-btn";
+    restartBtn.onclick=restartQuiz;
+
+    const backBtn=document.createElement("button");
+    backBtn.textContent="🏠 Retour aux quiz";
+    backBtn.className="action-btn";
+    backBtn.onclick=goBack;
+
+    btnGroup.appendChild(restartBtn);
+    btnGroup.appendChild(backBtn);
+    resultsEl.appendChild(btnGroup);
 }
 
-function restartQuiz() {
-    index = 0;
-    userAnswers = Array(questions.length).fill(null);
+function restartQuiz(){
+    index=0;
+    userAnswers=Array(questions.length).fill(null);
 
-    questionEl.style.display = "block";
-    answersEl.style.display = "block";
-    document.getElementById("nav-container").style.display = "flex";
-    resultsEl.style.display = "none";
+    questionEl.style.display="block";
+    answersEl.style.display="block";
+    document.getElementById("nav-container").style.display="flex";
+    resultsEl.style.display="none";
 
     loadQuestion();
+}
+
+function goBack(){
+    window.location.href="apprendre.html"; // change si besoin
 }
 
 loadQuestion();
