@@ -26,11 +26,85 @@
     color: white;
     overflow-x: hidden;
     position: relative;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
   }
 
-  /* Particules (canvas) */
+  /* NAVBAR FIXE */
+  .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(10,15,36,0.85);
+    backdrop-filter: blur(6px);
+    border-bottom: 2px solid var(--accent);
+    padding: 12px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 999;
+  }
+
+  .nav-logo {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 1px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 25px;
+  }
+
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+  }
+
+  .nav-links a:hover {
+    color: var(--accent-2);
+    text-shadow: 0 0 8px var(--accent);
+  }
+
+  .nav-toggle {
+    display: none;
+    font-size: 1.8rem;
+    color: white;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      position: fixed;
+      top: 60px;
+      right: -100%;
+      width: 70%;
+      height: calc(100vh - 60px);
+      background: rgba(10,15,36,0.95);
+      backdrop-filter: blur(6px);
+      flex-direction: column;
+      padding: 40px 20px;
+      gap: 20px;
+      transition: right 0.4s ease;
+      border-left: 2px solid var(--accent);
+    }
+
+    .nav-links.open {
+      right: 0;
+    }
+
+    .nav-toggle {
+      display: block;
+    }
+  }
+
+  /* Décale le contenu à cause de la navbar */
+  header, .intro, .quizz-category {
+    margin-top: 70px;
+  }
+
+  /* Particules */
   #particles {
     position: fixed;
     top: 0;
@@ -45,7 +119,6 @@
     padding: 60px 20px;
     text-align: center;
     background: linear-gradient(180deg, var(--glass), rgba(10,15,36,0.6));
-    backdrop-filter: blur(4px);
     border-bottom: 2px solid var(--accent);
   }
 
@@ -53,7 +126,6 @@
     font-size: 3rem;
     margin: 0;
     letter-spacing: 2px;
-    line-height:1.05;
   }
 
   header p {
@@ -92,7 +164,6 @@
     font-size: 2rem;
     margin-bottom: 20px;
     color: var(--accent);
-    text-align: left;
   }
 
   /* Grille */
@@ -110,18 +181,10 @@
     box-shadow: 0 5px 15px rgba(0,0,0,0.45);
     text-align: center;
     cursor: pointer;
-    transition: transform 0.35s cubic-bezier(.2,.9,.3,1), box-shadow 0.35s, background 0.35s, border 0.35s;
+    transition: 0.35s;
     border: 2px solid transparent;
     opacity: 0;
     transform: translateY(36px);
-    will-change: transform, opacity;
-    outline: none;
-    position: relative;
-  }
-
-  .card:focus {
-    box-shadow: 0 8px 30px rgba(0,191,255,0.12);
-    border: 2px solid rgba(0,191,255,0.18);
   }
 
   .card.visible {
@@ -136,58 +199,17 @@
     border: 2px solid var(--accent);
   }
 
-  .card h3 {
-    font-size: 1.35rem;
-    margin: 8px 0 6px;
-  }
-
-  .card p {
-    opacity: 0.88;
-    font-size: 0.98rem;
-    margin: 0;
-  }
-
-  /* Icône animée */
   .card-icon {
     font-size: 3.2rem;
     margin-bottom: 14px;
     color: var(--accent);
-    transition: transform 0.45s cubic-bezier(.2,.9,.3,1), color 0.35s, text-shadow 0.35s, filter 0.35s;
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    line-height: 1;
+    transition: 0.45s;
   }
 
-  /* Hover animation: scale + rotate + glow */
   .card:hover .card-icon {
     transform: scale(1.25) rotate(8deg);
     color: var(--accent-2);
-    text-shadow: 0 0 10px var(--accent), 0 0 20px rgba(0,153,255,0.25);
-    filter: drop-shadow(0 6px 18px rgba(0,191,255,0.12));
-  }
-
-  /* Subtle floating animation on icons (idle) */
-  .card-icon.float {
-    animation: floatIcon 6s ease-in-out infinite;
-  }
-  @keyframes floatIcon {
-    0% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-6px) rotate(2deg); }
-    100% { transform: translateY(0) rotate(0deg); }
-  }
-
-  /* Small badge glow on hover */
-  .card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 14px;
-    pointer-events: none;
-    transition: box-shadow 0.35s;
-  }
-  .card:hover::after {
-    box-shadow: 0 0 40px rgba(0,191,255,0.06) inset;
+    text-shadow: 0 0 10px var(--accent);
   }
 
   footer {
@@ -195,63 +217,40 @@
     padding: 20px;
     margin-top: 40px;
     background: rgba(13,19,43,0.8);
-    opacity: 0.9;
   }
 
-  /* Responsive improvements */
-  @media only screen and (max-width: 480px) {
-    header {
-      padding: 36px 12px;
-    }
-    header h1 {
-      font-size: 2.1rem;
-    }
-    header p {
-      font-size: 0.98rem;
-    }
-    .intro {
-      padding: 26px 14px;
-    }
-    .intro h2 {
-      font-size: 1.6rem;
-    }
-    .intro p {
-      font-size: 0.98rem;
-    }
-    .quizz-category h2 {
-      text-align: center;
-      font-size: 1.5rem;
-    }
-    .quizz-grid {
-      grid-template-columns: 1fr;
-      padding: 18px 12px;
-      gap: 18px;
-    }
-    .card {
-      padding: 20px;
-    }
-    .card h3 {
-      font-size: 1.15rem;
-    }
-    .card p {
-      font-size: 0.95rem;
-    }
-    .card-icon {
-      font-size: 2.6rem;
-      margin-bottom: 10px;
-    }
-  }
-
-  /* Focus-visible for keyboard users */
-  .card:focus-visible {
-    outline: 3px solid rgba(76,201,240,0.18);
-    outline-offset: 4px;
+  /* Mobile amélioré */
+  @media (max-width: 480px) {
+    header h1 { font-size: 2.2rem; }
+    .intro h2 { font-size: 1.7rem; }
+    .quizz-category h2 { text-align: center; }
+    .card { padding: 22px; }
+    .card-icon { font-size: 2.6rem; }
   }
 </style>
 </head>
 
 <body>
-<canvas id="particles" aria-hidden="true"></canvas>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-logo">CyberQuiz</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="accueil.html">Accueil</a>
+    <a href="debutant.html">Débutant</a>
+    <a href="pratiques.html">Pratiques</a>
+    <a href="menaces.html">Menaces</a>
+    <a href="avance.html">Avancé</a>
+    <a href="quiz-final.html">Contrôle Final</a>
+  </div>
+
+  <div class="nav-toggle" onclick="toggleMenu()">
+    <i class="fa-solid fa-bars"></i>
+  </div>
+</nav>
+
+<canvas id="particles"></canvas>
 
 <header>
   <h1>Apprendre & Se Tester</h1>
@@ -260,67 +259,70 @@
 
 <section class="intro">
   <h2>Choisissez votre quiz</h2>
-  <p>Explorez des quiz interactifs conçus pour tester vos connaissances, apprendre de nouvelles choses et vous préparer à reconnaître les menaces en ligne.</p>
+  <p>Explorez des quiz interactifs conçus pour tester vos connaissances.</p>
 </section>
 
-<!-- Catégorie : Bases -->
+<!-- Catégories -->
 <section class="quizz-category">
   <h2>💡 Bases & Initiation</h2>
   <div class="quizz-grid">
-    <div class="card" role="link" tabindex="0" onclick="location.href='debutant.html'" onkeypress="if(event.key==='Enter') location.href='debutant.html'">
-      <i class="fa-solid fa-graduation-cap card-icon float" aria-hidden="true"></i>
+
+    <div class="card" onclick="location.href='debutant.html'">
+      <i class="fa-solid fa-graduation-cap card-icon"></i>
       <h3>Quiz Débutant</h3>
-      <p>Parfait pour commencer : testez vos bases en cybersécurité.</p>
+      <p>Testez vos bases en cybersécurité.</p>
     </div>
 
-    <div class="card" role="link" tabindex="0" onclick="location.href='pratiques.html'" onkeypress="if(event.key==='Enter') location.href='pratiques.html'">
-      <i class="fa-solid fa-shield-halved card-icon float" aria-hidden="true"></i>
+    <div class="card" onclick="location.href='pratiques.html'">
+      <i class="fa-solid fa-shield-halved card-icon"></i>
       <h3>Bonnes Pratiques</h3>
-      <p>Testez vos réflexes : êtes-vous prêt à vous protéger ?</p>
+      <p>Êtes-vous prêt à vous protéger ?</p>
     </div>
+
   </div>
 </section>
 
-<!-- Catégorie : Menaces -->
 <section class="quizz-category">
   <h2>🔍 Menaces & Sécurité</h2>
   <div class="quizz-grid">
-    <div class="card" role="link" tabindex="0" onclick="location.href='menaces.html'" onkeypress="if(event.key==='Enter') location.href='menaces.html'">
-      <i class="fa-solid fa-bug card-icon float" aria-hidden="true"></i>
+
+    <div class="card" onclick="location.href='menaces.html'">
+      <i class="fa-solid fa-bug card-icon"></i>
       <h3>Identifier les Menaces</h3>
-      <p>Pourrez-vous reconnaître un phishing ou un malware ?</p>
+      <p>Reconnaître phishing et malware.</p>
     </div>
 
-    <div class="card" role="link" tabindex="0" onclick="location.href='mdp.html'" onkeypress="if(event.key==='Enter') location.href='mdp.html'">
-      <i class="fa-solid fa-key card-icon float" aria-hidden="true"></i>
+    <div class="card" onclick="location.href='mdp.html'">
+      <i class="fa-solid fa-key card-icon"></i>
       <h3>Mots de Passe</h3>
-      <p>Êtes-vous capable de repérer un mot de passe faible ?</p>
+      <p>Repérez les mots de passe faibles.</p>
     </div>
+
   </div>
 </section>
 
-<!-- Catégorie : Réseaux & Avancé -->
 <section class="quizz-category">
   <h2>👀 Réseaux & Avancé</h2>
   <div class="quizz-grid">
-    <div class="card" role="link" tabindex="0" onclick="location.href='reseaux.html'" onkeypress="if(event.key==='Enter') location.href='reseaux.html'">
-      <i class="fa-solid fa-users card-icon float" aria-hidden="true"></i>
+
+    <div class="card" onclick="location.href='reseaux.html'">
+      <i class="fa-solid fa-users card-icon"></i>
       <h3>Réseaux Sociaux</h3>
-      <p>Apprenez à éviter les pièges les plus courants en ligne.</p>
+      <p>Évitez les pièges en ligne.</p>
     </div>
 
-    <div class="card" role="link" tabindex="0" onclick="location.href='avance.html'" onkeypress="if(event.key==='Enter') location.href='avance.html'">
-      <i class="fa-solid fa-brain card-icon float" aria-hidden="true"></i>
+    <div class="card" onclick="location.href='avance.html'">
+      <i class="fa-solid fa-brain card-icon"></i>
       <h3>Quiz Avancé</h3>
-      <p>Défiez vos connaissances avec un quiz complet.</p>
+      <p>Défiez vos connaissances.</p>
     </div>
 
-    <!-- NOUVELLE CARTE : Contrôle Final -->
-    <div class="card" role="link" tabindex="0" onclick="location.href='quiz-final.html'" onkeypress="if(event.key==='Enter') location.href='quiz-final.html'">
-      <i class="fa-solid fa-trophy card-icon float" aria-hidden="true"></i>
+    <div class="card" onclick="location.href='quiz-final.html'">
+      <i class="fa-solid fa-trophy card-icon"></i>
       <h3>Contrôle Final</h3>
-      <p>Une question difficile aléatoire pour tester votre niveau.</p>
+      <p>Une question difficile aléatoire.</p>
     </div>
+
   </div>
 </section>
 
@@ -329,80 +331,77 @@
 </footer>
 
 <script>
-  /* Intersection Observer pour l'animation au scroll */
-  const cards = document.querySelectorAll('.card');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.18 });
+function toggleMenu() {
+  document.getElementById("navLinks").classList.toggle("open");
+}
 
-  cards.forEach(card => observer.observe(card));
-
-  /* Particules canvas */
-  const canvas = document.getElementById('particles');
-  const ctx = canvas.getContext('2d');
-  let particlesArray = [];
-
-  function initCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-
-  window.addEventListener('resize', () => {
-    initCanvas();
-    initParticles();
+/* Animation scroll */
+const cards = document.querySelectorAll('.card');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
   });
+}, { threshold: 0.2 });
 
-  class Particle {
-    constructor() {
-      this.reset();
-      this.size = Math.random() * 2.5 + 0.6;
-      this.color = `rgba(0,191,255,${Math.random() * 0.45 + 0.15})`;
-    }
-    reset() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.speedX = (Math.random() - 0.5) * 0.6;
-      this.speedY = (Math.random() - 0.5) * 0.6;
-    }
-    update() {
-      this.x += this.speedX;
-      this.y += this.speedY;
-      if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height + 10) {
-        this.reset();
-      }
-    }
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = this.color;
-      ctx.fill();
-    }
-  }
+cards.forEach(card => observer.observe(card));
 
-  function initParticles() {
-    particlesArray = [];
-    const number = Math.max(30, Math.floor((canvas.width * canvas.height) / 18000));
-    for (let i = 0; i < number; i++) particlesArray.push(new Particle());
-  }
+/* Particules */
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particlesArray = [];
 
-  function animateParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particlesArray.forEach(p => { p.update(); p.draw(); });
-    requestAnimationFrame(animateParticles);
-  }
+function initCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
 
+window.addEventListener('resize', () => {
   initCanvas();
   initParticles();
-  animateParticles();
+});
 
-  /* Petite amélioration d'accessibilité : activer hover effect via keyboard */
-  document.querySelectorAll('.card').forEach(card => {
-    card.addEventListener('focus', () => card.classList.add('visible'));
-  });
+class Particle {
+  constructor() {
+    this.reset();
+    this.size = Math.random() * 2.5 + 0.6;
+    this.color = `rgba(0,191,255,${Math.random() * 0.45 + 0.15})`;
+  }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.speedX = (Math.random() - 0.5) * 0.6;
+    this.speedY = (Math.random() - 0.5) * 0.6;
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height + 10) {
+      this.reset();
+    }
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.fill();
+  }
+}
+
+function initParticles() {
+  particlesArray = [];
+  const number = Math.max(30, Math.floor((canvas.width * canvas.height) / 18000));
+  for (let i = 0; i < number; i++) particlesArray.push(new Particle());
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particlesArray.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animateParticles);
+}
+
+initCanvas();
+initParticles();
+animateParticles();
 </script>
 
 </body>
