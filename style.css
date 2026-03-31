@@ -56,3 +56,84 @@ body {
   opacity: 0.8;
 }
 
+/* NAVBAR FIXE */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(10,15,36,0.85);
+  backdrop-filter: blur(6px);
+  border-bottom: 2px solid #00bfff;
+  padding: 12px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 999;
+}
+
+.nav-logo {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #00bfff;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 25px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #4cc9f0;
+  text-shadow: 0 0 8px #00bfff;
+}
+
+/* BOUTON BURGER (MOBILE) */
+.nav-toggle {
+  display: none;
+  font-size: 1.8rem;
+  color: white;
+  cursor: pointer;
+}
+
+/* VERSION MOBILE */
+@media (max-width: 768px) {
+  .nav-links {
+    position: fixed;
+    top: 60px;
+    right: -100%;
+    width: 70%;
+    height: calc(100vh - 60px);
+    background: rgba(10,15,36,0.95);
+    backdrop-filter: blur(6px);
+    flex-direction: column;
+    padding: 40px 20px;
+    gap: 20px;
+    transition: right 0.4s ease;
+    border-left: 2px solid #00bfff;
+  }
+
+  .nav-links a {
+    font-size: 1.2rem;
+  }
+
+  .nav-links.open {
+    right: 0;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+}
+
+/* Décale le contenu vers le bas à cause de la navbar fixe */
+header, .intro, .quizz-category {
+  margin-top: 70px;
+}
