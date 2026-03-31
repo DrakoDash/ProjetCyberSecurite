@@ -4,19 +4,33 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Apprendre - Quiz CyberSécurité</title>
+
+<!-- Font Awesome pour les icônes -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
 
 <style>
+  :root{
+    --bg:#0a0f24;
+    --card:#111833;
+    --accent:#00bfff;
+    --accent-2:#4cc9f0;
+    --card-hover:#16204a;
+    --glass: rgba(13,19,43,0.9);
+  }
+
   body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background: #0a0f24;
+    background: var(--bg);
     color: white;
     overflow-x: hidden;
     position: relative;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
   }
 
-  /* Effet particules */
+  /* Particules (canvas) */
   #particles {
     position: fixed;
     top: 0;
@@ -30,28 +44,29 @@
   header {
     padding: 60px 20px;
     text-align: center;
-    background: linear-gradient(180deg, rgba(13,19,43,0.9), rgba(10,15,36,0.6));
+    background: linear-gradient(180deg, var(--glass), rgba(10,15,36,0.6));
     backdrop-filter: blur(4px);
-    border-bottom: 2px solid #00bfff;
+    border-bottom: 2px solid var(--accent);
   }
 
   header h1 {
     font-size: 3rem;
     margin: 0;
     letter-spacing: 2px;
+    line-height:1.05;
   }
 
   header p {
     margin-top: 10px;
-    font-size: 1.2rem;
-    opacity: 0.85;
+    font-size: 1.15rem;
+    opacity: 0.9;
   }
 
   /* Intro */
   .intro {
     text-align: center;
     padding: 40px 20px;
-    max-width: 800px;
+    max-width: 900px;
     margin: auto;
   }
 
@@ -62,7 +77,7 @@
 
   .intro p {
     opacity: 0.9;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     line-height: 1.6;
   }
 
@@ -76,29 +91,37 @@
   .quizz-category h2 {
     font-size: 2rem;
     margin-bottom: 20px;
-    color: #00bfff;
+    color: var(--accent);
     text-align: left;
   }
 
   /* Grille */
   .quizz-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 28px;
   }
 
   /* Cartes */
   .card {
     background: rgba(17,24,51,0.95);
-    padding: 30px;
+    padding: 28px;
     border-radius: 14px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.45);
     text-align: center;
     cursor: pointer;
-    transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease, border 0.4s ease;
+    transition: transform 0.35s cubic-bezier(.2,.9,.3,1), box-shadow 0.35s, background 0.35s, border 0.35s;
     border: 2px solid transparent;
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(36px);
+    will-change: transform, opacity;
+    outline: none;
+    position: relative;
+  }
+
+  .card:focus {
+    box-shadow: 0 8px 30px rgba(0,191,255,0.12);
+    border: 2px solid rgba(0,191,255,0.18);
   }
 
   .card.visible {
@@ -107,20 +130,64 @@
   }
 
   .card:hover {
-    transform: translateY(-12px) scale(1.05);
+    transform: translateY(-10px) scale(1.03);
     background: rgba(22,32,74,0.95);
-    box-shadow: 0 8px 25px rgba(0, 80, 255, 0.5);
-    border: 2px solid #00bfff;
+    box-shadow: 0 10px 30px rgba(0, 80, 255, 0.45);
+    border: 2px solid var(--accent);
   }
 
   .card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
+    font-size: 1.35rem;
+    margin: 8px 0 6px;
   }
 
   .card p {
-    opacity: 0.85;
-    font-size: 1rem;
+    opacity: 0.88;
+    font-size: 0.98rem;
+    margin: 0;
+  }
+
+  /* Icône animée */
+  .card-icon {
+    font-size: 3.2rem;
+    margin-bottom: 14px;
+    color: var(--accent);
+    transition: transform 0.45s cubic-bezier(.2,.9,.3,1), color 0.35s, text-shadow 0.35s, filter 0.35s;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+  }
+
+  /* Hover animation: scale + rotate + glow */
+  .card:hover .card-icon {
+    transform: scale(1.25) rotate(8deg);
+    color: var(--accent-2);
+    text-shadow: 0 0 10px var(--accent), 0 0 20px rgba(0,153,255,0.25);
+    filter: drop-shadow(0 6px 18px rgba(0,191,255,0.12));
+  }
+
+  /* Subtle floating animation on icons (idle) */
+  .card-icon.float {
+    animation: floatIcon 6s ease-in-out infinite;
+  }
+  @keyframes floatIcon {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-6px) rotate(2deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+  }
+
+  /* Small badge glow on hover */
+  .card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    pointer-events: none;
+    transition: box-shadow 0.35s;
+  }
+  .card:hover::after {
+    box-shadow: 0 0 40px rgba(0,191,255,0.06) inset;
   }
 
   footer {
@@ -128,53 +195,63 @@
     padding: 20px;
     margin-top: 40px;
     background: rgba(13,19,43,0.8);
-    opacity: 0.8;
+    opacity: 0.9;
   }
 
-  /* Version mobile améliorée */
+  /* Responsive improvements */
   @media only screen and (max-width: 480px) {
     header {
-      padding: 40px 10px;
+      padding: 36px 12px;
     }
     header h1 {
-      font-size: 2.2rem;
+      font-size: 2.1rem;
     }
     header p {
-      font-size: 1rem;
+      font-size: 0.98rem;
     }
     .intro {
-      padding: 30px 15px;
+      padding: 26px 14px;
     }
     .intro h2 {
-      font-size: 1.7rem;
+      font-size: 1.6rem;
     }
     .intro p {
-      font-size: 1rem;
+      font-size: 0.98rem;
     }
     .quizz-category h2 {
       text-align: center;
-      font-size: 1.6rem;
+      font-size: 1.5rem;
     }
     .quizz-grid {
       grid-template-columns: 1fr;
-      padding: 30px 15px;
-      gap: 20px;
+      padding: 18px 12px;
+      gap: 18px;
     }
     .card {
-      padding: 25px;
+      padding: 20px;
     }
     .card h3 {
-      font-size: 1.3rem;
+      font-size: 1.15rem;
     }
     .card p {
       font-size: 0.95rem;
     }
+    .card-icon {
+      font-size: 2.6rem;
+      margin-bottom: 10px;
+    }
+  }
+
+  /* Focus-visible for keyboard users */
+  .card:focus-visible {
+    outline: 3px solid rgba(76,201,240,0.18);
+    outline-offset: 4px;
   }
 </style>
 </head>
 
 <body>
-<canvas id="particles"></canvas>
+<canvas id="particles" aria-hidden="true"></canvas>
 
 <header>
   <h1>Apprendre & Se Tester</h1>
@@ -183,19 +260,22 @@
 
 <section class="intro">
   <h2>Choisissez votre quiz</h2>
-  <p>Explorez des quiz interactifs conçus pour tester vos connaissances, vous apprendre de nouvelles choses et vous préparer à reconnaître les menaces en ligne.</p>
+  <p>Explorez des quiz interactifs conçus pour tester vos connaissances, apprendre de nouvelles choses et vous préparer à reconnaître les menaces en ligne.</p>
 </section>
 
 <!-- Catégorie : Bases -->
 <section class="quizz-category">
   <h2>💡 Bases & Initiation</h2>
   <div class="quizz-grid">
-    <div class="card" onclick="window.location.href='debutant.html'">
-      <h3>🧠 Quiz Débutant</h3>
+    <div class="card" role="link" tabindex="0" onclick="location.href='debutant.html'" onkeypress="if(event.key==='Enter') location.href='debutant.html'">
+      <i class="fa-solid fa-graduation-cap card-icon float" aria-hidden="true"></i>
+      <h3>Quiz Débutant</h3>
       <p>Parfait pour commencer : testez vos bases en cybersécurité.</p>
     </div>
-    <div class="card" onclick="window.location.href='pratiques.html'">
-      <h3>💡 Bonnes Pratiques</h3>
+
+    <div class="card" role="link" tabindex="0" onclick="location.href='pratiques.html'" onkeypress="if(event.key==='Enter') location.href='pratiques.html'">
+      <i class="fa-solid fa-shield-halved card-icon float" aria-hidden="true"></i>
+      <h3>Bonnes Pratiques</h3>
       <p>Testez vos réflexes : êtes-vous prêt à vous protéger ?</p>
     </div>
   </div>
@@ -205,12 +285,15 @@
 <section class="quizz-category">
   <h2>🔍 Menaces & Sécurité</h2>
   <div class="quizz-grid">
-    <div class="card" onclick="window.location.href='menaces.html'">
-      <h3>🔍 Identifier les Menaces</h3>
+    <div class="card" role="link" tabindex="0" onclick="location.href='menaces.html'" onkeypress="if(event.key==='Enter') location.href='menaces.html'">
+      <i class="fa-solid fa-bug card-icon float" aria-hidden="true"></i>
+      <h3>Identifier les Menaces</h3>
       <p>Pourrez-vous reconnaître un phishing ou un malware ?</p>
     </div>
-    <div class="card" onclick="window.location.href='mdp.html'">
-      <h3>🔐 Mots de Passe</h3>
+
+    <div class="card" role="link" tabindex="0" onclick="location.href='mdp.html'" onkeypress="if(event.key==='Enter') location.href='mdp.html'">
+      <i class="fa-solid fa-key card-icon float" aria-hidden="true"></i>
+      <h3>Mots de Passe</h3>
       <p>Êtes-vous capable de repérer un mot de passe faible ?</p>
     </div>
   </div>
@@ -220,18 +303,22 @@
 <section class="quizz-category">
   <h2>👀 Réseaux & Avancé</h2>
   <div class="quizz-grid">
-    <div class="card" onclick="window.location.href='reseaux.html'">
-      <h3>👀 Réseaux Sociaux</h3>
+    <div class="card" role="link" tabindex="0" onclick="location.href='reseaux.html'" onkeypress="if(event.key==='Enter') location.href='reseaux.html'">
+      <i class="fa-solid fa-users card-icon float" aria-hidden="true"></i>
+      <h3>Réseaux Sociaux</h3>
       <p>Apprenez à éviter les pièges les plus courants en ligne.</p>
     </div>
-    <div class="card" onclick="window.location.href='avance.html'">
-      <h3>📚 Quiz Avancé</h3>
+
+    <div class="card" role="link" tabindex="0" onclick="location.href='avance.html'" onkeypress="if(event.key==='Enter') location.href='avance.html'">
+      <i class="fa-solid fa-brain card-icon float" aria-hidden="true"></i>
+      <h3>Quiz Avancé</h3>
       <p>Défiez vos connaissances avec un quiz complet.</p>
     </div>
 
     <!-- NOUVELLE CARTE : Contrôle Final -->
-    <div class="card" onclick="window.location.href='quiz-final.html'">
-      <h3>🎓 Contrôle Final</h3>
+    <div class="card" role="link" tabindex="0" onclick="location.href='quiz-final.html'" onkeypress="if(event.key==='Enter') location.href='quiz-final.html'">
+      <i class="fa-solid fa-trophy card-icon float" aria-hidden="true"></i>
+      <h3>Contrôle Final</h3>
       <p>Une question difficile aléatoire pour tester votre niveau.</p>
     </div>
   </div>
@@ -242,28 +329,28 @@
 </footer>
 
 <script>
-  /* Animation au scroll */
+  /* Intersection Observer pour l'animation au scroll */
   const cards = document.querySelectorAll('.card');
-
-  const observer = new IntersectionObserver(entries => {
+  const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
       }
     });
-  }, { threshold: 0.2 });
+  }, { threshold: 0.18 });
 
   cards.forEach(card => observer.observe(card));
 
-  /* Particules */
+  /* Particules canvas */
   const canvas = document.getElementById('particles');
   const ctx = canvas.getContext('2d');
-  let particlesArray;
+  let particlesArray = [];
 
   function initCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }
+
   window.addEventListener('resize', () => {
     initCanvas();
     initParticles();
@@ -271,18 +358,22 @@
 
   class Particle {
     constructor() {
+      this.reset();
+      this.size = Math.random() * 2.5 + 0.6;
+      this.color = `rgba(0,191,255,${Math.random() * 0.45 + 0.15})`;
+    }
+    reset() {
       this.x = Math.random() * canvas.width;
       this.y = Math.random() * canvas.height;
-      this.size = Math.random() * 3 + 1;
-      this.speedX = Math.random() * 1 - 0.5;
-      this.speedY = Math.random() * 1 - 0.5;
-      this.color = 'rgba(0,191,255,0.6)';
+      this.speedX = (Math.random() - 0.5) * 0.6;
+      this.speedY = (Math.random() - 0.5) * 0.6;
     }
     update() {
       this.x += this.speedX;
       this.y += this.speedY;
-      if(this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-      if(this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height + 10) {
+        this.reset();
+      }
     }
     draw() {
       ctx.beginPath();
@@ -294,24 +385,24 @@
 
   function initParticles() {
     particlesArray = [];
-    const number = (canvas.width * canvas.height) / 15000;
-    for(let i = 0; i < number; i++) {
-      particlesArray.push(new Particle());
-    }
+    const number = Math.max(30, Math.floor((canvas.width * canvas.height) / 18000));
+    for (let i = 0; i < number; i++) particlesArray.push(new Particle());
   }
 
   function animateParticles() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    particlesArray.forEach(p => {
-      p.update();
-      p.draw();
-    });
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particlesArray.forEach(p => { p.update(); p.draw(); });
     requestAnimationFrame(animateParticles);
   }
 
   initCanvas();
   initParticles();
   animateParticles();
+
+  /* Petite amélioration d'accessibilité : activer hover effect via keyboard */
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('focus', () => card.classList.add('visible'));
+  });
 </script>
 
 </body>
