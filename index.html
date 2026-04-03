@@ -1,142 +1,285 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CyberSécurité - Protégez Votre Monde Numérique</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #0a0f24;
-      color: #ffffff;
-      overflow-x: hidden;
-    }
-    header {
-      padding: 40px;
-      text-align: center;
-      background: #0d132b;
-    }
-    header h1 {
-      font-size: 3rem;
-      margin: 0;
-    }
-    header p {
-      font-size: 1.2rem;
-      margin-top: 10px;
-      opacity: 0.9;
-    }
-    .hero {
-      padding: 120px 20px;
-      text-align: center;
-      background: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
-      position: relative;
-    }
-    .hero::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.6);
-    }
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 700px;
-      margin: auto;
-    }
-    .hero-content h2 {
-      font-size: 2.8rem;
-      margin-bottom: 20px;
-    }
-    .hero-content p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-      line-height: 1.6;
-    }
-    .btn {
-      padding: 15px 30px;
-      background: #2962ff;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: 0.3s;
-      text-decoration: none;
-    }
-    .btn:hover {
-      background: #0039cb;
-    }
-    .features {
-      padding: 80px 20px;
-      display: flex;
-      gap: 30px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .feature-card {
-      background: #111833;
-      padding: 30px;
-      border-radius: 12px;
-      width: 300px;
-      text-align: center;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      transition: transform 0.3s;
-    }
-    .feature-card:hover {
-      transform: translateY(-10px);
-    }
-    .feature-card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-    }
-    footer {
-      text-align: center;
-      padding: 30px;
-      background: #0d132b;
-      font-size: 0.9rem;
-      opacity: 0.7;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberQuiz — Introduction</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+
+<style>
+  :root {
+    --bg: #0a0f24;
+    --accent: #00bfff;
+    --accent2: #4cc9f0;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    overflow: hidden;
+  }
+
+  /* Canvas particules */
+  #particles {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+  }
+
+  /* Animation terminal */
+  #intro-screen {
+    position: fixed;
+    inset: 0;
+    background: black;
+    color: #00ffea;
+    font-family: monospace;
+    padding: 40px;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 10;
+    overflow: hidden;
+    animation: fadeOut 0.8s ease forwards;
+    animation-delay: 2.4s; /* Durée réduite */
+  }
+
+  .typing-line {
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid #00ffea;
+    width: 0;
+    animation: typing 1.2s steps(40) forwards, blink 0.7s infinite;
+  }
+
+  @keyframes typing {
+    to { width: 100%; }
+  }
+
+  @keyframes blink {
+    50% { border-color: transparent; }
+  }
+
+  @keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; }
+  }
+
+  /* Page d'intro */
+  .intro-container {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    opacity: 0;
+    animation: fadeIn 1.2s ease forwards;
+    animation-delay: 3s; /* Apparition plus rapide */
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  /* Effet glitch */
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    color: var(--accent);
+    position: relative;
+    text-shadow: 0 0 12px var(--accent);
+  }
+
+  h1::before, h1::after {
+    content: "CyberQuiz";
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0.6;
+  }
+
+  h1::before {
+    color: #ff00c8;
+    animation: glitch1 2s infinite;
+  }
+
+  h1::after {
+    color: #00fff2;
+    animation: glitch2 2s infinite;
+  }
+
+  @keyframes glitch1 {
+    0% { transform: translate(0); }
+    20% { transform: translate(-3px, 2px); }
+    40% { transform: translate(3px, -2px); }
+    60% { transform: translate(-2px, 1px); }
+    80% { transform: translate(2px, -1px); }
+    100% { transform: translate(0); }
+  }
+
+  @keyframes glitch2 {
+    0% { transform: translate(0); }
+    20% { transform: translate(3px, -2px); }
+    40% { transform: translate(-3px, 2px); }
+    60% { transform: translate(2px, -1px); }
+    80% { transform: translate(-2px, 1px); }
+    100% { transform: translate(0); }
+  }
+
+  p {
+    font-size: 1.2rem;
+    opacity: 0.85;
+    max-width: 600px;
+  }
+
+  /* Message d'avertissement */
+  .warning {
+    margin-top: 25px;
+    font-size: 0.95rem;
+    color: #ff6b6b;
+    background: rgba(255, 0, 0, 0.1);
+    padding: 10px 18px;
+    border-radius: 8px;
+    border-left: 3px solid #ff6b6b;
+    max-width: 500px;
+  }
+
+  /* Bouton */
+  .enter-btn {
+    margin-top: 30px;
+    padding: 14px 32px;
+    font-size: 1.2rem;
+    border: 2px solid var(--accent);
+    background: transparent;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .enter-btn:hover {
+    background: var(--accent);
+    color: black;
+    box-shadow: 0 0 15px var(--accent);
+  }
+
+  /* Mobile */
+  @media (max-width: 480px) {
+    h1 { font-size: 2.2rem; }
+    p { font-size: 1rem; }
+    .warning { font-size: 0.85rem; }
+    .enter-btn { font-size: 1.1rem; padding: 12px 26px; }
+  }
+</style>
 </head>
+
 <body>
-  <header>
-    <h1>CyberSécurité</h1>
-    <p>Protégez votre monde numérique, un clic à la fois.</p>
-  </header>
 
-  <section class="hero">
-    <div class="hero-content">
-      <h2>Votre sécurité, notre priorité</h2>
-      <p>Découvrez des conseils, outils et guides pour renforcer votre protection en ligne et naviguer en toute confiance sur Internet.</p>
-      <a href="accueil.html" class="btn">Explorer le site</a>
-    </div>
-  </section>
+<!-- Particules -->
+<canvas id="particles"></canvas>
 
-  <section id="features" class="features">
-    <div class="feature-card">
-      <h3>🔐 Apprendre</h3>
-      <p>Comprenez les bases de la cybersécurité grâce à des explications simples et accessibles.</p>
-    </div>
-    <div class="feature-card">
-      <h3>🛡️ Se protéger</h3>
-      <p>Découvrez les meilleures pratiques pour protéger vos données et vos appareils.</p>
-    </div>
-    <div class="feature-card">
-      <h3>⚠️ Prévenir</h3>
-      <p>Identifiez les menaces courantes et apprenez comment les éviter efficacement.</p>
-    </div>
-  </section>
+<!-- Animation terminal -->
+<div id="intro-screen">
+  <div class="typing-line" style="animation-delay:0s">> Initialisation du système…</div>
+  <div class="typing-line" style="animation-delay:0.6s">> Chargement des modules de cybersécurité…</div>
+  <div class="typing-line" style="animation-delay:1.2s">> Vérification de l’intégrité… OK</div>
+  <div class="typing-line" style="animation-delay:1.8s">> Analyse des menaces… OK</div>
+  <div class="typing-line" style="animation-delay:2.4s">> Bienvenue utilisateur.</div>
+</div>
 
-  <footer>
-    © 2025 CyberSécurité — Gardons le web plus sûr ensemble.
-  </footer>
+<!-- Page d'intro -->
+<div class="intro-container">
+  <h1>CyberQuiz</h1>
+  <p>Découvrez une plateforme immersive pour apprendre la cybersécurité en vous amusant.  
+  Testez vos connaissances, progressez et devenez incollable.</p>
+
+  <div class="warning">
+    ⚠️ La cybersécurité commence par la vigilance.  
+    Ce site vous apprend à reconnaître les menaces les plus courantes.
+  </div>
+
+  <button class="enter-btn" onclick="enterSite()">Entrer</button>
+</div>
+
+<script>
+/* Transition fluide */
+function enterSite() {
+  document.body.style.transition = "opacity 0.8s";
+  document.body.style.opacity = "0";
+  setTimeout(() => {
+    window.location.href = "accueil.html";
+  }, 800);
+}
+
+/* Disparition automatique de l'intro */
+setTimeout(() => {
+  document.getElementById("intro-screen").classList.add("fade-out");
+}, 2800); /* Durée réduite */
+
+/* Particules */
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particlesArray = [];
+
+function initCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+window.addEventListener('resize', () => {
+  initCanvas();
+  initParticles();
+});
+
+class Particle {
+  constructor() {
+    this.reset();
+    this.size = Math.random() * 2.5 + 0.6;
+    this.color = `rgba(0,191,255,${Math.random() * 0.45 + 0.15})`;
+  }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.speedX = (Math.random() - 0.5) * 0.6;
+    this.speedY = (Math.random() - 0.5) * 0.6;
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height + 10) {
+      this.reset();
+    }
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.fill();
+  }
+}
+
+function initParticles() {
+  particlesArray = [];
+  const number = Math.max(40, Math.floor((canvas.width * canvas.height) / 16000));
+  for (let i = 0; i < number; i++) particlesArray.push(new Particle());
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particlesArray.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animateParticles);
+}
+
+initCanvas();
+initParticles();
+animateParticles();
+</script>
+
 </body>
-
 </html>
-
-
