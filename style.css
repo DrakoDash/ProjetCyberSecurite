@@ -137,3 +137,23 @@ body {
 header, .intro, .quizz-category {
   margin-top: 70px;
 }
+.summary-card {
+    background: rgba(255,255,255,0.05);
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px auto;
+    max-width: 700px;
+    box-shadow: 0 0 12px rgba(0,191,255,0.3);
+    text-align: left;
+    animation: fadeIn 0.4s ease;
+}
+
+.summary-card h3 {
+    color: #00bfff;
+    margin-bottom: 10px;
+}
+
+.summary-nav {
+    text-align: center;
+    margin-top: 20px;
+}
