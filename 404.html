@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erreur 404 — CyberQuiz</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+
+<style>
+    body {
+        margin: 0;
+        background: #0a0f24;
+        font-family: 'Poppins', sans-serif;
+        color: white;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    /* Particules */
+    #particles {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+    }
+
+    /* Boîte d'erreur */
+    .error-box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255,255,255,0.05);
+        padding: 30px 40px;
+        border-radius: 15px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 0 20px rgba(0,191,255,0.4);
+        border: 2px solid rgba(0,191,255,0.4);
+        animation: popIn 0.6s ease forwards, shake 0.4s ease 0.6s;
+    }
+
+    /* Animation d'apparition */
+    @keyframes popIn {
+        0% { transform: translate(-50%, -60%) scale(0.8); opacity: 0; }
+        100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+
+    /* Vibration façon Fortnite */
+    @keyframes shake {
+        0% { transform: translate(-50%, -50%) rotate(0deg); }
+        20% { transform: translate(calc(-50% - 3px), calc(-50% + 2px)) rotate(-1deg); }
+        40% { transform: translate(calc(-50% + 3px), calc(-50% - 2px)) rotate(1deg); }
+        60% { transform: translate(calc(-50% - 2px), calc(-50% + 1px)) rotate(-1deg); }
+        80% { transform: translate(calc(-50% + 2px), calc(-50% - 1px)) rotate(1deg); }
+        100% { transform: translate(-50%, -50%) rotate(0deg); }
+    }
+
+    /* Titre glitch */
+    h1 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        color: #00bfff;
+        text-shadow: 0 0 12px #00bfff;
+    }
+
+    .glitch {
+        position: relative;
+        display: inline-block;
+    }
+
+    .glitch::before,
+    .glitch::after {
+        content: attr(data-text);
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0.6;
+    }
+
+    .glitch::before {
+        color: #ff00c8;
+        animation: glitch1 2s infinite;
+    }
+
+    .glitch::after {
+        color: #00fff2;
+        animation: glitch2 2s infinite;
+    }
+
+    @keyframes glitch1 {
+        0% { transform: translate(0); }
+        20% { transform: translate(-3px, 2px); }
+        40% { transform: translate(3px, -2px); }
+        60% { transform: translate(-2px, 1px); }
+        80% { transform: translate(2px, -1px); }
+        100% { transform: translate(0); }
+    }
+
+    @keyframes glitch2 {
+        0% { transform: translate(0); }
+        20% { transform: translate(3px, -2px); }
+        40% { transform: translate(-3px, 2px); }
+        60% { transform: translate(2px, -1px); }
+        80% { transform: translate(-2px, 1px); }
+        100% { transform: translate(0); }
+    }
+
+    p {
+        opacity: 0.9;
+        margin-bottom: 20px;
+    }
+
+    /* Bouton retour */
+    .btn {
+        padding: 12px 25px;
+        background: transparent;
+        border: 2px solid #00bfff;
+        color: white;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-size: 1.1rem;
+    }
+
+    .btn:hover {
+        background: #00bfff;
+        color: black;
+        box-shadow: 0 0 15px #00bfff;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- Son d'erreur -->
+<audio id="errorSound" autoplay>
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-system-beep-buzzer-fail-2964.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Particules -->
+<canvas id="particles"></canvas>
+
+<!-- Boîte d'erreur -->
+<div class="error-box">
+    <h1 class="glitch" data-text="ERREUR 404">ERREUR 404</h1>
+    <p>Nous avons buté sur un obstacle.<br>Cette page n’existe pas ou a été déplacée.</p>
+
+    <button class="btn" onclick="window.location.href='accueil.html'">Retour à l'accueil</button>
+</div>
+
+<script>
+/* Particules */
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particlesArray = [];
+
+function initCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+window.addEventListener('resize', () => {
+    initCanvas();
+    initParticles();
+});
+
+class Particle {
+    constructor() {
+        this.reset();
+        this.size = Math.random() * 2.5 + 0.6;
+        this.color = `rgba(0,191,255,${Math.random() * 0.45 + 0.15})`;
+    }
+    reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.speedX = (Math.random() - 0.5) * 0.6;
+        this.speedY = (Math.random() - 0.5) * 0.6;
+    }
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height + 10) {
+            this.reset();
+        }
+    }
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
+}
+
+function initParticles() {
+    particlesArray = [];
+    const number = Math.max(40, Math.floor((canvas.width * canvas.height) / 16000));
+    for (let i = 0; i < number; i++) particlesArray.push(new Particle());
+}
+
+function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particlesArray.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animateParticles);
+}
+
+initCanvas();
+initParticles();
+animateParticles();
+</script>
+
+</body>
+</html>
