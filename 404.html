@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Erreur 404 - CyberQuiz</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -12,7 +12,6 @@
 :root{
   --bg:#0a0f24;
   --accent:#00bfff;
-  --accent-2:#4cc9f0;
 }
 
 body{
@@ -23,7 +22,7 @@ body{
   overflow:hidden;
 }
 
-/* NAVBAR (identique à ton site) */
+/* NAVBAR */
 .navbar {
   position: fixed;
   top: 0;
@@ -34,22 +33,29 @@ body{
   padding: 12px 25px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .nav-logo {
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: var(--accent);
+  font-weight:600;
+  color:var(--accent);
 }
 
-.nav-links a {
-  color: white;
-  margin-left: 20px;
-  text-decoration: none;
+/* FLASH écran */
+.flash{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:white;
+  opacity:0;
+  animation:flashAnim 0.4s ease;
 }
 
-/* CONTENU ERREUR */
+@keyframes flashAnim{
+  0%{opacity:1;}
+  100%{opacity:0;}
+}
+
+/* CONTENU */
 .error-container{
   height:100vh;
   display:flex;
@@ -57,7 +63,51 @@ body{
   justify-content:center;
   align-items:center;
   text-align:center;
-  padding:20px;
+  opacity:0;
+  transform:translateY(40px) scale(0.95);
+  animation:appear 0.8s ease forwards;
+  animation-delay:0.3s;
+}
+
+@keyframes appear{
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+/* GLITCH */
+.glitch{
+  font-size:2.8rem;
+  font-weight:800;
+  position:relative;
+}
+
+.glitch::before,
+.glitch::after{
+  content:attr(data-text);
+  position:absolute;
+  left:0;
+  width:100%;
+}
+
+.glitch::before{
+  color:red;
+  animation:glitch 0.4s infinite;
+}
+
+.glitch::after{
+  color:cyan;
+  animation:glitch 0.4s infinite reverse;
+}
+
+@keyframes glitch{
+  0%{transform:translate(0)}
+  20%{transform:translate(-2px,2px)}
+  40%{transform:translate(-2px,-2px)}
+  60%{transform:translate(2px,2px)}
+  80%{transform:translate(2px,-2px)}
+  100%{transform:translate(0)}
 }
 
 /* Icône */
@@ -65,30 +115,20 @@ body{
   font-size:60px;
   color:#ff3b3b;
   margin-bottom:15px;
-  animation: pulse 1.5s infinite;
+  animation:pulse 1.5s infinite;
 }
 
 @keyframes pulse{
-  0%{transform:scale(1);}
   50%{transform:scale(1.2);}
-  100%{transform:scale(1);}
 }
 
-/* Texte principal */
-.error-title{
-  font-size:2.8rem;
-  font-weight:800;
-  letter-spacing:2px;
-  margin-bottom:10px;
-}
-
-/* Ligne style Fortnite */
+/* Barre */
 .error-bar{
   width:300px;
   height:4px;
   background:linear-gradient(90deg, transparent, var(--accent), transparent);
   margin:20px auto;
-  animation: slide 2s infinite;
+  animation:slide 2s infinite;
 }
 
 @keyframes slide{
@@ -97,7 +137,6 @@ body{
   100%{opacity:0;}
 }
 
-/* Texte secondaire */
 .error-text{
   opacity:0.85;
   margin-bottom:30px;
@@ -118,14 +157,7 @@ body{
   transform:scale(1.08);
 }
 
-/* Code erreur */
-.code{
-  margin-top:15px;
-  font-size:0.9rem;
-  opacity:0.6;
-}
-
-/* Particules (repris de ton site) */
+/* Particules */
 canvas{
   position:fixed;
   top:0;
@@ -137,11 +169,10 @@ canvas{
 
 <body>
 
+<div class="flash"></div>
+
 <nav class="navbar">
   <div class="nav-logo">CyberQuiz</div>
-  <div class="nav-links">
-    <a href="accueil.html">Accueil</a>
-  </div>
 </nav>
 
 <canvas id="particles"></canvas>
@@ -152,29 +183,38 @@ canvas{
     <i class="fa-solid fa-triangle-exclamation"></i>
   </div>
 
-  <div class="error-title">
-    NOUS AVONS RENCONTRÉ UNE ERREUR
+  <div class="glitch" data-text="ERREUR 404">
+    ERREUR 404
   </div>
 
   <div class="error-bar"></div>
 
   <div class="error-text">
-    La page que vous cherchez n'existe pas ou a été déplacée.<br>
-    Erreur 404 — Page introuvable.
+    La page est introuvable ou corrompue.
   </div>
 
   <button class="btn" onclick="location.href='accueil.html'">
-    RETOUR À L'ACCUEIL
+    CONTINUER
   </button>
-
-  <div class="code">
-    cyberquiz.error.404.notfound
-  </div>
 
 </div>
 
+<!-- SON -->
+<audio id="errorSound" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
+
 <script>
-/* Particules (identique à ton site) */
+/* Son au chargement */
+window.addEventListener("load", () => {
+  const sound = document.getElementById("errorSound");
+  sound.volume = 0.4;
+
+  // contourne les restrictions navigateur
+  setTimeout(() => {
+    sound.play().catch(()=>{});
+  }, 200);
+});
+
+/* Particules */
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let particlesArray = [];
@@ -183,11 +223,6 @@ function initCanvas(){
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 }
-
-window.addEventListener('resize',()=>{
-  initCanvas();
-  initParticles();
-});
 
 class Particle{
   constructor(){
@@ -228,6 +263,8 @@ function animate(){
 initCanvas();
 initParticles();
 animate();
+
+window.addEventListener('resize', initCanvas);
 </script>
 
 </body>
