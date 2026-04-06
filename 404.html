@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>404 - CyberQuiz</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#0a0f24;
+  --card:#111833;
+  --accent:#00bfff;
+  --accent-2:#4cc9f0;
+  --card-hover:#16204a;
+  --glass: rgba(13,19,43,0.9);
+}
+
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:var(--bg);
+  color:white;
+  overflow-x:hidden;
+}
+
+/* NAVBAR IDENTIQUE */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(10,15,36,0.85);
+  backdrop-filter: blur(6px);
+  border-bottom: 2px solid var(--accent);
+  padding: 12px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 999;
+}
+
+.nav-logo {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+/* CONTENU 404 */
+.error-wrapper{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+}
+
+/* CARTE style quiz */
+.error-box{
+  background: rgba(17,24,51,0.95);
+  padding:40px;
+  border-radius:14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  border:2px solid transparent;
+  max-width:600px;
+  width:100%;
+  animation: fadeIn 0.8s ease;
+}
+
+.error-box:hover{
+  border:2px solid var(--accent);
+  box-shadow: 0 10px 40px rgba(0, 80, 255, 0.5);
+}
+
+/* ANIMATION comme tes cards */
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(30px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* ICONE */
+.error-icon{
+  font-size:3.5rem;
+  color:var(--accent);
+  margin-bottom:15px;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow{
+  from{ text-shadow:0 0 5px var(--accent); }
+  to{ text-shadow:0 0 20px var(--accent-2); }
+}
+
+/* TITRE */
+.error-title{
+  font-size:2.2rem;
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+/* BARRE style Fortnite mais avec ton thème */
+.error-bar{
+  height:4px;
+  width:100%;
+  margin:20px 0;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+/* TEXTE */
+.error-text{
+  opacity:0.85;
+  margin-bottom:25px;
+  line-height:1.5;
+}
+
+/* BOUTON style site */
+.btn{
+  background: var(--accent);
+  border:none;
+  padding:12px 25px;
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+  border-radius:6px;
+  transition:0.3s;
+}
+
+.btn:hover{
+  background: var(--accent-2);
+  transform:scale(1.05);
+  box-shadow:0 0 12px var(--accent);
+}
+
+/* CODE ERREUR */
+.code{
+  margin-top:15px;
+  font-size:0.8rem;
+  opacity:0.6;
+}
+
+/* CANVAS */
+#particles{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:-1;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-logo">CyberQuiz</div>
+  <div class="nav-links">
+    <a href="accueil.html">Accueil</a>
+  </div>
+</nav>
+
+<canvas id="particles"></canvas>
+
+<div class="error-wrapper">
+  <div class="error-box">
+
+    <div class="error-icon">
+      <i class="fa-solid fa-bug"></i>
+    </div>
+
+    <div class="error-title">
+      Oups… une erreur est survenue
+    </div>
+
+    <div class="error-bar"></div>
+
+    <div class="error-text">
+      Cette page est introuvable ou a été déplacée.<br>
+      Peut-être un lien corrompu ou une tentative de phishing ? 👀
+    </div>
+
+    <button class="btn" onclick="location.href='accueil.html'">
+      Retour à l'accueil
+    </button>
+
+    <div class="code">
+      cyberquiz.error.404.notfound
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* EXACTEMENT ton système de particules */
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particlesArray = [];
+
+function initCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+window.addEventListener('resize', () => {
+  initCanvas();
+  initParticles();
+});
+
+class Particle {
+  constructor() {
+    this.reset();
+    this.size = Math.random() * 2.5 + 0.6;
+    this.color = `rgba(0,191,255,${Math.random() * 0.45 + 0.15})`;
+  }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.speedX = (Math.random() - 0.5) * 0.6;
+    this.speedY = (Math.random() - 0.5) * 0.6;
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height + 10) {
+      this.reset();
+    }
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.fill();
+  }
+}
+
+function initParticles() {
+  particlesArray = [];
+  const number = Math.max(30, Math.floor((canvas.width * canvas.height) / 18000));
+  for (let i = 0; i < number; i++) particlesArray.push(new Particle());
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particlesArray.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animateParticles);
+}
+
+initCanvas();
+initParticles();
+animateParticles();
+</script>
+
+</body>
+</html>
