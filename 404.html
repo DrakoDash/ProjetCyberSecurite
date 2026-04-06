@@ -1,176 +1,233 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Erreur 404 — CyberQuiz</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Erreur 404 - CyberQuiz</title>
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
-    body {
-        margin: 0;
-        background: #0a0f24;
-        font-family: 'Poppins', sans-serif;
-        color: white;
-        overflow: hidden;
-        text-align: center;
-    }
+:root{
+  --bg:#0a0f24;
+  --accent:#00bfff;
+  --accent-2:#4cc9f0;
+}
 
-    /* Particules */
-    #particles {
-        position: fixed;
-        inset: 0;
-        z-index: -1;
-    }
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:var(--bg);
+  color:white;
+  overflow:hidden;
+}
 
-    /* Boîte d'erreur façon Fortnite */
-    .error-box {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(0,0,0,0.55);
-        padding: 30px 40px;
-        border-radius: 12px;
-        width: 90%;
-        max-width: 480px;
-        border: 2px solid #00bfff;
-        box-shadow: 0 0 20px rgba(0,191,255,0.4);
-        animation: popIn 0.5s ease forwards, shake 0.35s ease 0.5s;
-    }
+/* NAVBAR (identique à ton site) */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(10,15,36,0.85);
+  backdrop-filter: blur(6px);
+  border-bottom: 2px solid var(--accent);
+  padding: 12px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    /* Apparition */
-    @keyframes popIn {
-        0% { transform: translate(-50%, -60%) scale(0.85); opacity: 0; }
-        100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-    }
+.nav-logo {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--accent);
+}
 
-    /* Vibration Fortnite */
-    @keyframes shake {
-        0% { transform: translate(-50%, -50%) rotate(0deg); }
-        25% { transform: translate(calc(-50% - 3px), calc(-50% + 2px)) rotate(-1deg); }
-        50% { transform: translate(calc(-50% + 3px), calc(-50% - 2px)) rotate(1deg); }
-        75% { transform: translate(calc(-50% - 2px), calc(-50% + 1px)) rotate(-1deg); }
-        100% { transform: translate(-50%, -50%) rotate(0deg); }
-    }
+.nav-links a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+}
 
-    /* Titre */
-    h1 {
-        font-size: 1.6rem;
-        margin-bottom: 10px;
-        color: #00bfff;
-        text-shadow: 0 0 12px #00bfff;
-    }
+/* CONTENU ERREUR */
+.error-container{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+}
 
-    /* Texte */
-    p {
-        opacity: 0.9;
-        margin-bottom: 25px;
-        font-size: 1rem;
-        line-height: 1.4;
-    }
+/* Icône */
+.error-icon{
+  font-size:60px;
+  color:#ff3b3b;
+  margin-bottom:15px;
+  animation: pulse 1.5s infinite;
+}
 
-    /* Bouton Fortnite */
-    .btn {
-        padding: 12px 25px;
-        background: #00bfff;
-        border: none;
-        color: black;
-        font-weight: 600;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: 0.25s;
-        font-size: 1.1rem;
-        width: 100%;
-        max-width: 260px;
-    }
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.2);}
+  100%{transform:scale(1);}
+}
 
-    .btn:hover {
-        background: #4cc9f0;
-        box-shadow: 0 0 15px #00bfff;
-    }
+/* Texte principal */
+.error-title{
+  font-size:2.8rem;
+  font-weight:800;
+  letter-spacing:2px;
+  margin-bottom:10px;
+}
+
+/* Ligne style Fortnite */
+.error-bar{
+  width:300px;
+  height:4px;
+  background:linear-gradient(90deg, transparent, var(--accent), transparent);
+  margin:20px auto;
+  animation: slide 2s infinite;
+}
+
+@keyframes slide{
+  0%{opacity:0;}
+  50%{opacity:1;}
+  100%{opacity:0;}
+}
+
+/* Texte secondaire */
+.error-text{
+  opacity:0.85;
+  margin-bottom:30px;
+}
+
+/* Bouton */
+.btn{
+  background:#ffe600;
+  color:black;
+  padding:12px 30px;
+  font-weight:600;
+  border:none;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.btn:hover{
+  transform:scale(1.08);
+}
+
+/* Code erreur */
+.code{
+  margin-top:15px;
+  font-size:0.9rem;
+  opacity:0.6;
+}
+
+/* Particules (repris de ton site) */
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
+}
 </style>
 </head>
 
 <body>
 
-<!-- Son d'erreur discret -->
-<audio id="errorSound" autoplay>
-    <source src="https://assets.mixkit.co/sfx/preview/mixkit-system-beep-buzzer-fail-2964.mp3" type="audio/mpeg">
-</audio>
+<nav class="navbar">
+  <div class="nav-logo">CyberQuiz</div>
+  <div class="nav-links">
+    <a href="accueil.html">Accueil</a>
+  </div>
+</nav>
 
-<!-- Particules -->
 <canvas id="particles"></canvas>
 
-<!-- Boîte d'erreur style Fortnite -->
-<div class="error-box">
-    <h1>NOUS AVONS BUTÉ SUR UN OBSTACLE</h1>
+<div class="error-container">
 
-    <p>Le serveur n’a pas trouvé la page demandée.<br>
-    <strong>Erreur 404</strong></p>
+  <div class="error-icon">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+  </div>
 
-    <button class="btn" onclick="window.location.href='accueil.html'">CONTINUER</button>
+  <div class="error-title">
+    NOUS AVONS RENCONTRÉ UNE ERREUR
+  </div>
+
+  <div class="error-bar"></div>
+
+  <div class="error-text">
+    La page que vous cherchez n'existe pas ou a été déplacée.<br>
+    Erreur 404 — Page introuvable.
+  </div>
+
+  <button class="btn" onclick="location.href='accueil.html'">
+    RETOUR À L'ACCUEIL
+  </button>
+
+  <div class="code">
+    cyberquiz.error.404.notfound
+  </div>
+
 </div>
 
 <script>
-/* Particules */
+/* Particules (identique à ton site) */
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let particlesArray = [];
 
-function initCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+function initCanvas(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 }
 
-window.addEventListener('resize', () => {
-    initCanvas();
-    initParticles();
+window.addEventListener('resize',()=>{
+  initCanvas();
+  initParticles();
 });
 
-class Particle {
-    constructor() {
-        this.reset();
-        this.size = Math.random() * 2.5 + 0.6;
-        this.color = `rgba(0,191,255,${Math.random() * 0.45 + 0.15})`;
-    }
-    reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.speedX = (Math.random() - 0.5) * 0.6;
-        this.speedY = (Math.random() - 0.5) * 0.6;
-    }
-    update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height + 10) {
-            this.reset();
-        }
-    }
-    draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-    }
+class Particle{
+  constructor(){
+    this.x=Math.random()*canvas.width;
+    this.y=Math.random()*canvas.height;
+    this.size=Math.random()*2+1;
+    this.speedX=(Math.random()-0.5)*0.5;
+    this.speedY=(Math.random()-0.5)*0.5;
+  }
+  update(){
+    this.x+=this.speedX;
+    this.y+=this.speedY;
+  }
+  draw(){
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+    ctx.fillStyle="rgba(0,191,255,0.5)";
+    ctx.fill();
+  }
 }
 
-function initParticles() {
-    particlesArray = [];
-    const number = Math.max(40, Math.floor((canvas.width * canvas.height) / 16000));
-    for (let i = 0; i < number; i++) particlesArray.push(new Particle());
+function initParticles(){
+  particlesArray=[];
+  for(let i=0;i<80;i++){
+    particlesArray.push(new Particle());
+  }
 }
 
-function animateParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particlesArray.forEach(p => { p.update(); p.draw(); });
-    requestAnimationFrame(animateParticles);
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particlesArray.forEach(p=>{
+    p.update();
+    p.draw();
+  });
+  requestAnimationFrame(animate);
 }
 
 initCanvas();
 initParticles();
-animateParticles();
+animate();
 </script>
 
 </body>
