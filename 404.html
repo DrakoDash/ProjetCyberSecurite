@@ -24,108 +24,70 @@
         z-index: -1;
     }
 
-    /* Boîte d'erreur */
+    /* Boîte d'erreur façon Fortnite */
     .error-box {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: rgba(255,255,255,0.05);
+        background: rgba(0,0,0,0.55);
         padding: 30px 40px;
-        border-radius: 15px;
+        border-radius: 12px;
         width: 90%;
-        max-width: 500px;
+        max-width: 480px;
+        border: 2px solid #00bfff;
         box-shadow: 0 0 20px rgba(0,191,255,0.4);
-        border: 2px solid rgba(0,191,255,0.4);
-        animation: popIn 0.6s ease forwards, shake 0.4s ease 0.6s;
+        animation: popIn 0.5s ease forwards, shake 0.35s ease 0.5s;
     }
 
-    /* Animation d'apparition */
+    /* Apparition */
     @keyframes popIn {
-        0% { transform: translate(-50%, -60%) scale(0.8); opacity: 0; }
+        0% { transform: translate(-50%, -60%) scale(0.85); opacity: 0; }
         100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
     }
 
-    /* Vibration façon Fortnite */
+    /* Vibration Fortnite */
     @keyframes shake {
         0% { transform: translate(-50%, -50%) rotate(0deg); }
-        20% { transform: translate(calc(-50% - 3px), calc(-50% + 2px)) rotate(-1deg); }
-        40% { transform: translate(calc(-50% + 3px), calc(-50% - 2px)) rotate(1deg); }
-        60% { transform: translate(calc(-50% - 2px), calc(-50% + 1px)) rotate(-1deg); }
-        80% { transform: translate(calc(-50% + 2px), calc(-50% - 1px)) rotate(1deg); }
+        25% { transform: translate(calc(-50% - 3px), calc(-50% + 2px)) rotate(-1deg); }
+        50% { transform: translate(calc(-50% + 3px), calc(-50% - 2px)) rotate(1deg); }
+        75% { transform: translate(calc(-50% - 2px), calc(-50% + 1px)) rotate(-1deg); }
         100% { transform: translate(-50%, -50%) rotate(0deg); }
     }
 
-    /* Titre glitch */
+    /* Titre */
     h1 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         margin-bottom: 10px;
         color: #00bfff;
         text-shadow: 0 0 12px #00bfff;
     }
 
-    .glitch {
-        position: relative;
-        display: inline-block;
-    }
-
-    .glitch::before,
-    .glitch::after {
-        content: attr(data-text);
-        position: absolute;
-        left: 0;
-        top: 0;
-        opacity: 0.6;
-    }
-
-    .glitch::before {
-        color: #ff00c8;
-        animation: glitch1 2s infinite;
-    }
-
-    .glitch::after {
-        color: #00fff2;
-        animation: glitch2 2s infinite;
-    }
-
-    @keyframes glitch1 {
-        0% { transform: translate(0); }
-        20% { transform: translate(-3px, 2px); }
-        40% { transform: translate(3px, -2px); }
-        60% { transform: translate(-2px, 1px); }
-        80% { transform: translate(2px, -1px); }
-        100% { transform: translate(0); }
-    }
-
-    @keyframes glitch2 {
-        0% { transform: translate(0); }
-        20% { transform: translate(3px, -2px); }
-        40% { transform: translate(-3px, 2px); }
-        60% { transform: translate(2px, -1px); }
-        80% { transform: translate(-2px, 1px); }
-        100% { transform: translate(0); }
-    }
-
+    /* Texte */
     p {
         opacity: 0.9;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
+        font-size: 1rem;
+        line-height: 1.4;
     }
 
-    /* Bouton retour */
+    /* Bouton Fortnite */
     .btn {
         padding: 12px 25px;
-        background: transparent;
-        border: 2px solid #00bfff;
-        color: white;
-        border-radius: 10px;
+        background: #00bfff;
+        border: none;
+        color: black;
+        font-weight: 600;
+        border-radius: 8px;
         cursor: pointer;
-        transition: 0.3s;
+        transition: 0.25s;
         font-size: 1.1rem;
+        width: 100%;
+        max-width: 260px;
     }
 
     .btn:hover {
-        background: #00bfff;
-        color: black;
+        background: #4cc9f0;
         box-shadow: 0 0 15px #00bfff;
     }
 </style>
@@ -133,7 +95,7 @@
 
 <body>
 
-<!-- Son d'erreur -->
+<!-- Son d'erreur discret -->
 <audio id="errorSound" autoplay>
     <source src="https://assets.mixkit.co/sfx/preview/mixkit-system-beep-buzzer-fail-2964.mp3" type="audio/mpeg">
 </audio>
@@ -141,12 +103,14 @@
 <!-- Particules -->
 <canvas id="particles"></canvas>
 
-<!-- Boîte d'erreur -->
+<!-- Boîte d'erreur style Fortnite -->
 <div class="error-box">
-    <h1 class="glitch" data-text="ERREUR 404">ERREUR 404</h1>
-    <p>Nous avons buté sur un obstacle.<br>Cette page n’existe pas ou a été déplacée.</p>
+    <h1>NOUS AVONS BUTÉ SUR UN OBSTACLE</h1>
 
-    <button class="btn" onclick="window.location.href='accueil.html'">Retour à l'accueil</button>
+    <p>Le serveur n’a pas trouvé la page demandée.<br>
+    <strong>Erreur 404</strong></p>
+
+    <button class="btn" onclick="window.location.href='accueil.html'">CONTINUER</button>
 </div>
 
 <script>
