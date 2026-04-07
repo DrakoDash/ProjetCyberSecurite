@@ -1,16 +1,38 @@
+/* ============================
+   VARIABLES GLOBALES
+============================ */
+:root {
+  --bg: #0a0f24;
+  --card-bg: #111833;
+  --btn-bg: #16204a;
+  --btn-bg-hover: #1f2a66;
+  --accent: #00bfff;
+  --accent-light: #4cc9f0;
+  --primary-btn: #3f6cf3;
+  --primary-btn-hover: #5b82ff;
+  --radius: 12px;
+  --transition: 0.3s ease;
+}
+
+/* ============================
+   GLOBAL
+============================ */
 body {
   margin: 0;
-  background: #0a0f24;
+  background: var(--bg);
   color: white;
   font-family: Poppins, sans-serif;
 }
 
+/* ============================
+   QUIZ CONTAINER
+============================ */
 .quiz-container {
   max-width: 700px;
   margin: 60px auto;
-  background: #111833;
+  background: var(--card-bg);
   padding: 30px;
-  border-radius: 14px;
+  border-radius: var(--radius);
   box-shadow: 0 5px 20px rgba(0,0,0,0.5);
 }
 
@@ -19,51 +41,59 @@ body {
   margin-bottom: 20px;
 }
 
-.btn-answer {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  background: #16204a;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.2s;
-  color: white;
-}
-
-.btn-answer:hover { background: #1f2a66; }
-
-.correct { }
-.wrong { }
-
-#next-btn, .btn-restart {
-  margin-top: 20px;
-  padding: 12px 20px;
-  background: #3f6cf3;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-#next-btn:hover, .btn-restart:hover {
-  background: #5b82ff;
-}
-
 #progress {
   font-size: 1rem;
   margin-bottom: 15px;
   opacity: 0.8;
 }
 
-/* NAVBAR FIXE */
+/* ============================
+   BUTTONS
+============================ */
+.btn-answer {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  background: var(--btn-bg);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: var(--transition);
+  color: white;
+}
+
+.btn-answer:hover {
+  background: var(--btn-bg-hover);
+}
+
+#next-btn,
+.btn-restart {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background: var(--primary-btn);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: var(--transition);
+  color: white;
+}
+
+#next-btn:hover,
+.btn-restart:hover {
+  background: var(--primary-btn-hover);
+}
+
+/* ============================
+   NAVBAR
+============================ */
 .navbar {
   position: fixed;
   top: 0;
   width: 100%;
   background: rgba(10,15,36,0.85);
   backdrop-filter: blur(6px);
-  border-bottom: 2px solid #00bfff;
+  border-bottom: 2px solid var(--accent);
   padding: 12px 25px;
   display: flex;
   justify-content: space-between;
@@ -74,7 +104,7 @@ body {
 .nav-logo {
   font-size: 1.4rem;
   font-weight: 600;
-  color: #00bfff;
+  color: var(--accent);
   letter-spacing: 1px;
 }
 
@@ -87,15 +117,17 @@ body {
   color: white;
   text-decoration: none;
   font-size: 1rem;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
+  transition: color var(--transition), text-shadow var(--transition);
 }
 
 .nav-links a:hover {
-  color: #4cc9f0;
-  text-shadow: 0 0 8px #00bfff;
+  color: var(--accent-light);
+  text-shadow: 0 0 8px var(--accent);
 }
 
-/* BOUTON BURGER (MOBILE) */
+/* ============================
+   BURGER MENU (MOBILE)
+============================ */
 .nav-toggle {
   display: none;
   font-size: 1.8rem;
@@ -103,7 +135,6 @@ body {
   cursor: pointer;
 }
 
-/* VERSION MOBILE */
 @media (max-width: 768px) {
   .nav-links {
     position: fixed;
@@ -116,8 +147,8 @@ body {
     flex-direction: column;
     padding: 40px 20px;
     gap: 20px;
-    transition: right 0.4s ease;
-    border-left: 2px solid #00bfff;
+    transition: right var(--transition);
+    border-left: 2px solid var(--accent);
   }
 
   .nav-links a {
@@ -133,27 +164,37 @@ body {
   }
 }
 
-/* Décale le contenu vers le bas à cause de la navbar fixe */
+/* Décale le contenu à cause de la navbar fixe */
 header, .intro, .quizz-category {
   margin-top: 70px;
 }
+
+/* ============================
+   SUMMARY CARDS
+============================ */
 .summary-card {
-    background: rgba(255,255,255,0.05);
-    padding: 20px;
-    border-radius: 12px;
-    margin: 20px auto;
-    max-width: 700px;
-    box-shadow: 0 0 12px rgba(0,191,255,0.3);
-    text-align: left;
-    animation: fadeIn 0.4s ease;
+  background: rgba(255,255,255,0.05);
+  padding: 20px;
+  border-radius: var(--radius);
+  margin: 20px auto;
+  max-width: 700px;
+  box-shadow: 0 0 12px rgba(0,191,255,0.3);
+  text-align: left;
+  animation: fadeIn 0.4s ease;
 }
 
 .summary-card h3 {
-    color: #00bfff;
-    margin-bottom: 10px;
+  color: var(--accent);
+  margin-bottom: 10px;
 }
 
 .summary-nav {
-    text-align: center;
-    margin-top: 20px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
