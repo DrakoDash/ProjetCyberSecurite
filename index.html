@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CyberQuiz — Introduction</title>
 
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#00bfff">
+
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
 
 <style>
@@ -22,14 +25,116 @@
     overflow: hidden;
   }
 
-  /* Canvas particules */
+  /* ============================
+     BIG PICTURE MODE (PWA ONLY)
+  ============================ */
+  .bp-overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at top, #00bfff 0%, #000 60%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    color: #fff;
+    opacity: 1;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .bp-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.02);
+  }
+
+  .bp-center {
+    text-align: center;
+    animation: bp-enter 0.8s ease-out forwards;
+  }
+
+  .bp-logo {
+    font-size: 3rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 18px rgba(0, 191, 255, 0.8);
+  }
+
+  .bp-subtitle {
+    font-size: 1rem;
+    opacity: 0.8;
+    margin-bottom: 2rem;
+  }
+
+  .bp-cards {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .bp-card {
+    min-width: 120px;
+    padding: 1rem 1.4rem;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(0, 191, 255, 0.12), rgba(0, 0, 0, 0.9));
+    border: 1px solid rgba(0, 191, 255, 0.4);
+    box-shadow: 0 0 24px rgba(0, 0, 0, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.8rem;
+    position: relative;
+    overflow: hidden;
+    transform: translateY(20px) scale(0.95);
+    opacity: 0;
+    animation: bp-card-in 0.6s ease-out forwards;
+  }
+
+  .bp-card:nth-child(1) { animation-delay: 0.2s; }
+  .bp-card:nth-child(2) { animation-delay: 0.35s; }
+  .bp-card:nth-child(3) { animation-delay: 0.5s; }
+
+  .bp-card::before {
+    content: "";
+    position: absolute;
+    inset: -50%;
+    background: linear-gradient(
+      120deg,
+      transparent 0,
+      rgba(0, 191, 255, 0.25) 40%,
+      transparent 80%
+    );
+    transform: translateX(-100%) rotate(8deg);
+    animation: bp-scan 2.4s linear infinite;
+  }
+
+  @keyframes bp-enter {
+    from { opacity: 0; transform: translateY(30px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes bp-card-in {
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes bp-scan {
+    to { transform: translateX(120%) rotate(8deg); }
+  }
+
+  @media (display-mode: standalone) {
+    #bp-overlay { opacity: 1; }
+  }
+
+  /* ============================
+     PARTICULES + INTRO TERMINAL
+  ============================ */
+
   #particles {
     position: fixed;
     inset: 0;
     z-index: -1;
   }
 
-  /* Animation terminal */
   #intro-screen {
     position: fixed;
     inset: 0;
@@ -45,7 +150,7 @@
     z-index: 10;
     overflow: hidden;
     animation: fadeOut 1s ease forwards;
-    animation-delay: 5.2s; /* Intro ralentie */
+    animation-delay: 5.2s;
   }
 
   .typing-line {
@@ -56,19 +161,10 @@
     animation: typing 1.8s steps(40) forwards, blink 0.7s infinite;
   }
 
-  @keyframes typing {
-    to { width: 100%; }
-  }
+  @keyframes typing { to { width: 100%; } }
+  @keyframes blink { 50% { border-color: transparent; } }
+  @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
 
-  @keyframes blink {
-    50% { border-color: transparent; }
-  }
-
-  @keyframes fadeOut {
-    to { opacity: 0; visibility: hidden; }
-  }
-
-  /* Page d'intro */
   .intro-container {
     position: absolute;
     inset: 0;
@@ -80,14 +176,11 @@
     padding: 20px;
     opacity: 0;
     animation: fadeIn 1.5s ease forwards;
-    animation-delay: 6s; /* Apparition ralentie */
+    animation-delay: 6s;
   }
 
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
+  @keyframes fadeIn { to { opacity: 1; } }
 
-  /* Effet glitch */
   h1 {
     font-size: 3rem;
     margin-bottom: 10px;
@@ -138,7 +231,6 @@
     max-width: 600px;
   }
 
-  /* Message d'avertissement */
   .warning {
     margin-top: 25px;
     font-size: 0.95rem;
@@ -150,7 +242,6 @@
     max-width: 500px;
   }
 
-  /* Bouton */
   .enter-btn {
     margin-top: 30px;
     padding: 14px 32px;
@@ -168,18 +259,23 @@
     color: black;
     box-shadow: 0 0 15px var(--accent);
   }
-
-  /* Mobile */
-  @media (max-width: 480px) {
-    h1 { font-size: 2.2rem; }
-    p { font-size: 1rem; }
-    .warning { font-size: 0.85rem; }
-    .enter-btn { font-size: 1.1rem; padding: 12px 26px; }
-  }
 </style>
 </head>
 
 <body>
+
+<!-- BIG PICTURE -->
+<div id="bp-overlay" class="bp-overlay hidden">
+  <div class="bp-center">
+    <div class="bp-logo">CYBERQUIZ</div>
+    <div class="bp-subtitle">Mode Application Activé</div>
+    <div class="bp-cards">
+      <div class="bp-card">Quiz</div>
+      <div class="bp-card">Progression</div>
+      <div class="bp-card">Défis</div>
+    </div>
+  </div>
+</div>
 
 <!-- Particules -->
 <canvas id="particles"></canvas>
@@ -196,18 +292,37 @@
 <!-- Page d'intro -->
 <div class="intro-container">
   <h1>CyberQuiz</h1>
-  <p>Découvrez une plateforme immersive pour apprendre la cybersécurité en vous amusant.  
-  Testez vos connaissances, progressez et devenez incollable.</p>
+  <p>Découvrez une plateforme immersive pour apprendre la cybersécurité en vous amusant.</p>
 
   <div class="warning">
-    ⚠️ La cybersécurité commence par la vigilance.  
-    Ce site vous apprend à reconnaître les menaces les plus courantes.
+    ⚠️ La cybersécurité commence par la vigilance.
   </div>
 
   <button class="enter-btn" onclick="enterSite()">Entrer</button>
 </div>
 
 <script>
+/* ============================
+   BIG PICTURE MODE (PWA ONLY)
+============================ */
+function isPWA() {
+  const standaloneMatch = window.matchMedia("(display-mode: standalone)").matches;
+  const iosStandalone = window.navigator.standalone === true;
+  return standaloneMatch || iosStandalone;
+}
+
+window.addEventListener("load", () => {
+  const overlay = document.getElementById("bp-overlay");
+  if (!overlay) return;
+
+  if (isPWA()) {
+    overlay.classList.remove("hidden");
+    setTimeout(() => overlay.classList.add("hidden"), 3200);
+  } else {
+    overlay.classList.add("hidden");
+  }
+});
+
 /* Transition fluide */
 function enterSite() {
   document.body.style.transition = "opacity 0.8s";
@@ -216,11 +331,6 @@ function enterSite() {
     window.location.href = "accueil.html";
   }, 800);
 }
-
-/* Disparition automatique de l'intro */
-setTimeout(() => {
-  document.getElementById("intro-screen").classList.add("fade-out");
-}, 5200); /* Intro ralentie */
 
 /* Particules */
 const canvas = document.getElementById('particles');
