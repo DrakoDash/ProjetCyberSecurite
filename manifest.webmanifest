@@ -1,11 +1,12 @@
 {
   "name": "CyberQuiz",
   "short_name": "CyberQuiz",
-  "start_url": "/",
+  "start_url": "/index.html",
   "scope": "/",
   "display": "standalone",
   "background_color": "#000000",
-  "theme_color": "#00ffe0",
+  "theme_color": "#00bfff",
+  "orientation": "portrait",
   "description": "Plateforme immersive de quiz cybersécurité",
   "icons": [
     {
