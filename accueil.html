@@ -403,6 +403,15 @@ initCanvas();
 initParticles();
 animateParticles();
 </script>
+<script>
+function isPWA() {
+  return window.matchMedia("(display-mode: standalone)").matches
+      || window.navigator.standalone === true;
+}
 
+if (isPWA()) {
+  console.log("Mode PWA actif sur accueil");
+}
+</script>
 </body>
 </html>
