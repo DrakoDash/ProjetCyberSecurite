@@ -1,9 +1,9 @@
 {
   "name": "CyberQuiz",
-  "short_name": "CyberQuiz",
-  "start_url": "/index.html",
-  "scope": "/",
+  "short_name": "CyberQuiz"
   "display": "standalone",
+  "start_url": "/ProjetCyberSecurite/index.html",
+  "scope": "/ProjetCyberSecurite/"
   "background_color": "#000000",
   "theme_color": "#00bfff",
   "orientation": "portrait",
