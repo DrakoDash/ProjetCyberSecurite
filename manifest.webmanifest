@@ -10,7 +10,7 @@
   "description": "Plateforme immersive de quiz cybersécurité",
   "icons": [
     {
-      "src": "/icons/icon-192.png",
+      "src": "/ProjetCyberSecurite/icons/icon-192.png"
       "sizes": "192x192",
       "type": "image/png"
     },
