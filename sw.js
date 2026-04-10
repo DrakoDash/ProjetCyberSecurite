@@ -1,13 +1,14 @@
 const CACHE_NAME = "cyberquiz-v3";
 const ASSETS = [
-  "/",
-  "/index.html",
-  "/accueil.html",
-  "/style.css",
-  "/manifest.webmanifest",
-  "/icons/icon-192.png",
-  "/icons/icon-512.png"
+  "/ProjetCyberSecurite/",
+  "/ProjetCyberSecurite/index.html",
+  "/ProjetCyberSecurite/accueil.html",
+  "/ProjetCyberSecurite/style.css",
+  "/ProjetCyberSecurite/manifest.webmanifest",
+  "/ProjetCyberSecurite/icons/icon-192.png",
+  "/ProjetCyberSecurite/icons/icon-512.png"
 ];
+
 
 // Installation
 self.addEventListener("install", event => {
