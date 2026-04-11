@@ -20,7 +20,6 @@
     --success: #7efc6a;
   }
 
-  /* Reprendre style global */
   html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:var(--bg);color:#fff}
   .navbar {
     position: fixed; top: 0; width: 100%; background: rgba(10,15,36,0.85);
@@ -33,7 +32,6 @@
     cursor:pointer; display:flex; align-items:center; gap:8px;
   }
 
-  /* Layout quiz */
   main { padding: 100px 20px 60px; max-width:900px; margin:0 auto; }
   .quiz-card {
     background: linear-gradient(180deg, rgba(17,24,51,0.95), rgba(13,19,43,0.85));
@@ -64,22 +62,36 @@
   .btn-primary { background:var(--accent); color:#001; flex:1; }
   .btn-ghost { background:transparent; border:1px solid rgba(255,255,255,0.06); color:var(--muted); }
 
-  /* Result */
   .result { text-align:center; padding:18px 10px; }
   .score { font-size:2.6rem; color:var(--accent); margin:6px 0; }
   .result-actions { display:flex; gap:12px; justify-content:center; margin-top:14px; flex-wrap:wrap; }
 
-  /* Correction list */
   .correction-item { background: rgba(255,255,255,0.03); padding:12px; border-radius:10px; margin-bottom:10px; }
   .correct { color: var(--success); font-weight:700; }
   .wrong { color: #ff7b7b; font-weight:700; }
 
-  /* Modal confirmation */
-  .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; z-index:1200; }
-  .modal { background: linear-gradient(180deg, #0b1228, #071028); padding:18px; border-radius:12px; border:1px solid rgba(0,191,255,0.08); width:320px; text-align:center; }
+  .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; z-index:1200; opacity:0; transition: opacity 240ms ease; }
+  .modal-backdrop.show { opacity:1; }
+  .modal { background: linear-gradient(180deg, #0b1228, #071028); padding:18px; border-radius:12px; border:1px solid rgba(0,191,255,0.08); width:320px; text-align:center; transform: scale(.96); opacity:0; transition: transform 260ms cubic-bezier(.2,.9,.3,1), opacity 220ms ease; }
+  .modal.show { transform: scale(1); opacity:1; }
   .modal p { margin:12px 0; color:var(--muted); }
 
-  /* Responsive */
+  /* Animations between questions */
+  .quiz-card .content-wrap {
+    position: relative;
+    overflow: hidden;
+    min-height: 220px;
+  }
+  .q-panel {
+    position: relative;
+    transition: transform 360ms cubic-bezier(.2,.9,.3,1), opacity 260ms ease;
+    will-change: transform, opacity;
+  }
+  .q-enter { transform: translateX(18px); opacity: 0; }
+  .q-enter.q-enter-active { transform: translateX(0); opacity: 1; }
+  .q-exit { transform: translateX(0); opacity: 1; }
+  .q-exit.q-exit-active { transform: translateX(-18px); opacity: 0; }
+
   @media (max-width:600px) {
     .quiz-card { padding:18px; }
     .quiz-title { font-size:1.05rem; }
@@ -89,7 +101,7 @@
 <body>
 
 <nav class="navbar">
-  <button class="back-quiz" id="backBtn"><i class="fa-solid fa-arrow-left"></i> Retour</button>
+  <button class="back-quiz" id="backBtn" aria-label="Retour à l'accueil"><i class="fa-solid fa-arrow-left"></i> Retour</button>
   <div class="nav-logo">CyberQuiz</div>
 </nav>
 
@@ -102,42 +114,42 @@
       <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
     </div>
 
-    <div id="quizStep">
-      <div class="question" id="questionText">Question texte</div>
-
-      <div class="answers" id="answersBox" role="list"></div>
-
-      <div class="controls">
-        <button class="btn btn-ghost" id="prevBtn" disabled>Précédent</button>
-        <button class="btn btn-primary" id="nextBtn" disabled>Suivant</button>
-      </div>
-    </div>
-
-    <div id="resultStep" style="display:none;">
-      <div class="result">
-        <div>Votre score</div>
-        <div class="score" id="scoreText">0 / 5</div>
-        <div class="result-actions">
-          <button class="btn btn-ghost" id="showCorrectionBtn">Voir la correction détaillée</button>
-          <button class="btn btn-primary" id="goHomeBtn">Retour à l’accueil</button>
+    <div class="content-wrap" id="contentWrap">
+      <div id="quizStep" class="q-panel">
+        <div class="question" id="questionText">Question texte</div>
+        <div class="answers" id="answersBox" role="list"></div>
+        <div class="controls">
+          <button class="btn btn-ghost" id="prevBtn" disabled>Précédent</button>
+          <button class="btn btn-primary" id="nextBtn" disabled>Suivant</button>
         </div>
       </div>
-    </div>
 
-    <div id="correctionStep" style="display:none;">
-      <h3 style="margin-top:0;color:var(--accent)">Correction détaillée</h3>
-      <div id="correctionList" style="margin-top:12px"></div>
-      <div style="display:flex;gap:12px;margin-top:14px;">
-        <button class="btn btn-ghost" id="backToResultBtn">Retour au score</button>
-        <button class="btn btn-primary" id="goHomeBtn2">Retour à l’accueil</button>
+      <div id="resultStep" class="q-panel" style="display:none;">
+        <div class="result">
+          <div>Votre score</div>
+          <div class="score" id="scoreText">0 / 5</div>
+          <div class="result-actions">
+            <button class="btn btn-ghost" id="showCorrectionBtn">Voir la correction détaillée</button>
+            <button class="btn btn-primary" id="goHomeBtn">Retour à l’accueil</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="correctionStep" class="q-panel" style="display:none;">
+        <h3 style="margin-top:0;color:var(--accent)">Correction détaillée</h3>
+        <div id="correctionList" style="margin-top:12px"></div>
+        <div style="display:flex;gap:12px;margin-top:14px;">
+          <button class="btn btn-ghost" id="backToResultBtn">Retour au score</button>
+          <button class="btn btn-primary" id="goHomeBtn2">Retour à l’accueil</button>
+        </div>
       </div>
     </div>
   </div>
 </main>
 
-<!-- Modal confirmation template -->
+<!-- Modal confirmation -->
 <div id="confirmModal" style="display:none;">
-  <div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <h4 id="modalTitle" style="color:var(--accent);margin:0">Quitter le quiz ?</h4>
       <p>Si vous quittez, votre progression sera perdue. Voulez-vous vraiment quitter ?</p>
@@ -150,7 +162,7 @@
 </div>
 
 <script>
-/* Particules : réutilisation simple du script d'accueil */
+/* Particules (léger, réutilisation) */
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let particlesArray = [];
@@ -204,6 +216,7 @@ let current = 0;
 let score = 0;
 let selected = null;
 const total = questions.length;
+const userSelections = new Array(total).fill(null);
 
 /* DOM */
 const questionText = document.getElementById('questionText');
@@ -225,11 +238,9 @@ const goHomeBtn2 = document.getElementById('goHomeBtn2');
 const backToResultBtn = document.getElementById('backToResultBtn');
 
 const backBtn = document.getElementById('backBtn');
-const confirmModal = document.getElementById('confirmModal');
-const modalBackdrop = document.getElementById('modalBackdrop');
+const contentWrap = document.getElementById('contentWrap');
 
-/* State to keep user selections (but we do NOT reveal correct answers during quiz) */
-const userSelections = new Array(total).fill(null);
+let animating = false;
 
 function updateProgress() {
   const pct = Math.round((current) / total * 100);
@@ -250,14 +261,12 @@ function renderQuestion() {
     btn.textContent = a;
     btn.setAttribute('data-index', idx);
     btn.onclick = () => {
-      // select visually
       document.querySelectorAll('.answer-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       selected = idx;
       userSelections[current] = idx;
       nextBtn.disabled = false;
     };
-    // restore previous selection if exists
     if (userSelections[current] === idx) {
       btn.classList.add('selected');
       selected = idx;
@@ -269,31 +278,97 @@ function renderQuestion() {
   updateProgress();
 }
 
-/* Navigation */
+/* Helper: animate panel swap (fromEl -> toEl) */
+function animatePanel(fromEl, toEl) {
+  return new Promise(resolve => {
+    if (animating) { resolve(); return; }
+    animating = true;
+
+    fromEl.classList.remove('q-enter','q-enter-active');
+    fromEl.classList.add('q-exit');
+    void fromEl.offsetWidth;
+    fromEl.classList.add('q-exit-active');
+
+    const onFromEnd = (e) => {
+      if (e.target !== fromEl) return;
+      fromEl.removeEventListener('transitionend', onFromEnd);
+      fromEl.style.display = 'none';
+      fromEl.classList.remove('q-exit','q-exit-active');
+
+      toEl.style.display = '';
+      toEl.classList.add('q-enter');
+      void toEl.offsetWidth;
+      toEl.classList.add('q-enter-active');
+
+      const onToEnd = (ev) => {
+        if (ev.target !== toEl) return;
+        toEl.removeEventListener('transitionend', onToEnd);
+        toEl.classList.remove('q-enter','q-enter-active');
+        animating = false;
+        resolve();
+      };
+      toEl.addEventListener('transitionend', onToEnd);
+    };
+
+    fromEl.addEventListener('transitionend', onFromEnd);
+  });
+}
+
+/* Navigation with animated transitions */
 nextBtn.addEventListener('click', () => {
-  // validate selection for scoring but DO NOT show correct answer now
-  if (userSelections[current] !== null && userSelections[current] === questions[current].correct) {
-    // only increment once per question
-    // ensure we don't double count if user navigates back and forth
-    // we recompute score at the end to avoid double counting
-  }
-  // move forward
+  if (animating) return;
   if (current < total - 1) {
-    current++;
-    selected = null;
-    renderQuestion();
+    const panel = quizStep;
+    const clone = panel.cloneNode(true);
+    clone.id = 'tempClone';
+    contentWrap.appendChild(clone);
+    // animate clone exit
+    clone.classList.add('q-exit','q-exit-active');
+    clone.addEventListener('transitionend', () => {
+      clone.remove();
+      current++;
+      selected = null;
+      renderQuestion();
+      panel.classList.add('q-enter');
+      void panel.offsetWidth;
+      panel.classList.add('q-enter-active');
+      panel.addEventListener('transitionend', function handler(e) {
+        if (e.target !== panel) return;
+        panel.removeEventListener('transitionend', handler);
+        panel.classList.remove('q-enter','q-enter-active');
+      });
+    }, { once: true });
   } else {
-    // finish: compute score and show result
     computeScore();
-    showResults();
+    animatePanel(quizStep, resultStep).then(() => {
+      scoreText.textContent = `${score} / ${total}`;
+      progressBar.style.width = '100%';
+    });
   }
 });
 
 prevBtn.addEventListener('click', () => {
+  if (animating) return;
   if (current > 0) {
-    current--;
-    selected = null;
-    renderQuestion();
+    const panel = quizStep;
+    const clone = panel.cloneNode(true);
+    clone.id = 'tempClone';
+    contentWrap.appendChild(clone);
+    clone.classList.add('q-exit','q-exit-active');
+    clone.addEventListener('transitionend', () => {
+      clone.remove();
+      current--;
+      selected = null;
+      renderQuestion();
+      panel.classList.add('q-enter');
+      void panel.offsetWidth;
+      panel.classList.add('q-enter-active');
+      panel.addEventListener('transitionend', function handler(e) {
+        if (e.target !== panel) return;
+        panel.removeEventListener('transitionend', handler);
+        panel.classList.remove('q-enter','q-enter-active');
+      });
+    }, { once: true });
   }
 });
 
@@ -313,56 +388,74 @@ function showResults() {
   progressBar.style.width = '100%';
 }
 
-/* Show correction only if user requests it */
+/* Show correction with animation */
 showCorrectionBtn.addEventListener('click', () => {
-  resultStep.style.display = 'none';
-  correctionStep.style.display = 'block';
-  correctionList.innerHTML = '';
-  questions.forEach((q, i) => {
-    const div = document.createElement('div');
-    div.className = 'correction-item';
-    const user = userSelections[i] === null ? 'Aucune réponse' : q.answers[userSelections[i]];
-    const correct = q.answers[q.correct];
-    const isOk = userSelections[i] === q.correct;
-    div.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:center;">
-        <strong>Question ${i+1}</strong>
-        <span class="${isOk ? 'correct' : 'wrong'}">${isOk ? 'Correct' : 'Incorrect'}</span>
-      </div>
-      <p style="margin:8px 0;color:var(--muted)">${q.q}</p>
-      <p style="margin:6px 0"><strong>Votre réponse :</strong> ${user}</p>
-      <p style="margin:6px 0"><strong>Bonne réponse :</strong> ${correct}</p>
-      <p style="margin:6px 0;color:var(--muted)">${q.explanation}</p>
-    `;
-    correctionList.appendChild(div);
+  animatePanel(resultStep, correctionStep).then(() => {
+    correctionList.innerHTML = '';
+    questions.forEach((q, i) => {
+      const div = document.createElement('div');
+      div.className = 'correction-item';
+      const user = userSelections[i] === null ? 'Aucune réponse' : q.answers[userSelections[i]];
+      const correct = q.answers[q.correct];
+      const isOk = userSelections[i] === q.correct;
+      div.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <strong>Question ${i+1}</strong>
+          <span class="${isOk ? 'correct' : 'wrong'}">${isOk ? 'Correct' : 'Incorrect'}</span>
+        </div>
+        <p style="margin:8px 0;color:var(--muted)">${q.q}</p>
+        <p style="margin:6px 0"><strong>Votre réponse :</strong> ${user}</p>
+        <p style="margin:6px 0"><strong>Bonne réponse :</strong> ${correct}</p>
+        <p style="margin:6px 0;color:var(--muted)">${q.explanation}</p>
+      `;
+      correctionList.appendChild(div);
+    });
   });
 });
 
-/* Retour à l'accueil */
+/* Back to result */
+backToResultBtn.addEventListener('click', () => {
+  animatePanel(correctionStep, resultStep);
+});
+
+/* Go home */
 function goHome() { window.location.href = 'accueil.html'; }
 goHomeBtn.addEventListener('click', goHome);
 goHomeBtn2.addEventListener('click', goHome);
 
-/* Back button with confirmation modal */
+/* Back button with animated modal */
 backBtn.addEventListener('click', () => {
-  // show custom modal
-  document.getElementById('confirmModal').style.display = 'block';
+  const confirmModal = document.getElementById('confirmModal');
+  const modalBackdrop = document.getElementById('modalBackdrop');
+  const modal = modalBackdrop.querySelector('.modal');
+  confirmModal.style.display = 'block';
+  requestAnimationFrame(() => {
+    modalBackdrop.classList.add('show');
+    modal.classList.add('show');
+  });
 });
+
 document.getElementById('cancelQuit').addEventListener('click', () => {
-  document.getElementById('confirmModal').style.display = 'none';
+  const modalBackdrop = document.getElementById('modalBackdrop');
+  const modal = modalBackdrop.querySelector('.modal');
+  modal.classList.remove('show');
+  modalBackdrop.classList.remove('show');
+  modalBackdrop.addEventListener('transitionend', function h() {
+    modalBackdrop.removeEventListener('transitionend', h);
+    document.getElementById('confirmModal').style.display = 'none';
+  });
 });
+
 document.getElementById('confirmQuit').addEventListener('click', () => {
   window.location.href = 'accueil.html';
 });
 
-/* keyboard accessibility: Enter to confirm selection */
+/* Keyboard accessibility */
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' && !nextBtn.disabled) {
-    nextBtn.click();
-  }
+  if (e.key === 'Enter' && !nextBtn.disabled) nextBtn.click();
 });
 
-/* Initialize */
+/* Init */
 renderQuestion();
 updateProgress();
 </script>
