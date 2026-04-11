@@ -1,284 +1,287 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CyberQuiz — Introduction</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>CyberQuiz — Introduction</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+    <style>
+        :root {
+            --bg: #0a0f24;
+            --steam-blue: #1b2838;
+            --steam-gradient: radial-gradient(circle, #1b2838 0%, #000a12 100%);
+            --accent: #00bfff;
+            --accent2: #4cc9f0;
+        }
 
-<style>
-  :root {
-    --bg: #0a0f24;
-    --accent: #00bfff;
-    --accent2: #4cc9f0;
-  }
+        body {
+            margin: 0;
+            background: var(--bg);
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            overflow: hidden;
+            height: 100vh;
+        }
 
-  body {
-    margin: 0;
-    background: var(--bg);
-    font-family: 'Poppins', sans-serif;
-    color: white;
-    overflow: hidden;
-  }
+        /* --- STYLES EXCLUSIFS PWA --- */
+        
+        /* Overlay d'intro type Steam Big Picture */
+        #pwa-steam-intro {
+            position: fixed;
+            inset: 0;
+            background: var(--steam-gradient);
+            z-index: 100;
+            display: none; /* Caché par défaut, activé par JS */
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
 
-  /* Canvas particules */
-  #particles {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-  }
+        .steam-logo-anim {
+            width: 150px;
+            filter: drop-shadow(0 0 20px var(--accent));
+            animation: steamZoom 3s ease-in-out forwards;
+        }
 
-  /* Animation terminal */
-  #intro-screen {
-    position: fixed;
-    inset: 0;
-    background: black;
-    color: #00ffea;
-    font-family: monospace;
-    padding: 40px;
-    font-size: 1.1rem;
-    line-height: 1.5;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    z-index: 10;
-    overflow: hidden;
-    animation: fadeOut 1s ease forwards;
-    animation-delay: 5.2s; /* Intro ralentie */
-  }
+        @keyframes steamZoom {
+            0% { transform: scale(0.8); opacity: 0; filter: blur(10px); }
+            50% { transform: scale(1.1); opacity: 1; filter: blur(0px); }
+            100% { transform: scale(1.3); opacity: 0; filter: blur(20px); }
+        }
 
-  .typing-line {
-    white-space: nowrap;
-    overflow: hidden;
-    border-right: 2px solid #00ffea;
-    width: 0;
-    animation: typing 1.8s steps(40) forwards, blink 0.7s infinite;
-  }
+        /* --- STYLES EXISTANTS OPTIMISÉS --- */
 
-  @keyframes typing {
-    to { width: 100%; }
-  }
+        #particles {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+        }
 
-  @keyframes blink {
-    50% { border-color: transparent; }
-  }
+        #intro-screen {
+            position: fixed;
+            inset: 0;
+            background: black;
+            color: #00ffea;
+            font-family: monospace;
+            padding: 40px;
+            font-size: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 10;
+            animation: fadeOut 1s ease forwards 5.2s;
+        }
 
-  @keyframes fadeOut {
-    to { opacity: 0; visibility: hidden; }
-  }
+        .typing-line {
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid #00ffea;
+            width: 0;
+            animation: typing 1.8s steps(40) forwards, blink 0.7s infinite;
+        }
 
-  /* Page d'intro */
-  .intro-container {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
-    opacity: 0;
-    animation: fadeIn 1.5s ease forwards;
-    animation-delay: 6s; /* Apparition ralentie */
-  }
+        @keyframes typing { to { width: 100%; } }
+        @keyframes blink { 50% { border-color: transparent; } }
+        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
 
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
+        .intro-container {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            opacity: 0;
+            animation: fadeIn 1.5s ease forwards 6s;
+        }
 
-  /* Effet glitch */
-  h1 {
-    font-size: 3rem;
-    margin-bottom: 10px;
-    color: var(--accent);
-    position: relative;
-    text-shadow: 0 0 12px var(--accent);
-  }
+        @keyframes fadeIn { to { opacity: 1; } }
 
-  h1::before, h1::after {
-    content: "CyberQuiz";
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0.6;
-  }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+            position: relative;
+            text-shadow: 0 0 12px var(--accent);
+        }
 
-  h1::before {
-    color: #ff00c8;
-    animation: glitch1 2s infinite;
-  }
+        .enter-btn {
+            margin-top: 30px;
+            padding: 14px 32px;
+            font-size: 1.2rem;
+            border: 2px solid var(--accent);
+            background: rgba(0, 191, 255, 0.1);
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            outline: none;
+        }
 
-  h1::after {
-    color: #00fff2;
-    animation: glitch2 2s infinite;
-  }
+        .enter-btn:hover {
+            background: var(--accent);
+            color: black;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--accent);
+        }
 
-  @keyframes glitch1 {
-    0% { transform: translate(0); }
-    20% { transform: translate(-3px, 2px); }
-    40% { transform: translate(3px, -2px); }
-    60% { transform: translate(-2px, 1px); }
-    80% { transform: translate(2px, -1px); }
-    100% { transform: translate(0); }
-  }
-
-  @keyframes glitch2 {
-    0% { transform: translate(0); }
-    20% { transform: translate(3px, -2px); }
-    40% { transform: translate(-3px, 2px); }
-    60% { transform: translate(2px, -1px); }
-    80% { transform: translate(-2px, 1px); }
-    100% { transform: translate(0); }
-  }
-
-  p {
-    font-size: 1.2rem;
-    opacity: 0.85;
-    max-width: 600px;
-  }
-
-  /* Message d'avertissement */
-  .warning {
-    margin-top: 25px;
-    font-size: 0.95rem;
-    color: #ff6b6b;
-    background: rgba(255, 0, 0, 0.1);
-    padding: 10px 18px;
-    border-radius: 8px;
-    border-left: 3px solid #ff6b6b;
-    max-width: 500px;
-  }
-
-  /* Bouton */
-  .enter-btn {
-    margin-top: 30px;
-    padding: 14px 32px;
-    font-size: 1.2rem;
-    border: 2px solid var(--accent);
-    background: transparent;
-    color: white;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-
-  .enter-btn:hover {
-    background: var(--accent);
-    color: black;
-    box-shadow: 0 0 15px var(--accent);
-  }
-
-  /* Mobile */
-  @media (max-width: 480px) {
-    h1 { font-size: 2.2rem; }
-    p { font-size: 1rem; }
-    .warning { font-size: 0.85rem; }
-    .enter-btn { font-size: 1.1rem; padding: 12px 26px; }
-  }
-</style>
+        .warning {
+            margin-top: 25px;
+            font-size: 0.95rem;
+            color: #ff6b6b;
+            background: rgba(255, 0, 0, 0.1);
+            padding: 10px 18px;
+            border-radius: 8px;
+            border-left: 3px solid #ff6b6b;
+            max-width: 500px;
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- Particules -->
-<canvas id="particles"></canvas>
-
-<!-- Animation terminal -->
-<div id="intro-screen">
-  <div class="typing-line" style="animation-delay:0s">> Initialisation du système…</div>
-  <div class="typing-line" style="animation-delay:1s">> Chargement des modules de cybersécurité…</div>
-  <div class="typing-line" style="animation-delay:2s">> Vérification de l’intégrité… OK</div>
-  <div class="typing-line" style="animation-delay:3s">> Analyse des menaces… OK</div>
-  <div class="typing-line" style="animation-delay:4s">> Bienvenue utilisateur.</div>
+<div id="pwa-steam-intro">
+    <img src="assets/icon-512.png" alt="Logo" class="steam-logo-anim">
 </div>
 
-<!-- Page d'intro -->
+<canvas id="particles"></canvas>
+
+<div id="intro-screen">
+    <div class="typing-line" style="animation-delay:0s">> Initialisation du système…</div>
+    <div class="typing-line" style="animation-delay:1s">> Mode PWA détecté… Activation de l'interface immersive.</div>
+    <div class="typing-line" style="animation-delay:2s">> Chargement des modules sonores… OK</div>
+    <div class="typing-line" style="animation-delay:3s">> Analyse des menaces… OK</div>
+    <div class="typing-line" style="animation-delay:4s">> Bienvenue utilisateur.</div>
+</div>
+
 <div class="intro-container">
-  <h1>CyberQuiz</h1>
-  <p>Découvrez une plateforme immersive pour apprendre la cybersécurité en vous amusant.  
-  Testez vos connaissances, progressez et devenez incollable.</p>
+    <h1>CyberQuiz</h1>
+    <p>Une plateforme immersive pour apprendre la cybersécurité. Testez vos connaissances et progressez.</p>
 
-  <div class="warning">
-    ⚠️ La cybersécurité commence par la vigilance.  
-    Ce site vous apprend à reconnaître les menaces les plus courantes.
-  </div>
+    <div class="warning">
+        ⚠️ Vigilance requise : Ce quiz simule des menaces réelles.
+    </div>
 
-  <button class="enter-btn" onclick="enterSite()">Entrer</button>
+    <button class="enter-btn" id="start-btn">ENTRER</button>
 </div>
 
 <script>
-/* Transition fluide */
-function enterSite() {
-  document.body.style.transition = "opacity 0.8s";
-  document.body.style.opacity = "0";
-  setTimeout(() => {
-    window.location.href = "accueil.html";
-  }, 800);
+/* CONFIGURATION PWA ET SONS */
+const isPWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+// On prépare les objets audio (ils ne chargeront que si nécessaires)
+const audioFiles = {
+    bg: new Audio('assets/sounds/ambient_bg.mp3'),
+    click: new Audio('assets/sounds/nav_click.mp3'),
+    hover: new Audio('assets/sounds/nav_hover.mp3')
+};
+
+function initPwaExperience() {
+    if (!isPWA) return;
+
+    // Afficher l'intro Steam
+    const steamIntro = document.getElementById('pwa-steam-intro');
+    steamIntro.style.display = 'flex';
+    
+    // Cacher l'intro après 3.5s
+    setTimeout(() => {
+        steamIntro.style.transition = "opacity 1s";
+        steamIntro.style.opacity = "0";
+        setTimeout(() => steamIntro.remove(), 1000);
+    }, 3500);
+
+    // Configurer la musique de fond
+    audioFiles.bg.loop = true;
+    audioFiles.bg.volume = 0.5;
 }
 
-/* Disparition automatique de l'intro */
-setTimeout(() => {
-  document.getElementById("intro-screen").classList.add("fade-out");
-}, 5200); /* Intro ralentie */
+// Fonction pour entrer dans le site
+function enterSite() {
+    if (isPWA) audioFiles.click.play();
+    
+    document.body.style.transition = "opacity 0.8s";
+    document.body.style.opacity = "0";
+    
+    setTimeout(() => {
+        window.location.href = "accueil.html";
+    }, 800);
+}
 
-/* Particules */
+// Gestionnaires d'événements
+document.getElementById('start-btn').addEventListener('click', () => {
+    if (isPWA) {
+        audioFiles.bg.play().catch(e => console.log("Audio blocké"));
+    }
+    enterSite();
+});
+
+document.getElementById('start-btn').addEventListener('mouseenter', () => {
+    if (isPWA) {
+        audioFiles.hover.currentTime = 0;
+        audioFiles.hover.play();
+    }
+});
+
+/* INITIALISATION */
+window.addEventListener('load', () => {
+    initPwaExperience();
+    initParticles();
+    animateParticles();
+});
+
+/* --- TON CODE PARTICULES (Inchangé mais encapsulé) --- */
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let particlesArray = [];
 
 function initCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 }
-
-window.addEventListener('resize', () => {
-  initCanvas();
-  initParticles();
-});
+window.addEventListener('resize', () => { initCanvas(); initParticles(); });
 
 class Particle {
-  constructor() {
-    this.reset();
-    this.size = Math.random() * 2.5 + 0.6;
-    this.color = `rgba(0,191,255,${Math.random() * 0.45 + 0.15})`;
-  }
-  reset() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.speedX = (Math.random() - 0.5) * 0.6;
-    this.speedY = (Math.random() - 0.5) * 0.6;
-  }
-  update() {
-    this.x += this.speedX;
-    this.y += this.speedY;
-    if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height + 10) {
-      this.reset();
+    constructor() {
+        this.reset();
+        this.size = Math.random() * 2.5 + 0.6;
+        this.color = `rgba(0,191,255,${Math.random() * 0.45 + 0.15})`;
     }
-  }
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = this.color;
-    ctx.fill();
-  }
+    reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.speedX = (Math.random() - 0.5) * 0.6;
+        this.speedY = (Math.random() - 0.5) * 0.6;
+    }
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height + 10) this.reset();
+    }
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
 }
 
 function initParticles() {
-  particlesArray = [];
-  const number = Math.max(40, Math.floor((canvas.width * canvas.height) / 16000));
-  for (let i = 0; i < number; i++) particlesArray.push(new Particle());
+    initCanvas();
+    particlesArray = [];
+    const number = Math.max(40, Math.floor((canvas.width * canvas.height) / 16000));
+    for (let i = 0; i < number; i++) particlesArray.push(new Particle());
 }
 
 function animateParticles() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particlesArray.forEach(p => { p.update(); p.draw(); });
-  requestAnimationFrame(animateParticles);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particlesArray.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animateParticles);
 }
-
-initCanvas();
-initParticles();
-animateParticles();
 </script>
 
 </body>
