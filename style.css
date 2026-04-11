@@ -200,3 +200,60 @@ header, .intro, .quizz-category {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* --- Animations questions --- */
+.quiz-card .content-wrap {
+  position: relative;
+  overflow: hidden;
+  min-height: 180px;
+}
+
+/* conteneur animé */
+.q-panel {
+  position: relative;
+  transition: transform 360ms cubic-bezier(.2,.9,.3,1), opacity 260ms ease;
+  will-change: transform, opacity;
+}
+
+/* état d'entrée (après mise à jour du DOM) */
+.q-enter {
+  transform: translateX(18px);
+  opacity: 0;
+}
+.q-enter.q-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* état de sortie (avant mise à jour du DOM) */
+.q-exit {
+  transform: translateX(0);
+  opacity: 1;
+}
+.q-exit.q-exit-active {
+  transform: translateX(-18px);
+  opacity: 0;
+}
+
+/* petite transition pour les boutons (feedback) */
+.answer-btn {
+  transition: transform .12s ease, background .12s ease, box-shadow .18s ease;
+}
+
+/* --- Modal animations --- */
+.modal-backdrop {
+  opacity: 0;
+  transition: opacity 240ms ease;
+}
+.modal-backdrop.show {
+  opacity: 1;
+}
+.modal {
+  transform: scale(.96);
+  opacity: 0;
+  transition: transform 260ms cubic-bezier(.2,.9,.3,1), opacity 220ms ease;
+}
+.modal.show {
+  transform: scale(1);
+  opacity: 1;
+}
