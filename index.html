@@ -7,156 +7,29 @@
     
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
-
-    <style>
-        :root {
-            --bg: #0a0f24;
-            --steam-blue: #1b2838;
-            --steam-gradient: radial-gradient(circle, #1b2838 0%, #000a12 100%);
-            --accent: #00bfff;
-            --accent2: #4cc9f0;
-        }
-
-        body {
-            margin: 0;
-            background: var(--bg);
-            font-family: 'Poppins', sans-serif;
-            color: white;
-            overflow: hidden;
-            height: 100vh;
-        }
-
-        /* --- STYLES EXCLUSIFS PWA --- */
-        
-        /* Overlay d'intro type Steam Big Picture */
-        #pwa-steam-intro {
-            position: fixed;
-            inset: 0;
-            background: var(--steam-gradient);
-            z-index: 100;
-            display: none; /* Caché par défaut, activé par JS */
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        .steam-logo-anim {
-            width: 150px;
-            filter: drop-shadow(0 0 20px var(--accent));
-            animation: steamZoom 3s ease-in-out forwards;
-        }
-
-        @keyframes steamZoom {
-            0% { transform: scale(0.8); opacity: 0; filter: blur(10px); }
-            50% { transform: scale(1.1); opacity: 1; filter: blur(0px); }
-            100% { transform: scale(1.3); opacity: 0; filter: blur(20px); }
-        }
-
-        /* --- STYLES EXISTANTS OPTIMISÉS --- */
-
-        #particles {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-        }
-
-        #intro-screen {
-            position: fixed;
-            inset: 0;
-            background: black;
-            color: #00ffea;
-            font-family: monospace;
-            padding: 40px;
-            font-size: 1.1rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            z-index: 10;
-            animation: fadeOut 1s ease forwards 5.2s;
-        }
-
-        .typing-line {
-            white-space: nowrap;
-            overflow: hidden;
-            border-right: 2px solid #00ffea;
-            width: 0;
-            animation: typing 1.8s steps(40) forwards, blink 0.7s infinite;
-        }
-
-        @keyframes typing { to { width: 100%; } }
-        @keyframes blink { 50% { border-color: transparent; } }
-        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
-
-        .intro-container {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-            opacity: 0;
-            animation: fadeIn 1.5s ease forwards 6s;
-        }
-
-        @keyframes fadeIn { to { opacity: 1; } }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            color: var(--accent);
-            position: relative;
-            text-shadow: 0 0 12px var(--accent);
-        }
-
-        .enter-btn {
-            margin-top: 30px;
-            padding: 14px 32px;
-            font-size: 1.2rem;
-            border: 2px solid var(--accent);
-            background: rgba(0, 191, 255, 0.1);
-            color: white;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            outline: none;
-        }
-
-        .enter-btn:hover {
-            background: var(--accent);
-            color: black;
-            transform: scale(1.05);
-            box-shadow: 0 0 20px var(--accent);
-        }
-
-        .warning {
-            margin-top: 25px;
-            font-size: 0.95rem;
-            color: #ff6b6b;
-            background: rgba(255, 0, 0, 0.1);
-            padding: 10px 18px;
-            border-radius: 8px;
-            border-left: 3px solid #ff6b6b;
-            max-width: 500px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div id="pwa-steam-intro">
-    <img src="assets/icon-512.png" alt="Logo" class="steam-logo-anim">
+<div id="pwa-bio-overlay">
+    <div class="scanner-container">
+        <div class="bio-ring"></div>
+        <div class="bio-scanner-line"></div>
+        <div class="bio-icon">
+            <img src="assets/icon-512.png" id="bio-logo" alt="Logo">
+        </div>
+        <div class="bio-text">ANALYSE BIOMÉTRIQUE EN COURS...</div>
+    </div>
 </div>
 
 <canvas id="particles"></canvas>
 
 <div id="intro-screen">
     <div class="typing-line" style="animation-delay:0s">> Initialisation du système…</div>
-    <div class="typing-line" style="animation-delay:1s">> Mode PWA détecté… Activation de l'interface immersive.</div>
-    <div class="typing-line" style="animation-delay:2s">> Chargement des modules sonores… OK</div>
-    <div class="typing-line" style="animation-delay:3s">> Analyse des menaces… OK</div>
-    <div class="typing-line" style="animation-delay:4s">> Bienvenue utilisateur.</div>
+    <div class="typing-line" style="animation-delay:1s">> Chargement des protocoles de sécurité…</div>
+    <div class="typing-line" style="animation-delay:2s">> Identification de l'appareil…</div>
+    <div class="typing-line" style="animation-delay:3s">> Accès autorisé.</div>
 </div>
 
 <div class="intro-container">
@@ -164,77 +37,67 @@
     <p>Une plateforme immersive pour apprendre la cybersécurité. Testez vos connaissances et progressez.</p>
 
     <div class="warning">
-        ⚠️ Vigilance requise : Ce quiz simule des menaces réelles.
+        ⚠️ La cybersécurité commence par la vigilance.
     </div>
 
     <button class="enter-btn" id="start-btn">ENTRER</button>
 </div>
 
 <script>
-/* CONFIGURATION PWA ET SONS */
+/* CONFIGURATION PWA & AUDIO */
 const isPWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 
-// On prépare les objets audio (ils ne chargeront que si nécessaires)
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js');
+}
+
 const audioFiles = {
     bg: new Audio('assets/sounds/ambient_bg.mp3'),
     click: new Audio('assets/sounds/nav_click.mp3'),
-    hover: new Audio('assets/sounds/nav_hover.mp3')
+    hover: new Audio('assets/sounds/nav_hover.mp3'),
+    scan: new Audio('assets/sounds/scan.mp3') // Optionnel : un son de scan
 };
 
-function initPwaExperience() {
-    if (!isPWA) return;
+window.addEventListener('DOMContentLoaded', () => {
+    initParticles();
+    animateParticles();
 
-    // Afficher l'intro Steam
-    const steamIntro = document.getElementById('pwa-steam-intro');
-    steamIntro.style.display = 'flex';
-    
-    // Cacher l'intro après 3.5s
+    // On attend la fin du terminal (5.5s)
     setTimeout(() => {
-        steamIntro.style.transition = "opacity 1s";
-        steamIntro.style.opacity = "0";
-        setTimeout(() => steamIntro.remove(), 1000);
-    }, 3500);
+        if (isPWA) {
+            const bioOverlay = document.getElementById('pwa-bio-overlay');
+            bioOverlay.style.display = 'flex';
+            
+            // On joue le son de scan si disponible
+            audioFiles.scan.play().catch(() => {});
 
-    // Configurer la musique de fond
-    audioFiles.bg.loop = true;
-    audioFiles.bg.volume = 0.5;
-}
+            // On retire l'overlay bio après 4s (durée de l'anim)
+            setTimeout(() => {
+                bioOverlay.style.opacity = '0';
+                setTimeout(() => bioOverlay.remove(), 1000);
+            }, 4000);
+        }
+    }, 5500);
+});
 
-// Fonction pour entrer dans le site
-function enterSite() {
-    if (isPWA) audioFiles.click.play();
-    
-    document.body.style.transition = "opacity 0.8s";
-    document.body.style.opacity = "0";
-    
-    setTimeout(() => {
-        window.location.href = "accueil.html";
-    }, 800);
-}
-
-// Gestionnaires d'événements
+// Navigation
 document.getElementById('start-btn').addEventListener('click', () => {
     if (isPWA) {
-        audioFiles.bg.play().catch(e => console.log("Audio blocké"));
+        audioFiles.bg.loop = true;
+        audioFiles.bg.volume = 0.4;
+        audioFiles.bg.play().catch(() => {});
+        audioFiles.click.play();
     }
-    enterSite();
+    
+    document.body.style.opacity = "0";
+    setTimeout(() => window.location.href = "accueil.html", 800);
 });
 
 document.getElementById('start-btn').addEventListener('mouseenter', () => {
-    if (isPWA) {
-        audioFiles.hover.currentTime = 0;
-        audioFiles.hover.play();
-    }
+    if (isPWA) { audioFiles.hover.currentTime = 0; audioFiles.hover.play(); }
 });
 
-/* INITIALISATION */
-window.addEventListener('load', () => {
-    initPwaExperience();
-    initParticles();
-    animateParticles();
-});
-
-/* --- TON CODE PARTICULES (Inchangé mais encapsulé) --- */
+/* CODE PARTICULES */
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let particlesArray = [];
@@ -243,38 +106,29 @@ function initCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 }
-window.addEventListener('resize', () => { initCanvas(); initParticles(); });
 
 class Particle {
-    constructor() {
-        this.reset();
-        this.size = Math.random() * 2.5 + 0.6;
-        this.color = `rgba(0,191,255,${Math.random() * 0.45 + 0.15})`;
-    }
+    constructor() { this.reset(); this.size = Math.random() * 2 + 0.5; this.color = 'rgba(0,191,255,0.3)'; }
     reset() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.speedX = (Math.random() - 0.5) * 0.6;
-        this.speedY = (Math.random() - 0.5) * 0.6;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.5;
     }
     update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height + 10) this.reset();
+        this.x += this.speedX; this.y += this.speedY;
+        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
     }
     draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color; ctx.fill();
     }
 }
 
 function initParticles() {
     initCanvas();
     particlesArray = [];
-    const number = Math.max(40, Math.floor((canvas.width * canvas.height) / 16000));
-    for (let i = 0; i < number; i++) particlesArray.push(new Particle());
+    for (let i = 0; i < 60; i++) particlesArray.push(new Particle());
 }
 
 function animateParticles() {
@@ -283,6 +137,5 @@ function animateParticles() {
     requestAnimationFrame(animateParticles);
 }
 </script>
-
 </body>
 </html>
