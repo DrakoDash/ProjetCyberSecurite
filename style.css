@@ -278,3 +278,25 @@ header, .intro, .quizz-category {
 .pwa-active button:active, .pwa-active a:active {
   transform: scale(0.98);
 }
+
+/* état initial des cartes et éléments pour éviter animations hors PWA */
+.card {
+  transform: translateY(10px);
+  opacity: 0;
+  transition: none;
+}
+
+/* quand la PWA est active, activer animations */
+.pwa-active .card {
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 420ms cubic-bezier(.2,.8,.2,1), opacity 420ms ease;
+}
+
+/* micro-interactions pour boutons en PWA */
+.pwa-active a, .pwa-active button {
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.pwa-active a:active, .pwa-active button:active {
+  transform: scale(0.98);
+}
