@@ -257,3 +257,24 @@ header, .intro, .quizz-category {
   transform: scale(1);
   opacity: 1;
 }
+
+/* Activation des animations uniquement en PWA */
+.pwa-active .card {
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 420ms cubic-bezier(.2,.8,.2,1), opacity 420ms ease;
+}
+
+/* état initial non-PWA (pour éviter animations hors PWA) */
+.card {
+  transform: translateY(10px);
+  opacity: 0.0;
+}
+
+/* micro-interaction pour boutons en PWA */
+.pwa-active button, .pwa-active a {
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.pwa-active button:active, .pwa-active a:active {
+  transform: scale(0.98);
+}
